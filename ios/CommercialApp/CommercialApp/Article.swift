@@ -16,6 +16,8 @@ open class Article {
     var image:String
     var categorie:Int32
     var tags:String
+    var prix:Double
+    var prixFinal:Double
     
     init() {
         self.id = 0
@@ -25,6 +27,8 @@ open class Article {
         self.categorie = 0
         self.tags = "test test toto"
         self.image = ""
+        self.prix = 0
+        self.prixFinal = 0
     }
 
 }

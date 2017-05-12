@@ -29,7 +29,7 @@ class DevisController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell :CellDevis = tableView.dequeueReusableCell(withIdentifier: CELL_IDENTIFIER)  as! CellDevis
-        cell.tvTitle!.text = "COUCOU"
+        cell.tvClient!.text = "ESGI"
         
         return cell
     }

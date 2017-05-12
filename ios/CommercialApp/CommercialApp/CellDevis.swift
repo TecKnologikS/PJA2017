@@ -9,5 +9,8 @@
 import UIKit
 
 class CellDevis: UITableViewCell {
-    @IBOutlet weak var tvTitle: UILabel!
+    @IBOutlet weak var tvDate: UILabel!
+    @IBOutlet weak var tvClient: UILabel!
+    @IBOutlet weak var tvNom: UILabel!
+    @IBOutlet weak var tvPrix: UILabel!
 }
