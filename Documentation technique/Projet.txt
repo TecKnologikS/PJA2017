@@ -1,35 +1,35 @@
 # PJA2017
-Projet Annuel 2017 PAUQUET MEHU
+Projet Annuel 2017 - PAUQUET MEHU - 5A AL1
 
 Donc voila pour le projet annuel: 
 Application Mobile & Web (Android, iOs et web surement a partir de angularJS pour une one page app)
 BackOffice unique
 
-Voici ce qui m'avais été proposé : 
+Voici ce qui m'avait Ã©tÃ© proposÃ© :
 
 Grandes lignes du projet :
  
 Existant :
-On a une équipe de commerciaux itinérants à qui on a remis un catalogue « papier » et un « simulateur » qui est en fait un tableau excel avec 2 ou 3 macros  qui génère  une proposition chiffrée. A la suite de ça le commercial établi un bon de commande manuscrit sur lequel il reporte les éléments générés par le « simulateur ».
+On a une ï¿½quipe de commerciaux itinï¿½rants ï¿½ qui on a remis un catalogue ï¿½ papier ï¿½ et un ï¿½ simulateur ï¿½ qui est en fait un tableau excel avec 2 ou 3 macros  qui gï¿½nï¿½re  une proposition chiffrï¿½e. A la suite de ï¿½a le commercial ï¿½tabli un bon de commande manuscrit sur lequel il reporte les ï¿½lï¿½ments gï¿½nï¿½rï¿½s par le ï¿½ simulateur ï¿½.
  
-Problème :
-Les commerciaux ont des moyens disparates : smartphone, tablette, pc sous tous les OS que tu peux imaginer et n’ont bien souvent même pas l’outil qui leur permettrait d’utiliser excel.
+Problï¿½me :
+Les commerciaux ont des moyens disparates : smartphone, tablette, pc sous tous les OS que tu peux imaginer et nï¿½ont bien souvent mï¿½me pas lï¿½outil qui leur permettrait dï¿½utiliser excel.
  
-Solution : (qui doit bien déjà exister quelque part puisque toutes les entreprises avec commerciaux itinérants ont la même problématique)
-Un site web , indépendant des OS, qui ne nécessite pas l’utilisation d’Excel ou d’un autre logiciel . 
+Solution : (qui doit bien dï¿½jï¿½ exister quelque part puisque toutes les entreprises avec commerciaux itinï¿½rants ont la mï¿½me problï¿½matique)
+Un site web , indï¿½pendant des OS, qui ne nï¿½cessite pas lï¿½utilisation dï¿½Excel ou dï¿½un autre logiciel . 
  
-Les commerciaux s’y connectent avec un login (leur adresse e-mail professionnelle) et leur mot de passe, recherchent dans le catalogue en ligne les produits nécessaires, génèrent une proposition chiffrée en fonction de la catégorie du client. Idéalement saisissent les infos du clients : nom, adresse, siret, tel, contact, etc .. et un fichier commande (pdf ? excel ? texte ?) est créé pour être soit stocké sur le serveur, soit envoyé par e-mail vers la secrétaire qui traite les commandes.
+Les commerciaux sï¿½y connectent avec un login (leur adresse e-mail professionnelle) et leur mot de passe, recherchent dans le catalogue en ligne les produits nï¿½cessaires, gï¿½nï¿½rent une proposition chiffrï¿½e en fonction de la catï¿½gorie du client. Idï¿½alement saisissent les infos du clients : nom, adresse, siret, tel, contact, etc .. et un fichier commande (pdf ? excel ? texte ?) est crï¿½ï¿½ pour ï¿½tre soit stockï¿½ sur le serveur, soit envoyï¿½ par e-mail vers la secrï¿½taire qui traite les commandes.
  
 
 
-Donc pour les ajouts afin que ce soit suffisamment compliqué : 
+Donc pour les ajouts afin que ce soit suffisamment compliquï¿½ : 
 - Optimisation du temps de transport si visite de plusieurs clients.
-- Machine learning pour la proposition de produit supplémentaires/complémentaires
-- Calcul de la commission en fonction de la catégorie des ventes et du vendeur ainsi que des remises faites par celui ci.
+- Machine learning pour la proposition de produit supplï¿½mentaires/complï¿½mentaires
+- Calcul de la commission en fonction de la catï¿½gorie des ventes et du vendeur ainsi que des remises faites par celui ci.
 
-Autres idées d'options :
-- Prévision de vente / des commissions  ? 
-- Analyse des ventes par rapports aux autres vendeurs et suggestion d'améliorations (pas assez de ventes dans certains domaines, pertes de commission en vendant un objet plutôt qu'un autre etc....)
+Autres idï¿½es d'options :
+- Prï¿½vision de vente / des commissions  ? 
+- Analyse des ventes par rapports aux autres vendeurs et suggestion d'amï¿½liorations (pas assez de ventes dans certains domaines, pertes de commission en vendant un objet plutï¿½t qu'un autre etc....)
 
 Cela vous convient-il ? 
 
@@ -37,4 +37,4 @@ Cordialement
 
 Robin PAUQUET & Pierre MEHU
 
-ps: le mail devait être envoyé vendredi cependant en checkant votre réponse ce matin j'ai vu qu'il était encore en brouillon 
+ps: le mail devait ï¿½tre envoyï¿½ vendredi cependant en checkant votre rï¿½ponse ce matin j'ai vu qu'il ï¿½tait encore en brouillon
