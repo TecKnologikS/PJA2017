@@ -6,6 +6,8 @@ package fr.tecknologiks.myapplication.Param;
  */
 
 public class API {
+
+// Declaration des Articles de Robin
     public static String URL = "http://commercial.tecknologiks.com/index.php";
 
     public static String LOGIN = "/login?login={login}&mdp={mdp}";
@@ -13,11 +15,19 @@ public class API {
     public static String ARTICLES = "/{id}/{token}/products?limit={limit}&start={start}";
     public static String ARTICLE = "/{id}/{token}/products/{id_product}/";
 
+// Declaration des Devis de Pierre
+	public static String URL = "http://commercial.tecknologiks.com/index.php";
+
+    public static String DEVIS = "/{id}/{token}/devis?limit={limit}&start={start}";
+    public static String DEVI = "/{id}/{token}/devis/{id_devis}/";
+	
+// Login de Robin
     public static String Login(String user, String mdp) {
         return LOGIN.replace("{user}", user)
                 .replace("{mdp}", mdp);
     }
 
+// Public static pour les articles de Robin	
     public static String Articles(String id, String token) {
         return Articles(id, token, 100, 0);
     }
@@ -34,26 +44,9 @@ public class API {
                 .replace("{token}", token)
                 .replace("{id_product}", String.valueOf(id_art));
     }
-}
-
-public class DEV {
-    public static String URL = "http://commercial.tecknologiks.com/index.php";
-
-    public static String LOGIN = "/login?login={login}&mdp={mdp}";
-
-    public static String DEVIS = "/{id}/{token}/products?limit={limit}&start={start}";
-    public static String DEVI = "/{id}/{token}/products/{id_product}/";
-
-    public static String Login(String user, String mdp) {
-        return LOGIN.replace("{user}", user)
-                .replace("{mdp}", mdp);
-    }
-
-    public static String Devis(String id, String token) {
-        return Devis(id, token, 100, 0);
-    }
-
-    public static String Devis(String id, String token, int limit, int start) {
+	
+// Public static pour les devis de Pierre	
+	    public static String Devis(String id, String token, int limit, int start) {
         return DEVIS.replace("{id}", id)
                         .replace("{token}", token)
                         .replace("{limit}", String.valueOf(limit))
@@ -63,6 +56,6 @@ public class DEV {
     public static String Devi(String id, String token, int id_dev) {
         return DEVI.replace("{id}", id)
                 .replace("{token}", token)
-                .replace("{id_product}", String.valueOf(id_dev));
+                .replace("{id_devis}", String.valueOf(id_dev));
     }
 }
