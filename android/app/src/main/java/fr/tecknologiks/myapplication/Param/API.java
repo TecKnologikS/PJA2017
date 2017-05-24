@@ -27,7 +27,7 @@ public class API {
                 .replace("{mdp}", mdp);
     }
 
-// Public static pour les articles de Robin	
+// Public static pour les articles de Robin
     public static String Articles(String id, String token) {
         return Articles(id, token, 100, 0);
     }
