@@ -16,8 +16,6 @@ public class API {
     public static String ARTICLE = "/{id}/{token}/products/{id_product}/";
 
 // Declaration des Devis de Pierre
-	public static String URL = "http://commercial.tecknologiks.com/index.php";
-
     public static String DEVIS = "/{id}/{token}/devis?limit={limit}&start={start}";
     public static String DEVI = "/{id}/{token}/devis/{id_devis}/";
 	
