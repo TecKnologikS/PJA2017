@@ -21,7 +21,7 @@ public class API {
 	
 // Login de Robin
     public static String Login(String user, String mdp) {
-        return LOGIN.replace("{user}", user)
+        return LOGIN.replace("{login}", user)
                 .replace("{mdp}", mdp);
     }
 
