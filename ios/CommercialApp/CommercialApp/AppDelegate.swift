@@ -15,6 +15,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+            if User.shared.token.isEmpty {
+                let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let vc: LoginController = storyboard.instantiateViewController(withIdentifier: "login") as! LoginController
+                //UIApplication.shared.keyWindow?.rootViewController?.present(vc, animated: true)
+                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                //show window
+                appDelegate.window?.rootViewController = vc
+            }
         // Override point for customization after application launch.
         return true
     }
@@ -40,6 +48,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
+    
+    func applicationDidFinishLaunching(_ application: UIApplication) {
+        if User.shared.token.isEmpty {
+            let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc: LoginController = storyboard.instantiateViewController(withIdentifier: "login") as! LoginController
+            self.window?.rootViewController?.present(vc, animated: true, completion: nil)
+        }
+    }
+    
 
 
 }
