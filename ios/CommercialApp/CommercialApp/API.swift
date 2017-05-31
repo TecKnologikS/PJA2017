@@ -28,34 +28,34 @@ open class API {
     }
 
 // static pour les articles
-	static func Articles(String id, String token) -> String {
-		return self.Articles(id, token, 100, 0);
+    static func Articles(id:String, token:String) -> String {
+		return self.Articles(id: id, token: token, limit: 100, start: 0);
    }
 
-	static func Articles(String id, String token, int limit, int start) -> String {
+    static func Articles(id:String, token:String, limit:Int, start:Int) -> String {
        	return self.ARTICLES.replacingOccurrences(of: "{id}", with: id)
                        .replacingOccurrences(of: "{token}", with: token)
-                       .replacingOccurrences(of: "{limit}", with: String.valueOf(limit))
-                       .replacingOccurrences(of: "{start}", with: String.valueOf(start));
+                       .replacingOccurrences(of: "{limit}", with: "\(limit)")
+                       .replacingOccurrences(of: "{start}", with: "\(start)")
    }
 
-	static func Article(String id, String token, int id_art) -> String {
+	static func Article(String id:String, String token:String, int id_art:Int) -> String {
 		return self.ARTICLE.replacingOccurrences(of: "{id}", with: id)
 			.replacingOccurrences(of: "{token}", with: token)
-			.replacingOccurrences(of: "{id_product}", with: String.valueOf(id_art));
+			.replacingOccurrences(of: "{id_product}", with: "\(id_art)")
     }
 	
 //static pour les devis
-	static func Devis(String id, String token, int limit, int start) -> String {
+	static func Devis(id:String, token:String, limit:Int, start:Int) -> String {
 		return self.DEVIS.replacingOccurrences(of: "{id}", with: id)
 			.replacingOccurrences(of: "{token}", with: token)
-			.replacingOccurrences(of: "{limit}", with: String.valueOf(limit))
-			.replacingOccurrences(of: "{start}", with: String.valueOf(start));
+			.replacingOccurrences(of: "{limit}", with: "\(limit)")
+			.replacingOccurrences(of: "{start}", with: "\(start)")
     }
 	
-	static func String Devi(String id, String token, int id_dev) -> String {
+	static func Devi(id:String, token:String, id_dev:Int) -> String {
 		return self.DEVI.replacingOccurrences(of: "{id}", with: id)
 			.replacingOccurrences(of: "{token}", with: token)
-			.replacingOccurrences(of: "{id_devis}", with: String.valueOf(id_dev));
+			.replacingOccurrences(of: "{id_devis}", with: "\(id_dev)")
     }
 }

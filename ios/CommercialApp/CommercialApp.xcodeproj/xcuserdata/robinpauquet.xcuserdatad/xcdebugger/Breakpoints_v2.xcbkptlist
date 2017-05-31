@@ -26,7 +26,7 @@
                   moduleName = "CommercialApp"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/robinpauquet/Desktop/PROJET_TKS/ProjetAnnuel/PJA2017/ios/CommercialApp/CommercialApp/LoginController.swift"
-                  timestampString = "517849659.869826"
+                  timestampString = "517849709.294721"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "33"
@@ -41,7 +41,7 @@
                   moduleName = "CommercialApp"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/robinpauquet/Desktop/PROJET_TKS/ProjetAnnuel/PJA2017/ios/CommercialApp/CommercialApp/LoginController.swift"
-                  timestampString = "517849659.877998"
+                  timestampString = "517849709.297926"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "34"
@@ -63,8 +63,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "15"
             endingLineNumber = "15"
-            landmarkName = "Login(user:mdp:)"
-            landmarkType = "7">
+            landmarkName = "API"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

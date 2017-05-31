@@ -21,6 +21,9 @@
 		B5D4C3921EDD7DF5005535D4 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D4C3911EDD7DF5005535D4 /* API.swift */; };
 		B5D4C3941EDD7ECC005535D4 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D4C3931EDD7ECC005535D4 /* LoginController.swift */; };
 		B5D4C3971EDD9CEF005535D4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D4C3961EDD9CEF005535D4 /* User.swift */; };
+		B5D4C3991EDECF04005535D4 /* CellArticles.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D4C3981EDECF04005535D4 /* CellArticles.swift */; };
+		B5D4C39B1EDECF6F005535D4 /* ArticlesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D4C39A1EDECF6F005535D4 /* ArticlesController.swift */; };
+		B5D4C39E1EDED35B005535D4 /* ArticleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D4C39D1EDED35B005535D4 /* ArticleBuilder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +43,9 @@
 		B5D4C3911EDD7DF5005535D4 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		B5D4C3931EDD7ECC005535D4 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		B5D4C3961EDD9CEF005535D4 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		B5D4C3981EDECF04005535D4 /* CellArticles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellArticles.swift; sourceTree = "<group>"; };
+		B5D4C39A1EDECF6F005535D4 /* ArticlesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticlesController.swift; sourceTree = "<group>"; };
+		B5D4C39D1EDED35B005535D4 /* ArticleBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleBuilder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +78,7 @@
 		B5D32C3D1EC1D2AA00BA4F71 /* CommercialApp */ = {
 			isa = PBXGroup;
 			children = (
+				B5D4C39C1EDED337005535D4 /* Function */,
 				B5D4C3951EDD9C11005535D4 /* Static */,
 				B5D4C3901EDD7DE6005535D4 /* Param */,
 				B5D32C571EC1F67C00BA4F71 /* Class */,
@@ -85,6 +92,7 @@
 				B5D32C491EC1D2AA00BA4F71 /* LaunchScreen.storyboard */,
 				B5D32C4C1EC1D2AA00BA4F71 /* Info.plist */,
 				B5D32C521EC1D6E200BA4F71 /* DevisController.swift */,
+				B5D4C39A1EDECF6F005535D4 /* ArticlesController.swift */,
 			);
 			path = CommercialApp;
 			sourceTree = "<group>";
@@ -93,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				B5D32C541EC1D7D800BA4F71 /* CellDevis.swift */,
+				B5D4C3981EDECF04005535D4 /* CellArticles.swift */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -121,6 +130,14 @@
 				B5D4C3961EDD9CEF005535D4 /* User.swift */,
 			);
 			name = Static;
+			sourceTree = "<group>";
+		};
+		B5D4C39C1EDED337005535D4 /* Function */ = {
+			isa = PBXGroup;
+			children = (
+				B5D4C39D1EDED35B005535D4 /* ArticleBuilder.swift */,
+			);
+			name = Function;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -196,6 +213,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5D4C3991EDECF04005535D4 /* CellArticles.swift in Sources */,
 				B5D32C551EC1D7D800BA4F71 /* CellDevis.swift in Sources */,
 				B5D32C431EC1D2AA00BA4F71 /* SecondViewController.swift in Sources */,
 				B5D32C3F1EC1D2AA00BA4F71 /* AppDelegate.swift in Sources */,
@@ -204,8 +222,10 @@
 				B5D32C531EC1D6E200BA4F71 /* DevisController.swift in Sources */,
 				B5D32C591EC1F69700BA4F71 /* Devis.swift in Sources */,
 				B5D4C3921EDD7DF5005535D4 /* API.swift in Sources */,
+				B5D4C39B1EDECF6F005535D4 /* ArticlesController.swift in Sources */,
 				B5D32C5B1EC1F6A600BA4F71 /* Panier.swift in Sources */,
 				B5D4C3941EDD7ECC005535D4 /* LoginController.swift in Sources */,
+				B5D4C39E1EDED35B005535D4 /* ArticleBuilder.swift in Sources */,
 				B5D4C3971EDD9CEF005535D4 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
