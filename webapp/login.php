@@ -1,5 +1,12 @@
 <?php
 include("part/language.php");
+include("const/param.php");
+
+
+if (isset($_POST["id"]) && isset($_POST["password"])) {
+	header('Location: index.php');   
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -16,7 +23,7 @@ include("part/language.php");
 						<h2 class="panel-title"><?php echo NOM ?></h2>
 					</div>
 					<div align="center" class="panel-body">
-						<img src="img/logo.png" WIDTH=170 HEIGHT=104 ><br><br>
+						<img src="https://robin.pauquet.net/logo_tks_light.png" WIDTH=170 HEIGHT=170 ><br><br>
 						<?php
 						if(isset($_SESSION['Error'])){
 							echo '<div class="alert-danger"><strong>Erreur : </strong>'.$_SESSION['Error'].'</div>';
