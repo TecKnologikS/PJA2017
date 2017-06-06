@@ -6,6 +6,10 @@ var calcDataTableHeight = function() {
 var setTable = function() {
 	var table = $('#quezac').DataTable( {
 	paging: true,
+  searching: false,
+  lengthChange: false,
+  pageLength: 50,
+  processing: true,
 	scrollCollapse: true,
 	deferRender:    true,
 	scrollY:        calcDataTableHeight(),

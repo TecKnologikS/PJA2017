@@ -23,6 +23,6 @@
 <link rel="stylesheet" type="text/css" href="part/style.css">
 
 <script type="text/javascript" src="part/gestionTouche.js"></script>
-<script type="text/javascript" src="part/gestionModals.js"></script>
+<!-- <script type="text/javascript" src="part/gestionModals.js"></script>-->
 
 <script type="text/javascript" src="part/gestionTable_fr.js"></script>
