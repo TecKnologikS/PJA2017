@@ -1,0 +1,192 @@
+.loader {
+	border: 16px solid #f3f3f3; /* Light grey */
+	border-top: 16px solid #3498db; /* Blue */
+	border-bottom: 16px solid #3498db; /* Blue */
+	border-radius: 50%;
+	width: 120px;
+	height: 120px;
+	animation: spin 2s linear infinite;
+}
+
+#quezac {
+	font-family: "Courier New";
+	white-space:nowrap;
+}
+
+@keyframes spin {
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+}
+.overscreen{
+	z-index:2000;
+	position: fixed;
+	display:block;
+	top: 0;
+	left:0;
+	height:100%;
+	width:100%;
+	background:white;
+}
+
+.popup {
+	color:black;
+	font-weight:bold;
+	position:absolute;
+	margin-left:auto;
+	margin-right:auto;
+	top:45%;
+	left:45%;
+}
+
+.container-fluid {
+	padding-right: 0px;
+	padding-left: 0px;
+}
+
+.table-responsive {
+	width: 100%;
+	margin-bottom: 15px;
+	overflow-x: auto;
+	overflow-y: hidden;
+	-webkit-overflow-scrolling: touch;
+	-ms-overflow-style: -ms-autohiding-scrollbar;
+	border: 1px solid #DDD;
+}
+
+body{
+	background-color: #f2f2f2;
+}
+.vertical-offset-100{
+	padding-top:100px;
+}
+
+input[type=checkbox] {			display:none;		}		 		input[type=checkbox] + label		{			height: 75px;			width: 75px;			padding: 0 0 0 0px;		}
+input[type=checkbox]:checked + label		{			height: 75px;			width: 75px;			padding: 0 0 0 0px;		}
+.lta > input[type=checkbox] + label 		{			background: url("../img/avion_disable.png") no-repeat;			background-size: 100%;		}
+.lta > input[type=checkbox]:checked + label 		{			background: url("../img/1.png") no-repeat;			background-size: 100%;		}
+.boat > input[type=checkbox] + label 		{			background: url("../img/boat_disable.png") no-repeat;			background-size: 100%;		}
+.boat > input[type=checkbox]:checked + label 		{			background: url("../img/boat_enable.png") no-repeat;			background-size: 100%;		}
+.camion > input[type=checkbox] + label 		{			background: url("../img/camion_disable.png") no-repeat;			background-size: 100%;		}
+.camion > input[type=checkbox]:checked + label 		{			background: url("../img/camion_enable.png") no-repeat;			background-size: 100%;		}
+.export > input[type=checkbox] + label 		{			background: url("../img/export_disable.png") no-repeat;			background-size: 100%;		}
+.export > input[type=checkbox]:checked + label 		{			background: url("../img/export_enable.png") no-repeat;			background-size: 100%;		}
+.import > input[type=checkbox] + label 		{			background: url("../img/import_disable.png") no-repeat;			background-size: 100%;		}
+.import > input[type=checkbox]:checked + label 		{			background: url("../img/import_enable.png") no-repeat;			background-size: 100%;		}
+.douane > input[type=checkbox] + label 		{			background: url("../img/douane_disable.png") no-repeat;			background-size: 100%;		}
+.douane > input[type=checkbox]:checked + label 		{			background: url("../img/douane_enable.png") no-repeat;			background-size: 100%;		}
+.train > input[type=checkbox] + label 		{			background: url("../img/train_disable.png") no-repeat;			background-size: 100%;		}
+.train > input[type=checkbox]:checked + label 		{			background: url("../img/train_enable.png") no-repeat;			background-size: 100%;		}
+
+input[type="radio"] {			display:none;		}		 		input[type=radio] + label		{			height: 75px;			width: 75px;			padding: 0 0 0 0px;		}		input[type="radio"]:checked + label		{			height: 75px;			width: 75px;			padding: 0 0 0 0px;		}
+.lta > input[type="radio"] + label 		{			background: url("../img/avion_disable.png") no-repeat;			background-size: 100%;		}
+.lta > input[type="radio"]:checked + label 		{			background: url("../img/1.png") no-repeat;			background-size: 100%;		}
+.boat > input[type="radio"] + label 		{			background: url("../img/boat_disable.png") no-repeat;			background-size: 100%;		}
+.boat > input[type="radio"]:checked + label 		{			background: url("../img/boat_enable.png") no-repeat;			background-size: 100%;		}
+.camion > input[type="radio"] + label 		{			background: url("../img/camion_disable.png") no-repeat;			background-size: 100%;		}
+.camion > input[type="radio"]:checked + label 		{			background: url("../img/camion_enable.png") no-repeat;			background-size: 100%;		}
+.import > input[type="radio"] + label 		{			background: url("../img/import_disable.png") no-repeat;			background-size: 100%;		}
+.import > input[type="radio"]:checked + label 		{			background: url("../img/import_enable.png") no-repeat;			background-size: 100%;		}
+.export > input[type="radio"] + label 		{			background: url("../img/export_disable.png") no-repeat;			background-size: 100%;		}
+.export > input[type="radio"]:checked + label 		{			background: url("../img/export_enable.png") no-repeat;			background-size: 100%;		}
+
+
+
+@import('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.0/css/bootstrap.min.css') .funkyradio div {
+    clear: both;
+    /*margin: 0 50px;*/
+    overflow: hidden;
+}
+.funkyradio input[type=radio] + label {
+	width: 150px;
+	height: 40px;
+}
+.funkyradio label {
+    /*min-width: 400px;*/
+    width: 100%;
+    border-radius: 3px;
+    border: 1px solid #D1D3D4;
+    font-weight: normal;
+}
+.funkyradio input[type="radio"]:empty, .funkyradio input[type="checkbox"]:empty {
+    display: none;
+}
+.funkyradio input[type="radio"]:empty ~ label, .funkyradio input[type="checkbox"]:empty ~ label {
+    position: relative;
+    line-height: 2.5em;
+    text-indent: 3.25em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.funkyradio input[type="radio"]:empty ~ label:before, .funkyradio input[type="checkbox"]:empty ~ label:before {
+    position: absolute;
+    display: block;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    content:'';
+    width: 2.5em;
+    background: #D1D3D4;
+    border-radius: 3px 0 0 3px;
+}
+.funkyradio input[type="radio"]:hover:not(:checked) ~ label:before, .funkyradio input[type="checkbox"]:hover:not(:checked) ~ label:before {
+    content:'\2714';
+    text-indent: .9em;
+    color: #C2C2C2;
+}
+.funkyradio input[type="radio"]:hover:not(:checked) ~ label, .funkyradio input[type="checkbox"]:hover:not(:checked) ~ label {
+    color: #888;
+}
+.funkyradio input[type="radio"]:checked ~ label:before, .funkyradio input[type="checkbox"]:checked ~ label:before {
+    content:'\2714';
+    text-indent: .9em;
+    color: #333;
+    background-color: #ccc;
+}
+.funkyradio input[type="radio"]:checked ~ label, .funkyradio input[type="checkbox"]:checked ~ label {
+    color: #777;
+}
+.funkyradio input[type="radio"]:focus ~ label:before, .funkyradio input[type="checkbox"]:focus ~ label:before {
+    box-shadow: 0 0 0 3px #999;
+}
+
+
+
+
+
+.funkyradio-primary input[type="radio"]:checked ~ label:before, .funkyradio-primary input[type="checkbox"]:checked ~ label:before {
+    color: #fff;
+    background-color: #337ab7;
+}
+.funkyradio-warning input[type="radio"]:checked ~ label:before, .funkyradio-warning input[type="checkbox"]:checked ~ label:before {
+    color: #fff;
+    background-color: #f0ad4e;
+}
+
+.easter {
+	position: absolute;
+	left: 0;
+	top: 0;
+	margin: 10vh 10vw 10vh 10vw;
+	height: 80vh;
+	width: 80vw;
+	background-color: white;
+	border-color: #E0E0E0;
+	border-style: solid;
+	border-width: 10px;
+	border-radius:5vh;
+	padding: 20px;
+}
+
+.easter_inv {
+	visibility: collapse;
+}
+
+.easter #close {
+	position: absolute;
+	right: 5vh;
+}
