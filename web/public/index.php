@@ -5,7 +5,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 require '../vendor/autoload.php';
 
 function isTimeStampsOk($id, $timestamps) {
-	$mysqli = new mysqli("127.0.0.1", "root", "", "commercial");
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
 	if ($mysqli->connect_errno) {
 		echo "Echec lors de la connexion à MySQL : (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 	}
@@ -18,7 +18,7 @@ function isTimeStampsOk($id, $timestamps) {
 }
 
 function isCorrectIdentification($id, $token) {
-	$mysqli = new mysqli("127.0.0.1", "root", "", "commercial");
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
 	if ($mysqli->connect_errno) {
 		echo "Echec lors de la connexion à MySQL : (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 	}
@@ -40,7 +40,7 @@ function article($id, $number) {
 		$args .= " LIMIT ".$number." ";
 	}
 	
-	$mysqli = new mysqli("127.0.0.1", "root", "", "commercial");
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
 	if ($mysqli->connect_errno) {
 		echo "Echec lors de la connexion à MySQL : (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 	}
@@ -109,7 +109,23 @@ $app->get('/{id}/{token}/products/{id_p}/', function (Request $request, Response
 	$response = $response->withJson($data, 302);
     return $response;
 });
-
+$app->post('/{id}/{token}/bag/add/', function ($request, $response, $args) {
+	$id = $args['id'];
+	$token = $args['token'];
+	$parsedBody = $request->getParsedBody();
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
+	$retour = array('item' => $parsedBody["id"],'count' => 0);
+	
+	//TODO: add item to panier 
+	$mysqli->query("INSERT INTO panier_article (ID_User,ID_Article,Qte) VALUES (".$id.", ".$parsedBody["id"].", 1) ON DUPLICATE KEY UPDATE Qte=Qte+1;");
+	$res = $mysqli->query("SELECT COUNT(*) as nb FROM panier_article WHERE ID_User=".$mysqli->real_escape_string($id)." ");
+	if ($row = $res->fetch_assoc()){
+		$retour = array('item' => $parsedBody["id"],'count' => $row['nb']);
+	}
+	$response = $response->withHeader('Content-type', 'text');
+	$response = $response->withJson($retour, 302);
+    return $response;
+});
 $app->get('/login', function (Request $request, Response $response) {
 	$data = array();
 	//$name = $request->getAttribute('name');
@@ -117,14 +133,14 @@ $app->get('/login', function (Request $request, Response $response) {
 	$mdp = $request->getQueryParams()["mdp"];
 	//echo  $request->getUri();
 
-	$mysqli = new mysqli("127.0.0.1", "root", "", "commercial");
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
 	$res = $mysqli->query("SELECT * FROM user WHERE Login='".$mysqli->real_escape_string($nom)."' AND  Password='".$mysqli->real_escape_string($mdp)."'");
 	$check_user = mysqli_num_rows($res);
 	if($check_user>0){
 		//$res->data_seek(0);
 		if ($row = $res->fetch_assoc()){
 			$token = bin2hex(random_bytes(25));
-			$data = array('ID' => $row['ID'],'login' => $row['Login'], 'mdp' => $row['Password'], 'token' => $token);
+			$data = array('ID' => $row['ID'],'login' => $row['Login'], 'mdp' => 'ESPECE DE CURIEUX ! :p', 'token' => $token);
 			$mysqli->query("UPDATE user SET Token='".$token."' WHERE ID=".$row['ID']." ");
 		}
 	}
