@@ -11,12 +11,21 @@ include('const/param.php');
 <head>
 	<?php include('part/header.php'); ?>
 	<script>
-	function addToBasket(p1) {
-		//TODO: call api / receive nb articles into basket / change basket number
+	function removeToBasket(p1) {
 		$.ajax({
-		    url: 'callapi.php?function=addToBasket&id={id_product}'.replace("{id_product}", p1),
+		    url: 'callapi.php?function=removeToBasket&id={id_product}'.replace("{id_product}", p1),
 		    dataType: "json",
 		    complete: function (response) {
+            header('Location: bag.php');
+		    }
+		});
+	}
+  function updateToBasket(p1, qte) {
+		$.ajax({
+		    url: 'callapi.php?function=updateToBasket&id={id_product}&qte={qte}'.replace("{id_product}", p1).replace("{qte}", qte),
+		    dataType: "json",
+		    complete: function (response) {
+          //TODO: update PRIX + PRIX TOTAL + PANIER SIZE
 		        var obj = JSON.parse(response.responseText);
 						document.getElementById("item_count_bag").innerText =  obj.count;
 		    }
@@ -31,21 +40,20 @@ include('const/param.php');
 		<table id="quezac" class="display responsive nowrap" width="100%">
 			<thead>
 						<tr>
-							<th>Image</th>
+							<th></th>
 							<th>Nom</th>
 							<th>Quantité</th>
 							<th>Prix de base</th>
 							<th>Prix final</th>
 							<th>Réduction</th>
-							<th>Action</th>
 						</tr>
 					</thead>
 					<tbody>
 						<?php
 
-						$service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/products";
-						$toshow = "<tr><td>{img}</td><td><a href='page.html?product={id_product}'>{name}</a></td><td>{descr}</td><td>{commande}</td><td>{prix}</td><td>{btn}</td></tr>";
-						$btn = '<input id="addIt" type="button" value="addIt" onclick="addToBasket({id_product});" />';
+						$service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/bag";
+						$toshow = "<tr><td>{img}</td><td><a href='page.html?product={id_product}'>{name}</a></td><td>{qte}</td><td>{prix_base}</td><td>{prix_final}</td><td>{reduction}</td></tr>";
+						$btn = '<input id="addIt" type="button" value="remove" onclick="removeToBasket({id_product});" />';
 						$articles = json_decode(file_get_contents(
 									str_replace(
 										array("{id}", 					"{token}"),
@@ -53,8 +61,9 @@ include('const/param.php');
 										$service_url)), true);
 						if (count($articles) > 0) {
 							for($i = 0; $i < count($articles); $i++) {
+              //TODO: ca ....
 								echo str_replace(
-									array("{id_product}",								"{name}", 					"{descr}", 										"{prix}" , 							"{btn}"),
+									array("{id_product}",								"{name}", 					"{qte}", 										"{prix_base}" , 							"{prix_final}", 							"{reduction}"),
 									array($articles[$i]["id"], $articles[$i]["name"], $articles[$i]["smallDesc"], $articles[$i]["prix"], str_replace("{id_product}", $articles[$i]["id"], $btn)),
 									$toshow);
 							}

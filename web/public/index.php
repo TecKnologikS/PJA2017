@@ -4,6 +4,13 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 require '../vendor/autoload.php';
 
+
+function CalculateBag($article, $promo) {
+	
+	
+	return array("articles" => $data, "promo" => $data2);
+}
+
 function isTimeStampsOk($id, $timestamps) {
 	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
 	if ($mysqli->connect_errno) {
@@ -29,6 +36,7 @@ function isCorrectIdentification($id, $token) {
 	}
 	return false;
 }
+
 
 function article($id, $number) {
 	$args = "";
@@ -77,6 +85,7 @@ $configuration = [
 $c = new \Slim\Container($configuration);
 $app = new \Slim\App($c);
 
+
 //$app = new \Slim\App;
 $app->get('/{id}/{token}/products', function (Request $request, Response $response) {
     $id = $request->getAttribute('id');
@@ -96,6 +105,51 @@ $app->get('/{id}/{token}/products', function (Request $request, Response $respon
     return $response;
 });
 
+
+$app->get('/{id}/{token}/bag/', function (Request $request, Response $response) {
+	$id = $request->getAttribute('id');
+	$token =  $request->getAttribute('token');
+	
+	$timestamps =  time();
+	$data = array();
+	$data2 = array();
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
+	$mysqli->set_charset("utf8");
+	if ($mysqli->connect_errno) {
+		echo "Echec lors de la connexion à MySQL : (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
+	}
+	
+	// SELECT ARTICLE
+	$res = $mysqli->query("SELECT * FROM article a INNER JOIN panier_article pa ON pa.ID_Article = a.ID WHERE pa.ID_User = ".$mysqli->real_escape_string($id)." ");
+
+	while(($row =  mysqli_fetch_assoc($res))) {
+		$data[] = $row;
+	}
+	
+	// SELECT PROMO
+	$res = $mysqli->query("SELECT * FROM promocode a INNER JOIN panier_promo pp ON pp.ID_Promo = a.ID WHERE pp.ID_User = ".$mysqli->real_escape_string($id)." ");
+	while(($row =  mysqli_fetch_assoc($res))) {
+		$data2[] = $row;
+	}
+	
+	$retour = CalculateBag($data, $data2);
+	
+	$response = $response->withHeader('Content-type', 'application/json');
+	$response = $response->withJson($retour, 302);
+    return $response;
+});
+$app->get('/{id}/{token}/count_bag/', function ($request, $response, $args) {
+	$id = $args['id'];
+	$token = $args['token'];
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
+	$res = $mysqli->query("SELECT COUNT(*) as nb FROM panier_article WHERE ID_User=".$mysqli->real_escape_string($id)." ");
+	if ($row = $res->fetch_assoc()){
+		$retour = array('count' => $row['nb']);
+	}
+	$response = $response->withHeader('Content-type', 'text');
+	$response = $response->withJson($retour, 302);
+    return $response;
+});
 $app->get('/{id}/{token}/products/{id_p}/', function (Request $request, Response $response) {
     $id = $request->getAttribute('id');
     $id_p = $request->getAttribute('id_p');
@@ -113,15 +167,41 @@ $app->post('/{id}/{token}/bag/add/', function ($request, $response, $args) {
 	$id = $args['id'];
 	$token = $args['token'];
 	$parsedBody = $request->getParsedBody();
+	
 	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
 	$retour = array('item' => $parsedBody["id"],'count' => 0);
 	
-	//TODO: add item to panier 
 	$mysqli->query("INSERT INTO panier_article (ID_User,ID_Article,Qte) VALUES (".$id.", ".$parsedBody["id"].", 1) ON DUPLICATE KEY UPDATE Qte=Qte+1;");
 	$res = $mysqli->query("SELECT COUNT(*) as nb FROM panier_article WHERE ID_User=".$mysqli->real_escape_string($id)." ");
 	if ($row = $res->fetch_assoc()){
 		$retour = array('item' => $parsedBody["id"],'count' => $row['nb']);
 	}
+	$response = $response->withHeader('Content-type', 'text');
+	$response = $response->withJson($retour, 302);
+    return $response;
+});
+$app->post('/{id}/{token}/bag/remove/', function ($request, $response, $args) {
+	$id = $args['id'];
+	$token = $args['token'];
+	$parsedBody = $request->getParsedBody();
+	
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
+	$retour = array('item' => $parsedBody["id"],'count' => 0);
+	
+	$mysqli->query("DELETE FROM panier_article WHERE ID_User= ".$id." AND ID_Article = ".$parsedBody["id"]." ");
+	$response = $response->withHeader('Content-type', 'text');
+	$response = $response->withJson($retour, 302);
+    return $response;
+});
+$app->post('/{id}/{token}/bag/update/', function ($request, $response, $args) {
+	$id = $args['id'];
+	$token = $args['token'];
+	$parsedBody = $request->getParsedBody();
+	
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
+	$retour = array('item' => $parsedBody["id"],'count' => 0);
+	
+	$mysqli->query("UPDATE FROM panier_article SET Qte = ".$parsedBody["qte"]." WHERE ID_User= ".$id." AND ID_Article = ".$parsedBody["id"]." ");
 	$response = $response->withHeader('Content-type', 'text');
 	$response = $response->withJson($retour, 302);
     return $response;
