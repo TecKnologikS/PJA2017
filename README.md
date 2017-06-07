@@ -37,4 +37,8 @@ Cordialement
 
 Robin PAUQUET & Pierre MEHU
 
-ps: le mail devait être envoyé vendredi cependant en checkant votre réponse ce matin j'ai vu qu'il était encore en brouillon 
+##Avancement
+35% du projet 
+La partie web est la plus avancée, elle évolue avec l'API. Quand elle sera terminée, l'api le sera aussi. 
+Et ensuite les parties iOs et Android pourront être terminées.
+Actuellement les vues & la connexion sont finalisée sur les plateformes mobiles
