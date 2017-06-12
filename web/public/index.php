@@ -6,10 +6,10 @@ require '../vendor/autoload.php';
 
 
 function CalculateBag($article, $promo) {
-	$prix_total = 0; $reduction_total = 0;
+	$prix_final = 0; $prix_total = 0; $reduction_total = 0;
 	
 	for($i = 0; $i < count($article); $i++) {
-		$prix_total = $article[$i]["prix"];
+		$prix_total += $article[$i]["prix"];
 		$article[$i]["prix_final"] = $article[$i]["prix"];
 		$article[$i]["reduction"] = 0;
 	}
@@ -18,12 +18,12 @@ function CalculateBag($article, $promo) {
 		switch($promo[$i]["Type"]) {
 			case "1":
 			if ($prix_total >= $promo[$i]["Minimum"]) {
-				$prix_total = 0; $reduction_total = 0;
+				$prix_final = 0; $reduction_total = 0;
 				for($j = 0; $j < count($article); $j++) {
 					$reduction = (($article[$j]["prix"]*$promo[$i]["Reduction"]) / 100);
 		            $article[$j]["prix_final"] = $article[$j]["prix"] - $reduction;
 		            $article[$j]["reduction"] = $reduction;
-					$prix_total += $article[$j]["prix_final"];
+					$prix_final += $article[$j]["prix_final"];
 					$reduction_total += $reduction;
 	            }
 			}
@@ -33,7 +33,7 @@ function CalculateBag($article, $promo) {
 		}
 	}
 	
-	return array("articles" => $article, "promo" => $promo, "prix_total" => $prix_total, "reduction_total" => $reduction_total);
+	return array("articles" => $article, "promo" => $promo, "prix_total" => $prix_total, "prix_final" => $prix_final, "reduction_total" => $reduction_total);
 }
 
 function isTimeStampsOk($id, $timestamps) {

@@ -28,6 +28,10 @@ require("part/basicFunctionLoad.php");
 		}
 	}
 
+	function isGoodPromo(elem) {
+		//TODO: verifier et si oui ajouter
+	}
+
 	</script>
 </head>
 <body onload="getBasketAndDevis();">
@@ -72,7 +76,24 @@ require("part/basicFunctionLoad.php");
 
 					</tbody>
 		</table>
+		<table class="addition">
+			<tbody>
 
+				<?php
+				$promo = $bag["promo"];
+					if (count($promo) > 0) {
+							echo '<tr> <td colspan="2" style="text-align:center;">Code Promo</td></tr>';
+							for($i = 0; $i < count($promo); $i++) {
+								echo '<tr> <td>'.$promo[$i]["Code"].'</td><td>'.$promo[$i]["Nom"].'</td> </tr>';
+							}
+					}
+				?>
+				<tr> <td colspan="2" style="text-align:center;">Addition</td></tr>
+				<tr> <td class>Prix total</td><td><?php echo  $bag["prix_total"]; ?> €</td> </tr>
+				<tr> <td>Reduction</td><td><?php echo  "(".(($bag['reduction_total']/$bag['prix_total'])*100)." %) ".$bag["reduction_total"]; ?> €</td> </tr>
+				<tr> <td>Prix final</td><td><?php echo  $bag["prix_final"]; ?> €</td> </tr>
+			</tbody>
+		</table>
 	</div>
 </body>
 </html>
