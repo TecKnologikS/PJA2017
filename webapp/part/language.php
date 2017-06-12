@@ -9,6 +9,7 @@
    define("S_LOGOUT", 				"Déconnexion");
    define("S_FILTRES", 				"Filtres");
    define("S_PANIER", 				"Panier");
+   define("S_DEVIS", 				"Devis");
    define("S_FILTRES_TITLE", 		"Track'n Trace - Filtres");
    define("S_NOTHING_TO_SHOW", 		"Aucune donnée à afficher");
    define("S_NOTHING_SUPP", 		"Il n'y a aucune informations supplémentaires disponibles");

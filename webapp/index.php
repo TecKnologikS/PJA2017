@@ -1,16 +1,12 @@
 ﻿<?php
-session_start();
-if (!isset($_SESSION["id"])) {
-	header('Location: login.php');
-}
-include('part/language.php');
-include('const/param.php');
+require_once("part/basicFunctionLoad.php");
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 	<?php include('part/header.php'); ?>
 	<script>
+
 	function addToBasket(p1) {
 		//TODO: call api / receive nb articles into basket / change basket number
 		$.ajax({
@@ -25,7 +21,7 @@ include('const/param.php');
 
 	</script>
 </head>
-<body>
+<body onload="getBasketAndDevis();">
 	<?php include("part/navdatas.php"); ?>
 	<div class="container-fluid" style="margin-top: 50px;">
 		<table id="quezac" class="display responsive nowrap" width="100%">

@@ -6,9 +6,34 @@ require '../vendor/autoload.php';
 
 
 function CalculateBag($article, $promo) {
+	$prix_total = 0; $reduction_total = 0;
 	
+	for($i = 0; $i < count($article); $i++) {
+		$prix_total = $article[$i]["prix"];
+		$article[$i]["prix_final"] = $article[$i]["prix"];
+		$article[$i]["reduction"] = 0;
+	}
 	
-	return array("articles" => $data, "promo" => $data2);
+	for($i = 0; $i < count($promo); $i++) {
+		switch($promo[$i]["Type"]) {
+			case "1":
+			if ($prix_total >= $promo[$i]["Minimum"]) {
+				$prix_total = 0; $reduction_total = 0;
+				for($j = 0; $j < count($article); $j++) {
+					$reduction = (($article[$j]["prix"]*$promo[$i]["Reduction"]) / 100);
+		            $article[$j]["prix_final"] = $article[$j]["prix"] - $reduction;
+		            $article[$j]["reduction"] = $reduction;
+					$prix_total += $article[$j]["prix_final"];
+					$reduction_total += $reduction;
+	            }
+			}
+			break;
+			default:
+			break;
+		}
+	}
+	
+	return array("articles" => $article, "promo" => $promo, "prix_total" => $prix_total, "reduction_total" => $reduction_total);
 }
 
 function isTimeStampsOk($id, $timestamps) {
@@ -150,6 +175,27 @@ $app->get('/{id}/{token}/count_bag/', function ($request, $response, $args) {
 	$response = $response->withJson($retour, 302);
     return $response;
 });
+$app->get('/{id}/{token}/count_bag_and_devis/', function ($request, $response, $args) {
+	$id = $args['id'];
+	$token = $args['token'];
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
+	$nb_bag = "0"; $nb_devis = "0";
+	
+	$res = $mysqli->query("SELECT COUNT(*) as nb FROM panier_article WHERE ID_User=".$mysqli->real_escape_string($id)." ");
+	if ($row = $res->fetch_assoc()){
+		$nb_bag = $row['nb'];
+	}
+	//TODO: a activer
+	/*
+	$res = $mysqli->query("SELECT COUNT(*) as nb FROM devis_article WHERE ID_User=".$mysqli->real_escape_string($id)." ");
+	if ($row = $res->fetch_assoc()){
+		$nb_devis = $row['nb'];
+	}*/
+	$retour = array('count_bag' => $nb_bag, 'count_devis' => $nb_devis);
+	$response = $response->withHeader('Content-type', 'text');
+	$response = $response->withJson($retour, 302);
+    return $response;
+});
 $app->get('/{id}/{token}/products/{id_p}/', function (Request $request, Response $response) {
     $id = $request->getAttribute('id');
     $id_p = $request->getAttribute('id_p');
@@ -201,7 +247,8 @@ $app->post('/{id}/{token}/bag/update/', function ($request, $response, $args) {
 	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
 	$retour = array('item' => $parsedBody["id"],'count' => 0);
 	
-	$mysqli->query("UPDATE FROM panier_article SET Qte = ".$parsedBody["qte"]." WHERE ID_User= ".$id." AND ID_Article = ".$parsedBody["id"]." ");
+	$mysqli->query("UPDATE panier_article SET Qte = ".$parsedBody["qte"]." WHERE ID_User= ".$id." AND ID_Article = ".$parsedBody["id"]." ");
+	$retour = array('item' => $parsedBody["id"],'count' => 0, 'sql'=>"UPDATE FROM panier_article SET Qte = ".$parsedBody["qte"]." WHERE ID_User= ".$id." AND ID_Article = ".$parsedBody["id"]." ");
 	$response = $response->withHeader('Content-type', 'text');
 	$response = $response->withJson($retour, 302);
     return $response;

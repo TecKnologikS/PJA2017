@@ -26,3 +26,4 @@
 <!-- <script type="text/javascript" src="part/gestionModals.js"></script>-->
 
 <script type="text/javascript" src="part/gestionTable_fr.js"></script>
+<script type="text/javascript" src="part/updateHeader.js"></script>
