@@ -209,6 +209,27 @@ $app->get('/{id}/{token}/products/{id_p}/', function (Request $request, Response
 	$response = $response->withJson($data, 302);
     return $response;
 });
+$app->post('/{id}/{token}/promo/add/', function ($request, $response, $args) {
+	$id = $args['id'];
+	$token = $args['token'];
+	$parsedBody = $request->getParsedBody();
+	
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
+	$retour = array('item' => $parsedBody["code"],'insert' => false);
+	$res = $mysqli->query("SELECT * FROM `promocode` WHERE code='".$mysqli->real_escape_string($parsedBody["code"])." ' AND Validity > CURRENT_TIMESTAMP");
+	$id_promo = 0;
+	if ($row = $res->fetch_assoc()){
+		$retour = array('item' => $parsedBody["code"],'insert' => true);
+		$id_promo = $row['ID'];
+	}
+	if ($id_promo > 0) {
+		$mysqli->query("INSERT INTO panier_promo (ID_User,ID_Promo) VALUES (".$id.", ".$id_promo.") ON DUPLICATE KEY UPDATE ID_Promo=ID_Promo;");
+	}
+	
+	$response = $response->withHeader('Content-type', 'text');
+	$response = $response->withJson($retour, 302);
+    return $response;
+});
 $app->post('/{id}/{token}/bag/add/', function ($request, $response, $args) {
 	$id = $args['id'];
 	$token = $args['token'];

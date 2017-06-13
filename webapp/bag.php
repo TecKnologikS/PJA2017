@@ -1,5 +1,40 @@
 <?php
 require("part/basicFunctionLoad.php");
+
+function isGoodPromo($code) {
+	$postdata = http_build_query(
+			array(
+					'code' => $code
+			)
+	);
+
+	$opts = array('http' =>
+			array(
+					'method'  => 'POST',
+					'header'  => 'Content-type: application/x-www-form-urlencoded',
+					'content' => $postdata
+			)
+	);
+
+	$context  = stream_context_create($opts);
+	$service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/promo/add/";
+	$result = json_decode(file_get_contents(str_replace(
+			array("{id}", 					"{token}"),
+			array($_SESSION["id"], $_SESSION["token"]),
+			$service_url),
+		false,
+		$context), true);
+	if ($result["insert"] == "OK") {
+		return true;
+	}
+	return false;
+}
+
+if (isset($_POST["codepromo"])) {
+	if (!isGoodPromo($_POST["codepromo"])) {
+		$error_promo = $_POST["codepromo"]." est non valide";
+	}
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -28,9 +63,7 @@ require("part/basicFunctionLoad.php");
 		}
 	}
 
-	function isGoodPromo(elem) {
-		//TODO: verifier et si oui ajouter
-	}
+
 
 	</script>
 </head>
@@ -76,7 +109,18 @@ require("part/basicFunctionLoad.php");
 
 					</tbody>
 		</table>
-		<table class="addition">
+		<br />
+		<form action="/bag.php" method="post" style="margin-left: 20px;">
+			<table class="addition" style="margin-left: 20px; float: left;">
+				<tbody>
+					<tr><td colspan="2"><h4>Ajouter un code promotionnel</h4></td></tr>
+					<tr><td>Code :</td><td><input type="text" name="codepromo" /></td></tr>
+					<tr><td colspan="2"><input type="submit" value="Ajouter" class="btn btn-info" style="font-size: 1.0em; width:100%;"></td></tr>
+					<tr><td colspan="2"><span class="error_message"><?php if(isset($error_promo)) { echo $error_promo; } ?></span></td></tr>
+				</tbody>
+			</table>
+		</form>
+		<table class="addition" style="float: right;">
 			<tbody>
 
 				<?php
@@ -93,6 +137,12 @@ require("part/basicFunctionLoad.php");
 				<tr> <td>Reduction</td><td><?php echo  "(".(($bag['reduction_total']/$bag['prix_total'])*100)." %) ".$bag["reduction_total"]; ?> €</td> </tr>
 				<tr> <td>Prix final</td><td><?php echo  $bag["prix_final"]; ?> €</td> </tr>
 			</tbody>
+
+			<tfoot>
+				<tr>
+					<td style="border: none" colspan="2"><a style="margin: 20px; margin-left: auto;" href="./validate.php"><button class="btn btn-success" style="font-size: 1.5em; width:100%;"><?php echo S_VALIDER; ?></button></a></td>
+				</tr>
+			</tfoot>
 		</table>
 	</div>
 </body>

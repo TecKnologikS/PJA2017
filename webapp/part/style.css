@@ -13,6 +13,11 @@
 	white-space:nowrap;
 }
 
+.error_message {
+	color: red;
+	font-weight: bold;
+}
+
 @keyframes spin {
 	0% { transform: rotate(0deg); }
 	100% { transform: rotate(360deg); }
@@ -52,9 +57,6 @@
 }
 .addition tr {
 		border-bottom: 2px solid #EEEEEE;
-}
-.addition tr:last-child {
-	border-bottom: solid 3px #E0E0E0;
 }
 
 .addition td {
@@ -189,6 +191,7 @@ input[type="radio"] {			display:none;		}		 		input[type=radio] + label		{			heig
     color: #fff;
     background-color: #f0ad4e;
 }
+
 
 .easter {
 	position: absolute;
