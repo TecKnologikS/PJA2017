@@ -61,7 +61,7 @@ if (isset($_POST["societe"]) && isset($_POST["email"]) && isset($_POST["nom"]) &
 
   $context  = stream_context_create($opts);
   $service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/devis/create/";
-  $result = json_encode(file_get_contents(str_replace(
+  $result = json_decode(file_get_contents(str_replace(
       array("{id}", 					"{token}"),
       array($_SESSION["id"], $_SESSION["token"]),
       $service_url),

@@ -132,9 +132,9 @@ if (isset($_POST["codepromo"])) {
 							}
 					}
 				?>
-				<tr> <td colspan="2" style="text-align:center;">Addition</td></tr>
+				<tr> <td colspan="2" style="text-align:center;border-bottom: 2px solid #E0E0E0;border-top: 2px solid #E0E0E0;">Addition</td></tr>
 				<tr> <td class>Prix total</td><td><?php echo  $bag["prix_total"]; ?> €</td> </tr>
-				<tr> <td>Reduction</td><td><?php echo  "(".(($bag['reduction_total']/$bag['prix_total'])*100)." %) ".$bag["reduction_total"]; ?> €</td> </tr>
+				<tr> <td>Reduction</td><td><?php echo  "(".round((($bag['reduction_total']/$bag['prix_total'])*100), 2)." %) ".$bag["reduction_total"]; ?> €</td> </tr>
 				<tr> <td>Prix final</td><td><?php echo  $bag["prix_final"]; ?> €</td> </tr>
 			</tbody>
 

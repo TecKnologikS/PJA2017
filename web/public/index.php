@@ -7,13 +7,13 @@ require '../vendor/autoload.php';
 
 function CalculateBag($article, $promo) {
 	$prix_final = 0; $prix_total = 0; $reduction_total = 0;
-	
+
 	for($i = 0; $i < count($article); $i++) {
-		$prix_total += $article[$i]["prix"];
+		$prix_total += $article[$i]["prix"]*$article[$i]["Qte"];
 		$article[$i]["prix_final"] = $article[$i]["prix"];
 		$article[$i]["reduction"] = 0;
 	}
-	
+
 	for($i = 0; $i < count($promo); $i++) {
 		$promo[$i]["total"] = 0;
 		$promo_total = 0;
@@ -22,9 +22,11 @@ function CalculateBag($article, $promo) {
 			if ($prix_total >= $promo[$i]["Minimum"]) {
 				$prix_final = 0; $reduction_total = 0;
 				for($j = 0; $j < count($article); $j++) {
-					$reduction = (($article[$j]["prix"]*$promo[$i]["Reduction"]) / 100);
-		            $article[$j]["prix_final"] = $article[$j]["prix"] - $reduction;
-		            $article[$j]["reduction"] = $reduction;
+					$prix_group = $article[$j]["prix"]*$article[$j]["Qte"];
+					$reduction = (($prix_group*$promo[$i]["Reduction"]) / 100);
+          $article[$j]["prix_final"] = $prix_group - $reduction;
+          $article[$j]["prix_group"] = $prix_group;
+          $article[$j]["reduction"] = $reduction;
 					$prix_final += $article[$j]["prix_final"];
 					$reduction_total += $reduction;
 					$promo_total += $reduction;
@@ -36,7 +38,7 @@ function CalculateBag($article, $promo) {
 		}
 		$promo[$i]["total"] = $promo_total;
 	}
-	
+
 	return array("articles" => $article, "promo" => $promo, "prix_total" => $prix_total, "prix_final" => $prix_final, "reduction_total" => $reduction_total);
 }
 
@@ -72,11 +74,11 @@ function article($id, $number) {
 	if ($id != -1) {
 		$args .= " AND id=".$id." ";
 	}
-	
+
 	if ($number != -1) {
 		$args .= " LIMIT ".$number." ";
 	}
-	
+
 	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
 	if ($mysqli->connect_errno) {
 		echo "Echec lors de la connexion à MySQL : (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
@@ -99,11 +101,11 @@ function error($message, $code, $response) {
 function verify() {
 	if (!isCorrectIdentification($id, $token)) {
 		return error("Bad Identification", 0, $response);
-	} 
-	
+	}
+
 	if (!isTimeStampsOk($id, $timestamps)) {
 		return error("Too Old Request", 0, $response);
-	} 
+	}
 }
 
 $configuration = [
@@ -120,15 +122,15 @@ $app->get('/{id}/{token}/products', function (Request $request, Response $respon
     $id = $request->getAttribute('id');
 	$token =  $request->getAttribute('token');
 	$limit =  $request->getQueryParams()["limit"];
-	
+
 	$timestamps =  time();
 	$data = array();
-	
-	if (empty($limit)) 
+
+	if (empty($limit))
 		$data = article(-1, -1);
 	else
 		$data = article(-1, $limit);
-	
+
 	$response = $response->withHeader('Content-type', 'application/json');
 	$response = $response->withJson($data, 302);
     return $response;
@@ -138,7 +140,7 @@ $app->get('/{id}/{token}/products', function (Request $request, Response $respon
 $app->get('/{id}/{token}/bag/', function (Request $request, Response $response) {
 	$id = $request->getAttribute('id');
 	$token =  $request->getAttribute('token');
-	
+
 	$timestamps =  time();
 	$data = array();
 	$data2 = array();
@@ -147,21 +149,58 @@ $app->get('/{id}/{token}/bag/', function (Request $request, Response $response) 
 	if ($mysqli->connect_errno) {
 		echo "Echec lors de la connexion à MySQL : (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 	}
-	
+
 	// SELECT ARTICLE
 	$res = $mysqli->query("SELECT * FROM article a INNER JOIN panier_article pa ON pa.ID_Article = a.ID WHERE pa.ID_User = ".$mysqli->real_escape_string($id)." ");
 	while(($row =  mysqli_fetch_assoc($res))) {
 		$data[] = $row;
 	}
-	
+
 	// SELECT PROMO
 	$res = $mysqli->query("SELECT * FROM promocode a INNER JOIN panier_promo pp ON pp.ID_Promo = a.ID WHERE pp.ID_User = ".$mysqli->real_escape_string($id)." ");
 	while(($row =  mysqli_fetch_assoc($res))) {
 		$data2[] = $row;
 	}
-	
+
 	$retour = CalculateBag($data, $data2);
-	
+
+	$response = $response->withHeader('Content-type', 'application/json');
+	$response = $response->withJson($retour, 302);
+    return $response;
+});
+$app->get('/{id}/{token}/devis/{id_devis}/', function (Request $request, Response $response) {
+	$id = $request->getAttribute('id');
+	$token =  $request->getAttribute('token');
+	$id_devis =  $request->getAttribute('id_devis');
+
+	$timestamps =  time();
+	$articles = array();
+	$promos = array();
+
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
+	$mysqli->set_charset("utf8");
+	if ($mysqli->connect_errno) {
+		echo "Echec lors de la connexion à MySQL : (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
+	}
+
+	$res = $mysqli->query("SELECT * FROM devis WHERE ID=".$mysqli->real_escape_string($id_devis)." ");
+	if ($row = $res->fetch_assoc()){
+		$devis = $row;
+	}
+	// SELECT ARTICLE
+	$res = $mysqli->query("SELECT * FROM devis_article da INNER JOIN article a ON a.ID = da.ID_Article WHERE da.ID_Devis = ".$mysqli->real_escape_string($id_devis)." ");
+	while(($row =  mysqli_fetch_assoc($res))) {
+		$articles[] = $row;
+	}
+
+	// SELECT PROMO
+	$res = $mysqli->query("SELECT * FROM devis_promo dp INNER JOIN promocode pc ON dp.ID_Promo = pc.ID WHERE dp.ID_Devis = ".$mysqli->real_escape_string($id_devis)." ");
+	while(($row =  mysqli_fetch_assoc($res))) {
+		$promos[] = $row;
+	}
+
+	$retour = array("devis" => $devis, "articles" => $articles, "promo" => $promos);
+
 	$response = $response->withHeader('Content-type', 'application/json');
 	$response = $response->withJson($retour, 302);
     return $response;
@@ -183,7 +222,7 @@ $app->get('/{id}/{token}/count_bag_and_devis/', function ($request, $response, $
 	$token = $args['token'];
 	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
 	$nb_bag = "0"; $nb_devis = "0";
-	
+
 	$res = $mysqli->query("SELECT COUNT(*) as nb FROM panier_article WHERE ID_User=".$mysqli->real_escape_string($id)." ");
 	if ($row = $res->fetch_assoc()){
 		$nb_bag = $row['nb'];
@@ -205,9 +244,9 @@ $app->get('/{id}/{token}/products/{id_p}/', function (Request $request, Response
 	$token =  $request->getAttribute('token');
 	$timestamps =  time();
 	$data = array();
-	 
+
 	$data = article($id_p, -1);
-	
+
 	$response = $response->withHeader('Content-type', 'application/json');
 	$response = $response->withJson($data, 302);
     return $response;
@@ -216,7 +255,7 @@ $app->post('/{id}/{token}/promo/add/', function ($request, $response, $args) {
 	$id = $args['id'];
 	$token = $args['token'];
 	$parsedBody = $request->getParsedBody();
-	
+
 	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
 	$retour = array('item' => $parsedBody["code"],'insert' => false);
 	$res = $mysqli->query("SELECT * FROM `promocode` WHERE code='".$mysqli->real_escape_string($parsedBody["code"])." ' AND Validity > CURRENT_TIMESTAMP");
@@ -228,7 +267,7 @@ $app->post('/{id}/{token}/promo/add/', function ($request, $response, $args) {
 	if ($id_promo > 0) {
 		$mysqli->query("INSERT INTO panier_promo (ID_User,ID_Promo) VALUES (".$id.", ".$id_promo.") ON DUPLICATE KEY UPDATE ID_Promo=ID_Promo;");
 	}
-	
+
 	$response = $response->withHeader('Content-type', 'text');
 	$response = $response->withJson($retour, 302);
     return $response;
@@ -237,10 +276,10 @@ $app->post('/{id}/{token}/bag/add/', function ($request, $response, $args) {
 	$id = $args['id'];
 	$token = $args['token'];
 	$parsedBody = $request->getParsedBody();
-	
+
 	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
 	$retour = array('item' => $parsedBody["id"],'count' => 0);
-	
+
 	$mysqli->query("INSERT INTO panier_article (ID_User,ID_Article,Qte) VALUES (".$id.", ".$parsedBody["id"].", 1) ON DUPLICATE KEY UPDATE Qte=Qte+1;");
 	$res = $mysqli->query("SELECT COUNT(*) as nb FROM panier_article WHERE ID_User=".$mysqli->real_escape_string($id)." ");
 	if ($row = $res->fetch_assoc()){
@@ -254,7 +293,7 @@ $app->post('/{id}/{token}/devis/create/', function ($request, $response, $args) 
 	$id = $args['id'];
 	$token = $args['token'];
 	$parsedBody = $request->getParsedBody();
-	
+
 	$data = array();
 	$data2 = array();
 	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
@@ -263,37 +302,37 @@ $app->post('/{id}/{token}/devis/create/', function ($request, $response, $args) 
 		echo "Echec lors de la connexion à MySQL : (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 	}
 	$retour = array('item' => $parsedBody["id"],'id_devis' => 0, 'created' => false);
-	
+
 	// SELECT ARTICLE
 	$res = $mysqli->query("SELECT * FROM article a INNER JOIN panier_article pa ON pa.ID_Article = a.ID WHERE pa.ID_User = ".$mysqli->real_escape_string($id)." ");
 	while(($row =  mysqli_fetch_assoc($res))) {
 		$data[] = $row;
 	}
-	
+
 	// SELECT PROMO
 	$res = $mysqli->query("SELECT * FROM promocode a INNER JOIN panier_promo pp ON pp.ID_Promo = a.ID WHERE pp.ID_User = ".$mysqli->real_escape_string($id)." ");
 	while(($row =  mysqli_fetch_assoc($res))) {
 		$data2[] = $row;
 	}
-	
+
 	$panier = CalculateBag($data, $data2);
 	/*** Create devis ***/
-	$res = $mysqli->query("INSERT INTO devis(ID_User, Societe, Date_Validity, Siret, Tel, Fax, Email, Adresse, CP, Ville, Nom, Prenom, Prix, Reduction, Prix_final) VALUES ("  
-										." ".$mysqli->real_escape_string($id).", " 
-										." '".$mysqli->real_escape_string($parsedBody["societe"])."', "  
-										." DATE_ADD(NOW(), INTERVAL 90 DAY), " 
-										." '".$mysqli->real_escape_string($parsedBody["siret"])."', "  
-										." '".$mysqli->real_escape_string($parsedBody["tel"])."', "  
-										." '".$mysqli->real_escape_string($parsedBody["fax"])."', "  
-										." '".$mysqli->real_escape_string($parsedBody["email"])."', " 
-										." '".$mysqli->real_escape_string($parsedBody["adresse"])."', " 
-										." '".$mysqli->real_escape_string($parsedBody["cp"])."', " 
-										." '".$mysqli->real_escape_string($parsedBody["ville"])."', "  
-										." '".$mysqli->real_escape_string($parsedBody["nom"])."', " 
-										." '".$mysqli->real_escape_string($parsedBody["prenom"])."', "  
-										." '".$mysqli->real_escape_string($panier["prix_total"])."', "  
-										." '".$mysqli->real_escape_string($panier["reduction_total"])."', "  
-										." '".$mysqli->real_escape_string($panier["prix_final"])."' " 
+	$res = $mysqli->query("INSERT INTO devis(ID_User, Societe, Date_Validity, Siret, Tel, Fax, Email, Adresse, CP, Ville, Nom, Prenom, Prix, Reduction, Prix_final) VALUES ("
+										." ".$mysqli->real_escape_string($id).", "
+										." '".$mysqli->real_escape_string($parsedBody["societe"])."', "
+										." DATE_ADD(NOW(), INTERVAL 90 DAY), "
+										." '".$mysqli->real_escape_string($parsedBody["siret"])."', "
+										." '".$mysqli->real_escape_string($parsedBody["tel"])."', "
+										." '".$mysqli->real_escape_string($parsedBody["fax"])."', "
+										." '".$mysqli->real_escape_string($parsedBody["email"])."', "
+										." '".$mysqli->real_escape_string($parsedBody["adresse"])."', "
+										." '".$mysqli->real_escape_string($parsedBody["cp"])."', "
+										." '".$mysqli->real_escape_string($parsedBody["ville"])."', "
+										." '".$mysqli->real_escape_string($parsedBody["nom"])."', "
+										." '".$mysqli->real_escape_string($parsedBody["prenom"])."', "
+										." '".$mysqli->real_escape_string($panier["prix_total"])."', "
+										." '".$mysqli->real_escape_string($panier["reduction_total"])."', "
+										." '".$mysqli->real_escape_string($panier["prix_final"])."' "
 										.");");
 	$id_devis = $mysqli->insert_id;
 	$retour = array('item' => $parsedBody["id"],'id_devis' => $id_devis, 'created' => true);
@@ -301,22 +340,22 @@ $app->post('/{id}/{token}/devis/create/', function ($request, $response, $args) 
 	/*** Add Articles ***/
 	for($i = 0; $i < count($panier["articles"]); $i++) {
 		$mysqli->query("INSERT INTO devis_article (ID_Devis,ID_Article,Qte, Prix, Reduction, Prix_final) VALUES ("
-													."".$id_devis.", "  
-													."".$panier["articles"][$i]["id"].", "  
-													."'".$panier["articles"][$i]["Qte"]."', " 
-													."'".$panier["articles"][$i]["prix"]."', "  
-													."'".$panier["articles"][$i]["reduction"]."', "  
+													."".$id_devis.", "
+													."".$panier["articles"][$i]["id"].", "
+													."'".$panier["articles"][$i]["Qte"]."', "
+													."'".$panier["articles"][$i]["prix"]."', "
+													."'".$panier["articles"][$i]["reduction"]."', "
 													."'".$panier["articles"][$i]["prix_final"]."');");
 	}
 	$retour = array('id_devis' => $id_devis, 'created' => true);
 	/*** Add PromoCode ***/
 	for($i = 0; $i < count($panier["promo"]); $i++) {
 		$mysqli->query("INSERT INTO devis_promo (ID_Devis,ID_Promo,Reduction) VALUES ("
-													."".$id_devis.", "  
-													."".$panier["promo"][$i]["ID"].", " 
+													."".$id_devis.", "
+													."".$panier["promo"][$i]["ID"].", "
 													."'".$panier["promo"][$i]["total"]."');");
 	}
-	
+
 	$response = $response->withHeader('Content-type', 'text');
 	$response = $response->withJson($retour, 302);
     return $response;
@@ -325,10 +364,10 @@ $app->post('/{id}/{token}/bag/remove/', function ($request, $response, $args) {
 	$id = $args['id'];
 	$token = $args['token'];
 	$parsedBody = $request->getParsedBody();
-	
+
 	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
 	$retour = array('item' => $parsedBody["id"],'count' => 0);
-	
+
 	$mysqli->query("DELETE FROM panier_article WHERE ID_User= ".$id." AND ID_Article = ".$parsedBody["id"]." ");
 	$response = $response->withHeader('Content-type', 'text');
 	$response = $response->withJson($retour, 302);
@@ -338,10 +377,10 @@ $app->post('/{id}/{token}/bag/update/', function ($request, $response, $args) {
 	$id = $args['id'];
 	$token = $args['token'];
 	$parsedBody = $request->getParsedBody();
-	
+
 	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
 	$retour = array('item' => $parsedBody["id"],'count' => 0);
-	
+
 	$mysqli->query("UPDATE panier_article SET Qte = ".$parsedBody["qte"]." WHERE ID_User= ".$id." AND ID_Article = ".$parsedBody["id"]." ");
 	$retour = array('item' => $parsedBody["id"],'count' => 0, 'sql'=>"UPDATE FROM panier_article SET Qte = ".$parsedBody["qte"]." WHERE ID_User= ".$id." AND ID_Article = ".$parsedBody["id"]." ");
 	$response = $response->withHeader('Content-type', 'text');
@@ -382,8 +421,8 @@ $res->data_seek(0);
 while ($row = $res->fetch_assoc()) {
     echo " id = " . $row['ID'] . "\n";
 }*/
-	
-	
+
+
     //$response->getBody()->write("Hello, $name");
 	//$response = $response->withStatus(302);
 
