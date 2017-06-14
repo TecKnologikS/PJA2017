@@ -1,5 +1,6 @@
 <?php
 require("part/basicFunctionLoad.php");
+
 if (isset($_POST["societe"]) && isset($_POST["email"]) && isset($_POST["nom"]) && isset($_POST["prenom"])) {
   //Minimum pour valider le devis
   $societe = "";
@@ -49,6 +50,7 @@ if (isset($_POST["societe"]) && isset($_POST["email"]) && isset($_POST["nom"]) &
       )
   );
 
+
   $opts = array('http' =>
       array(
           'method'  => 'POST',
@@ -78,14 +80,14 @@ if (isset($_POST["societe"]) && isset($_POST["email"]) && isset($_POST["nom"]) &
 <body onload="getBasketAndDevis();">
 	<?php include("part/navdatas.php"); ?>
 	<div class="container-fluid" style="margin-top: 70px;">
-    <form>
+    <form method="post" >
     <table class="addition" style="margin: 20px auto 20px auto; width:800px">
       <tbody>
         <tr><td colspan="2"><h3>Information client</h3></td></tr>
         <tr><td>Société :</td><td><input type="text" name="societe" /></td></tr>
         <tr><td>Siret :</td><td><input type="text" name="siret" /></td></tr>
         <tr><td>Téléphone :</td><td><input type="tel" pattern="^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$" name="tel" /></td></tr>
-        <tr><td>Courriel :</td><td><input type="email" name="mail" /></td></tr>
+        <tr><td>Courriel :</td><td><input type="email" name="email" /></td></tr>
         <tr><td>Fax :</td><td><input type="tel" pattern="^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$" name="fax" /></td></tr>
         <tr><td>Adresse :</td><td><input type="text" name="adresse" /></td></tr>
         <tr><td>Code Postal :</td><td><input type="number" name="cp" /></td></tr>

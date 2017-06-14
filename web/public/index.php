@@ -277,45 +277,44 @@ $app->post('/{id}/{token}/devis/create/', function ($request, $response, $args) 
 	}
 	
 	$panier = CalculateBag($data, $data2);
-	$response = $response->withHeader('Content-type', 'text');
-	$response = $response->withJson($retour, 302);
-	return $response;
 	/*** Create devis ***/
-	$res = $mysqli->query("INSERT INTO devis(ID_User, Societe, Date_Validity, Siret, Tel, Fax, Email, Adresse, CP, Ville, Nom, Prenom, Prix, Reduction, Prix_final) VALUES (" + 
-										" ".$mysqli->real_escape_string($id).", " + 
-										" ".$mysqli->real_escape_string($parsedBody["societe"]).", " + 
-										" DATE_ADD(NOW(), INTERVAL 90 DAY), " + 
-										" ".$mysqli->real_escape_string($parsedBody["siret"]).", " + 
-										" ".$mysqli->real_escape_string($parsedBody["tel"]).", " + 
-										" ".$mysqli->real_escape_string($parsedBody["fax"]).", " + 
-										" ".$mysqli->real_escape_string($parsedBody["email"]).", " + 
-										" ".$mysqli->real_escape_string($parsedBody["adresse"]).", " + 
-										" ".$mysqli->real_escape_string($parsedBody["cp"]).", " + 
-										" ".$mysqli->real_escape_string($parsedBody["ville"]).", " + 
-										" ".$mysqli->real_escape_string($parsedBody["nom"]).", " + 
-										" ".$mysqli->real_escape_string($parsedBody["prenom"]).", " + 
-										" ".$mysqli->real_escape_string($panier["prix_total"]).", " + 
-										" ".$mysqli->real_escape_string($panier["reduction_total"]).", " + 
-										" ".$mysqli->real_escape_string($panier["prix_final"])." " + 
-										");");
+	$res = $mysqli->query("INSERT INTO devis(ID_User, Societe, Date_Validity, Siret, Tel, Fax, Email, Adresse, CP, Ville, Nom, Prenom, Prix, Reduction, Prix_final) VALUES ("  
+										." ".$mysqli->real_escape_string($id).", " 
+										." '".$mysqli->real_escape_string($parsedBody["societe"])."', "  
+										." DATE_ADD(NOW(), INTERVAL 90 DAY), " 
+										." '".$mysqli->real_escape_string($parsedBody["siret"])."', "  
+										." '".$mysqli->real_escape_string($parsedBody["tel"])."', "  
+										." '".$mysqli->real_escape_string($parsedBody["fax"])."', "  
+										." '".$mysqli->real_escape_string($parsedBody["email"])."', " 
+										." '".$mysqli->real_escape_string($parsedBody["adresse"])."', " 
+										." '".$mysqli->real_escape_string($parsedBody["cp"])."', " 
+										." '".$mysqli->real_escape_string($parsedBody["ville"])."', "  
+										." '".$mysqli->real_escape_string($parsedBody["nom"])."', " 
+										." '".$mysqli->real_escape_string($parsedBody["prenom"])."', "  
+										." '".$mysqli->real_escape_string($panier["prix_total"])."', "  
+										." '".$mysqli->real_escape_string($panier["reduction_total"])."', "  
+										." '".$mysqli->real_escape_string($panier["prix_final"])."' " 
+										.");");
 	$id_devis = $mysqli->insert_id;
 	$retour = array('item' => $parsedBody["id"],'id_devis' => $id_devis, 'created' => true);
-	
+	$test = "";
 	/*** Add Articles ***/
 	for($i = 0; $i < count($panier["articles"]); $i++) {
-		$mysqli->query("INSERT INTO devis_article (ID_Devis,ID_Article,Qte, Prix, Reduction, Prix_final) VALUES (" + 
-													"".$panier["articles"][$i]["id"].", " + 
-													"".$panier["articles"][$i]["Qte"].", " + 
-													"".$panier["articles"][$i]["prix"].", " + 
-													"".$panier["articles"][$i]["reduction"].", " + 
-													"".$panier["articles"][$i]["prix_final"].");");
+		$mysqli->query("INSERT INTO devis_article (ID_Devis,ID_Article,Qte, Prix, Reduction, Prix_final) VALUES ("
+													."".$id_devis.", "  
+													."".$panier["articles"][$i]["id"].", "  
+													."'".$panier["articles"][$i]["Qte"]."', " 
+													."'".$panier["articles"][$i]["prix"]."', "  
+													."'".$panier["articles"][$i]["reduction"]."', "  
+													."'".$panier["articles"][$i]["prix_final"]."');");
 	}
+	$retour = array('id_devis' => $id_devis, 'created' => true);
 	/*** Add PromoCode ***/
 	for($i = 0; $i < count($panier["promo"]); $i++) {
-		$mysqli->query("INSERT INTO devis_promo (ID_Devis,ID_Promo,Reduction) VALUES (" + 
-													"".$id_devis.", " + 
-													"".$panier["promo"][$i]["ID"].", " + 
-													"".$panier["promo"][$i]["total"].");");
+		$mysqli->query("INSERT INTO devis_promo (ID_Devis,ID_Promo,Reduction) VALUES ("
+													."".$id_devis.", "  
+													."".$panier["promo"][$i]["ID"].", " 
+													."'".$panier["promo"][$i]["total"]."');");
 	}
 	
 	$response = $response->withHeader('Content-type', 'text');
