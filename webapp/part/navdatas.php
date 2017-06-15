@@ -9,7 +9,7 @@
 							<fieldset style="padding-top: 15px;"><input class="form-control" placeholder="search" name="search" type="text"></fieldset>
 					</form></li>
           <li><a href="./bag.php"><button class="btn btn-warning"><?php echo S_PANIER; ?> (<span id="item_count_bag">0</span>)</button></a></li>
-          <li><a href="./devis.php"><button class="btn btn-success"><?php echo S_DEVIS; ?> (<span id="item_count_devis">0</span>)</button></a></li>
+          <li><a href="./listdevis.php"><button class="btn btn-success"><?php echo S_DEVIS; ?> (<span id="item_count_devis">0</span>)</button></a></li>
           <li><a href="./logout.php"><button type="submit" name="logOut" class="btn btn-danger"><?php echo S_LOGOUT; ?></button></a></li>
             </div>
         </div>

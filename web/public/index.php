@@ -68,7 +68,6 @@ function isCorrectIdentification($id, $token) {
 	return false;
 }
 
-
 function article($id, $number) {
 	$args = "";
 	if ($id != -1) {
@@ -84,6 +83,29 @@ function article($id, $number) {
 		echo "Echec lors de la connexion à MySQL : (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 	}
 	$res = $mysqli->query("SELECT * FROM article WHERE 1=1 ".$args);
+	$types = array();
+
+	while(($row =  mysqli_fetch_assoc($res))) {
+		$types[] = $row;
+	}
+	return $types;
+}
+
+function devis($id, $number) {
+	$args = "";
+	if ($id != -1) {
+		$args .= " AND ID=".$id." ";
+	}
+
+	if ($number != -1) {
+		$args .= " LIMIT ".$number." ";
+	}
+
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
+	if ($mysqli->connect_errno) {
+		echo "Echec lors de la connexion à MySQL : (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
+	}
+	$res = $mysqli->query("SELECT * FROM devis WHERE 1=1 ".$args);
 	$types = array();
 
 	while(($row =  mysqli_fetch_assoc($res))) {
@@ -135,37 +157,34 @@ $app->get('/{id}/{token}/products', function (Request $request, Response $respon
 	$response = $response->withJson($data, 302);
     return $response;
 });
-
-
-$app->get('/{id}/{token}/bag/', function (Request $request, Response $response) {
-	$id = $request->getAttribute('id');
+$app->get('/{id}/{token}/products/{id_p}/', function (Request $request, Response $response) {
+    $id = $request->getAttribute('id');
+    $id_p = $request->getAttribute('id_p');
 	$token =  $request->getAttribute('token');
+	$timestamps =  time();
+	$data = array();
+
+	$data = article($id_p, -1);
+
+	$response = $response->withHeader('Content-type', 'application/json');
+	$response = $response->withJson($data, 302);
+    return $response;
+});
+$app->get('/{id}/{token}/devis', function ($request, $response, $args) {
+	$id = $args['id'];
+	$token = $args['token'];
+	$limit =  $request->getQueryParams()["limit"];
 
 	$timestamps =  time();
 	$data = array();
-	$data2 = array();
-	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
-	$mysqli->set_charset("utf8");
-	if ($mysqli->connect_errno) {
-		echo "Echec lors de la connexion à MySQL : (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
-	}
 
-	// SELECT ARTICLE
-	$res = $mysqli->query("SELECT * FROM article a INNER JOIN panier_article pa ON pa.ID_Article = a.ID WHERE pa.ID_User = ".$mysqli->real_escape_string($id)." ");
-	while(($row =  mysqli_fetch_assoc($res))) {
-		$data[] = $row;
-	}
-
-	// SELECT PROMO
-	$res = $mysqli->query("SELECT * FROM promocode a INNER JOIN panier_promo pp ON pp.ID_Promo = a.ID WHERE pp.ID_User = ".$mysqli->real_escape_string($id)." ");
-	while(($row =  mysqli_fetch_assoc($res))) {
-		$data2[] = $row;
-	}
-
-	$retour = CalculateBag($data, $data2);
+	if (empty($limit))
+		$data = devis(-1, -1);
+	else
+		$data = devis(-1, $limit);
 
 	$response = $response->withHeader('Content-type', 'application/json');
-	$response = $response->withJson($retour, 302);
+	$response = $response->withJson($data, 302);
     return $response;
 });
 $app->get('/{id}/{token}/devis/{id_devis}/', function (Request $request, Response $response) {
@@ -205,6 +224,27 @@ $app->get('/{id}/{token}/devis/{id_devis}/', function (Request $request, Respons
 	$response = $response->withJson($retour, 302);
     return $response;
 });
+$app->post('/{id}/{token}/promo/add/', function ($request, $response, $args) {
+	$id = $args['id'];
+	$token = $args['token'];
+	$parsedBody = $request->getParsedBody();
+
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
+	$retour = array('item' => $parsedBody["code"],'insert' => false);
+	$res = $mysqli->query("SELECT * FROM `promocode` WHERE code='".$mysqli->real_escape_string($parsedBody["code"])." ' AND Validity > CURRENT_TIMESTAMP");
+	$id_promo = 0;
+	if ($row = $res->fetch_assoc()){
+		$retour = array('item' => $parsedBody["code"],'insert' => true);
+		$id_promo = $row['ID'];
+	}
+	if ($id_promo > 0) {
+		$mysqli->query("INSERT INTO panier_promo (ID_User,ID_Promo) VALUES (".$id.", ".$id_promo.") ON DUPLICATE KEY UPDATE ID_Promo=ID_Promo;");
+	}
+
+	$response = $response->withHeader('Content-type', 'text');
+	$response = $response->withJson($retour, 302);
+    return $response;
+});
 $app->get('/{id}/{token}/count_bag/', function ($request, $response, $args) {
 	$id = $args['id'];
 	$token = $args['token'];
@@ -227,48 +267,44 @@ $app->get('/{id}/{token}/count_bag_and_devis/', function ($request, $response, $
 	if ($row = $res->fetch_assoc()){
 		$nb_bag = $row['nb'];
 	}
-	//TODO: a activer
-	/*
-	$res = $mysqli->query("SELECT COUNT(*) as nb FROM devis_article WHERE ID_User=".$mysqli->real_escape_string($id)." ");
+
+	$res = $mysqli->query("SELECT COUNT(*) as nb FROM devis WHERE ID_User=".$mysqli->real_escape_string($id)." ");
 	if ($row = $res->fetch_assoc()){
 		$nb_devis = $row['nb'];
-	}*/
+	}
 	$retour = array('count_bag' => $nb_bag, 'count_devis' => $nb_devis);
 	$response = $response->withHeader('Content-type', 'text');
 	$response = $response->withJson($retour, 302);
     return $response;
 });
-$app->get('/{id}/{token}/products/{id_p}/', function (Request $request, Response $response) {
-    $id = $request->getAttribute('id');
-    $id_p = $request->getAttribute('id_p');
+$app->get('/{id}/{token}/bag/', function (Request $request, Response $response) {
+	$id = $request->getAttribute('id');
 	$token =  $request->getAttribute('token');
+
 	$timestamps =  time();
 	$data = array();
+	$data2 = array();
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
+	$mysqli->set_charset("utf8");
+	if ($mysqli->connect_errno) {
+		echo "Echec lors de la connexion à MySQL : (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
+	}
 
-	$data = article($id_p, -1);
+	// SELECT ARTICLE
+	$res = $mysqli->query("SELECT * FROM article a INNER JOIN panier_article pa ON pa.ID_Article = a.ID WHERE pa.ID_User = ".$mysqli->real_escape_string($id)." ");
+	while(($row =  mysqli_fetch_assoc($res))) {
+		$data[] = $row;
+	}
+
+	// SELECT PROMO
+	$res = $mysqli->query("SELECT * FROM promocode a INNER JOIN panier_promo pp ON pp.ID_Promo = a.ID WHERE pp.ID_User = ".$mysqli->real_escape_string($id)." ");
+	while(($row =  mysqli_fetch_assoc($res))) {
+		$data2[] = $row;
+	}
+
+	$retour = CalculateBag($data, $data2);
 
 	$response = $response->withHeader('Content-type', 'application/json');
-	$response = $response->withJson($data, 302);
-    return $response;
-});
-$app->post('/{id}/{token}/promo/add/', function ($request, $response, $args) {
-	$id = $args['id'];
-	$token = $args['token'];
-	$parsedBody = $request->getParsedBody();
-
-	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
-	$retour = array('item' => $parsedBody["code"],'insert' => false);
-	$res = $mysqli->query("SELECT * FROM `promocode` WHERE code='".$mysqli->real_escape_string($parsedBody["code"])." ' AND Validity > CURRENT_TIMESTAMP");
-	$id_promo = 0;
-	if ($row = $res->fetch_assoc()){
-		$retour = array('item' => $parsedBody["code"],'insert' => true);
-		$id_promo = $row['ID'];
-	}
-	if ($id_promo > 0) {
-		$mysqli->query("INSERT INTO panier_promo (ID_User,ID_Promo) VALUES (".$id.", ".$id_promo.") ON DUPLICATE KEY UPDATE ID_Promo=ID_Promo;");
-	}
-
-	$response = $response->withHeader('Content-type', 'text');
 	$response = $response->withJson($retour, 302);
     return $response;
 });
@@ -285,6 +321,33 @@ $app->post('/{id}/{token}/bag/add/', function ($request, $response, $args) {
 	if ($row = $res->fetch_assoc()){
 		$retour = array('item' => $parsedBody["id"],'count' => $row['nb']);
 	}
+	$response = $response->withHeader('Content-type', 'text');
+	$response = $response->withJson($retour, 302);
+    return $response;
+});
+$app->post('/{id}/{token}/bag/remove/', function ($request, $response, $args) {
+	$id = $args['id'];
+	$token = $args['token'];
+	$parsedBody = $request->getParsedBody();
+
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
+	$retour = array('item' => $parsedBody["id"],'count' => 0);
+
+	$mysqli->query("DELETE FROM panier_article WHERE ID_User= ".$id." AND ID_Article = ".$parsedBody["id"]." ");
+	$response = $response->withHeader('Content-type', 'text');
+	$response = $response->withJson($retour, 302);
+    return $response;
+});
+$app->post('/{id}/{token}/bag/update/', function ($request, $response, $args) {
+	$id = $args['id'];
+	$token = $args['token'];
+	$parsedBody = $request->getParsedBody();
+
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
+	$retour = array('item' => $parsedBody["id"],'count' => 0);
+
+	$mysqli->query("UPDATE panier_article SET Qte = ".$parsedBody["qte"]." WHERE ID_User= ".$id." AND ID_Article = ".$parsedBody["id"]." ");
+	$retour = array('item' => $parsedBody["id"],'count' => 0, 'sql'=>"UPDATE FROM panier_article SET Qte = ".$parsedBody["qte"]." WHERE ID_User= ".$id." AND ID_Article = ".$parsedBody["id"]." ");
 	$response = $response->withHeader('Content-type', 'text');
 	$response = $response->withJson($retour, 302);
     return $response;
@@ -360,33 +423,7 @@ $app->post('/{id}/{token}/devis/create/', function ($request, $response, $args) 
 	$response = $response->withJson($retour, 302);
     return $response;
 });
-$app->post('/{id}/{token}/bag/remove/', function ($request, $response, $args) {
-	$id = $args['id'];
-	$token = $args['token'];
-	$parsedBody = $request->getParsedBody();
 
-	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
-	$retour = array('item' => $parsedBody["id"],'count' => 0);
-
-	$mysqli->query("DELETE FROM panier_article WHERE ID_User= ".$id." AND ID_Article = ".$parsedBody["id"]." ");
-	$response = $response->withHeader('Content-type', 'text');
-	$response = $response->withJson($retour, 302);
-    return $response;
-});
-$app->post('/{id}/{token}/bag/update/', function ($request, $response, $args) {
-	$id = $args['id'];
-	$token = $args['token'];
-	$parsedBody = $request->getParsedBody();
-
-	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
-	$retour = array('item' => $parsedBody["id"],'count' => 0);
-
-	$mysqli->query("UPDATE panier_article SET Qte = ".$parsedBody["qte"]." WHERE ID_User= ".$id." AND ID_Article = ".$parsedBody["id"]." ");
-	$retour = array('item' => $parsedBody["id"],'count' => 0, 'sql'=>"UPDATE FROM panier_article SET Qte = ".$parsedBody["qte"]." WHERE ID_User= ".$id." AND ID_Article = ".$parsedBody["id"]." ");
-	$response = $response->withHeader('Content-type', 'text');
-	$response = $response->withJson($retour, 302);
-    return $response;
-});
 $app->get('/login', function (Request $request, Response $response) {
 	$data = array();
 	//$name = $request->getAttribute('name');
@@ -421,8 +458,6 @@ $res->data_seek(0);
 while ($row = $res->fetch_assoc()) {
     echo " id = " . $row['ID'] . "\n";
 }*/
-
-
     //$response->getBody()->write("Hello, $name");
 	//$response = $response->withStatus(302);
 
