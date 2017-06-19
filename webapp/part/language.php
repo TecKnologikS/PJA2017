@@ -9,6 +9,7 @@
    define("S_LOGOUT", 				"Déconnexion");
    define("S_FILTRES", 				"Filtres");
    define("S_PANIER", 				"Panier");
+   define("S_USER", 				"Utilisateurs");
    define("S_DEVIS", 				"Devis");
    define("S_VALIDER", 				"Valider");
    define("S_FILTRES_TITLE", 		"Track'n Trace - Filtres");

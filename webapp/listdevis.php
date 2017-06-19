@@ -26,7 +26,7 @@ require_once("part/basicFunctionLoad.php");
 						$toshow = "<tr><td>{societe}</td><td>{contact}</td><td>{date}</td><td>{prix}</td><td class='action_btn'>"
                           ."<a href='./devis.php?id={id}'><button type='submit' name='See' class='btn btn-success'>VOIR</button></a>"
                           ."<a href='./devis.php?id={id}&action=share'><button type='submit' name='Share' class='btn btn-info'>PARTAGER</button></a>"
-                          ."<a href='./download.php?id_devis={id}'><button type='submit' name='Download' class='btn btn-danger'>DOWNLOAD</button></a></td></tr>";
+                          ."<a href='./export.php?id={id}'><button type='submit' name='PDF' class='btn btn-danger'>PDF</button></a></td></tr>";
 						$btn = '<input id="addIt" type="button" value="addIt" onclick="addToBasket({id_product});" />';
 						$devis = json_decode(file_get_contents(
 									str_replace(

@@ -438,7 +438,7 @@ $app->get('/login', function (Request $request, Response $response) {
 		//$res->data_seek(0);
 		if ($row = $res->fetch_assoc()){
 			$token = bin2hex(random_bytes(25));
-			$data = array('ID' => $row['ID'],'login' => $row['Login'], 'mdp' => 'ESPECE DE CURIEUX ! :p', 'token' => $token);
+			$data = array('ID' => $row['ID'],'login' => $row['Login'], 'really' => $row['Admin'], 'mdp' => 'ESPECE DE CURIEUX ! :p', 'token' => $token);
 			$mysqli->query("UPDATE user SET Token='".$token."' WHERE ID=".$row['ID']." ");
 		}
 	}

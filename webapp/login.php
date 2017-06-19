@@ -19,6 +19,7 @@ if (isset($_POST["id"]) && isset($_POST["password"])) {
 		$_SESSION['id'] = $login['ID'];
 		$_SESSION['pseudo'] = $login['login'];
 		$_SESSION['token'] = $login['token'];
+		$_SESSION['really'] = $login['really'];
 		header('Location: index.php');
 	} else {
 		$error = "ERREUR";

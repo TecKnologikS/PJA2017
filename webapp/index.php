@@ -39,7 +39,7 @@ require_once("part/basicFunctionLoad.php");
 						<?php
 
 						$service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/products";
-						$toshow = "<tr><td>{img}</td><td><a href='page.html?product={id_product}'>{name}</a></td><td>{descr}</td><td>{commande}</td><td>{prix}</td><td>{btn}</td></tr>";
+						$toshow = "<tr><td>{img}</td><td><a href='page.php?product={id_product}'>{name}</a></td><td>{descr}</td><td>{commande}</td><td>{prix}</td><td>{btn}</td></tr>";
 						$btn = '<input id="addIt" type="button" value="addIt" onclick="addToBasket({id_product});" />';
 						$articles = json_decode(file_get_contents(
 									str_replace(
