@@ -29,7 +29,7 @@ require_once("part/basicFunctionLoad.php");
 						<tr>
 							<th>Image</th>
 							<th>Nom</th>
-							<th>Description</th>
+							<th>Description du produit</th>
 							<th>Commande</th>
 							<th>Prix</th>
 							<th></th>

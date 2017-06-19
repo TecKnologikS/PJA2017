@@ -1,4 +1,3 @@
-<?php //mb_internal_encoding('UTF-8'); ?>
 <title><?php echo NOM; ?></title>
 <meta charset="utf-8">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
