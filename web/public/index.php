@@ -91,10 +91,13 @@ function article($id, $number) {
 	return $types;
 }
 
-function devis($id, $number) {
+function devis($id_user, $id, $number) {
 	$args = "";
 	if ($id != -1) {
 		$args .= " AND ID=".$id." ";
+	}
+	if ($id_user != -1) {
+		$args .= " AND ID_User=".$id_user." ";
 	}
 
 	if ($number != -1) {
@@ -179,9 +182,9 @@ $app->get('/{id}/{token}/devis', function ($request, $response, $args) {
 	$data = array();
 
 	if (empty($limit))
-		$data = devis(-1, -1);
+		$data = devis($id, -1, -1);
 	else
-		$data = devis(-1, $limit);
+		$data = devis($id, -1, $limit);
 
 	$response = $response->withHeader('Content-type', 'application/json');
 	$response = $response->withJson($data, 302);
