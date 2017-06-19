@@ -10,26 +10,17 @@ if (!isset($_GET["id"])) {
 <head>
 	<?php include('part/header.php'); ?>
 	<script>
-	function removeToBasket(p1) {
+
+	function addToBasket(p1) {
+		//TODO: call api / receive nb articles into basket / change basket number
 		$.ajax({
-		    url: 'callapi.php?function=removeToBasket&id={id_product}'.replace("{id_product}", p1),
+		    url: 'callapi.php?function=addToBasket&id={id_product}'.replace("{id_product}", p1),
 		    dataType: "json",
 		    complete: function (response) {
-            location.reload();c
+		        var obj = JSON.parse(response.responseText);
+						document.getElementById("item_count_bag").innerText =  obj.count;
 		    }
 		});
-	}
-  function updateToBasket(elem, p1) {
-		var val = (elem.parentElement).getElementsByTagName("input")[0].value;
-		if (val > 0) {
-			$.ajax({
-			    url: 'callapi.php?function=updateToBasket&id={id_product}&qte={qte}'.replace("{id_product}", p1).replace("{qte}", val),
-			    dataType: "json",
-			    complete: function (response) {
-							location.reload();
-			    }
-			});
-		}
 	}
 
 
@@ -39,8 +30,7 @@ if (!isset($_GET["id"])) {
 <body onload="getBasketAndDevis();">
 	<?php include("part/navdatas.php"); ?>
 	<div class="container-fluid" style="margin-top: 70px;">
-
-						<?php
+					<?php
 
 						$service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/products/{id_p}/";
 						$bag = json_decode(file_get_contents(
@@ -49,14 +39,28 @@ if (!isset($_GET["id"])) {
 										array($_SESSION["id"], $_SESSION["token"], $_GET["id"]),
 										$service_url)), true);
 						if (count($bag) > 0) {
-							$articles = $bag[0];
+							$article = $bag[0];
 
 						} else {
 							header('Location: index.php');
 						}
+					?>
+	<div style="margin: 10px 20px 10px 20px;">
+		<h1><?= $article["name"] ?></h1>
+		<i><?= $article["smallDesc"] ?></i>
+		<table class="addition" style="margin-left: 0px;">
+			<tbody>
+				<tr><td colspan="2"><h4 style="text-align:center">Ajouter au panier</h4></td></tr>
+				<tr><td>Nombre :</td><td><input type='number' min=1 name="nomber" value="1" /></td></tr>
+				<tr><td colspan="2"><input value="Ajouter" class="btn btn-success" style="font-size: 1.0em; width:100%;" onclick="addToBasket(<?= $article['id'] ?>);"></td></tr>
+			</tbody>
+		</table>
+		<br />
+		<div  style="margin: 20px 0px 10px 0px;">
+				<?= $article["about"] ?>
+		</div>
+	</div>
 
-
-						?>
 
 	</div>
 </body>
