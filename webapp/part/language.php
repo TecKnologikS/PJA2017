@@ -1,4 +1,6 @@
 ﻿<?php
+   
+   //Version française
    define("S_CHAMPS_EMPTY", 		"Tous les champs sont obligatoires !");
    define("S_USER_UNKNOW", 			"Utilisateur inconnu !");
    define("S_BAD_PASSWORD", 		"Mot de passe incorrect!");
@@ -20,5 +22,5 @@
    define("S_ERROR", 				"Un problème est survenu, veuillez patienter");
    define("S_NOTHING_DOC", 			"Il n'y a aucun document sur ce dossier");
    define("S_DATETIME", 			"Date / Heure");
-
+   
 ?>
