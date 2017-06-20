@@ -1,5 +1,5 @@
 ﻿<?php
-   
+
    //Version française
    define("S_CHAMPS_EMPTY", 		"Tous les champs sont obligatoires !");
    define("S_USER_UNKNOW", 			"Utilisateur inconnu !");
@@ -12,6 +12,7 @@
    define("S_FILTRES", 				"Filtres");
    define("S_PANIER", 				"Panier");
    define("S_USER", 				"Utilisateurs");
+   define("S_PROMO", 				"Codes Promos");
    define("S_DEVIS", 				"Devis");
    define("S_VALIDER", 				"Valider");
    define("S_FILTRES_TITLE", 		"Track'n Trace - Filtres");
@@ -22,5 +23,5 @@
    define("S_ERROR", 				"Un problème est survenu, veuillez patienter");
    define("S_NOTHING_DOC", 			"Il n'y a aucun document sur ce dossier");
    define("S_DATETIME", 			"Date / Heure");
-   
+
 ?>

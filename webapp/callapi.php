@@ -8,19 +8,29 @@ if (isset($_GET["function"])) {
       AddToBasket($_GET["id"]);
     }
       break;
-      case 'removeToBasket':
+    case 'removeToBasket':
       if (isset($_GET["id"])) {
         removeToBasket($_GET["id"]);
       }
-        break;
-      case 'getBasketAndDevis':
-        getBasketAndDevis();
-        break;
-        case 'updateToBasket':
-        if (isset($_GET["id"]) && isset($_GET["qte"])) {
-          updateToBasket($_GET["id"], $_GET["qte"]);
-        }
-          break;
+      break;
+    case 'updateMDP':
+      if (isset($_GET["id"]) && isset($_GET["mdp"])) {
+        updateMDP($_GET["id"], $_GET["mdp"]);
+      }
+      break;
+    case 'updateSTATUT':
+      if (isset($_GET["id"]) && isset($_GET["statut"])) {
+        updateSTATUT($_GET["id"], $_GET["statut"]);
+      }
+      break;
+    case 'getBasketAndDevis':
+      getBasketAndDevis();
+      break;
+    case 'updateToBasket':
+    if (isset($_GET["id"]) && isset($_GET["qte"])) {
+      updateToBasket($_GET["id"], $_GET["qte"]);
+    }
+    break;
 
     default:
       # code...
@@ -72,6 +82,60 @@ function removeToBasket($id) {
 
   $context  = stream_context_create($opts);
   $service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/bag/remove/";
+  $result = file_get_contents(str_replace(
+      array("{id}", 					"{token}"),
+      array($_SESSION["id"], $_SESSION["token"]),
+      $service_url),
+    false,
+    $context);
+  print_r($result);
+}
+
+function updateMDP($id, $mdp) {
+  $postdata = http_build_query(
+      array(
+          'id' => $id,
+          'mdp' => $mdp
+      )
+  );
+
+  $opts = array('http' =>
+      array(
+          'method'  => 'POST',
+          'header'  => 'Content-type: application/x-www-form-urlencoded',
+          'content' => $postdata
+      )
+  );
+
+  $context  = stream_context_create($opts);
+  $service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/users/update/mdp";
+  $result = file_get_contents(str_replace(
+      array("{id}", 					"{token}"),
+      array($_SESSION["id"], $_SESSION["token"]),
+      $service_url),
+    false,
+    $context);
+  print_r($result);
+}
+
+function updateSTATUT($id, $statut) {
+  $postdata = http_build_query(
+      array(
+          'id' => $id,
+          'statut' => $statut
+      )
+  );
+
+  $opts = array('http' =>
+      array(
+          'method'  => 'POST',
+          'header'  => 'Content-type: application/x-www-form-urlencoded',
+          'content' => $postdata
+      )
+  );
+
+  $context  = stream_context_create($opts);
+  $service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/users/update/statut";
   $result = file_get_contents(str_replace(
       array("{id}", 					"{token}"),
       array($_SESSION["id"], $_SESSION["token"]),

@@ -12,6 +12,7 @@
    define("S_FILTRES", 				"Filters");
    define("S_PANIER", 				"Basket");
    define("S_USER", 				"Users");
+   define("S_PROMO", 				"Codes Promos");
    define("S_DEVIS", 				"Work");
    define("S_VALIDER", 				"Validate");
    define("S_FILTRES_TITLE", 		"Track'n Trace - Filtres");
@@ -21,6 +22,6 @@
    define("S_DETAILS", 				"Détails");
    define("S_ERROR", 				"A problem has occurred, please wait");
    define("S_NOTHING_DOC", 			"There is no document on this file");
-   define("S_DATETIME", 			"Date / Hour"); 
-      
+   define("S_DATETIME", 			"Date / Hour");
+
 ?>

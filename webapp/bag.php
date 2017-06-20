@@ -46,7 +46,7 @@ if (isset($_POST["codepromo"])) {
 		    url: 'callapi.php?function=removeToBasket&id={id_product}'.replace("{id_product}", p1),
 		    dataType: "json",
 		    complete: function (response) {
-            location.reload();c
+            location.reload();
 		    }
 		});
 	}

@@ -12,6 +12,7 @@
    define("S_FILTRES", 				"Filter");
    define("S_PANIER", 				"Korb");
    define("S_USER", 				"Benutzer");
+   define("S_PROMO", 				"Codes Promos");
    define("S_DEVIS", 				"Arbeit");
    define("S_VALIDER", 				"Bestätigen");
    define("S_FILTRES_TITLE", 		"Track'n Trace - Filtres");

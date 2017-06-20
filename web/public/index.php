@@ -68,6 +68,19 @@ function isCorrectIdentification($id, $token) {
 	return false;
 }
 
+function isCorrectIdentificationAdmin($id, $token) {
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
+	if ($mysqli->connect_errno) {
+		echo "Echec lors de la connexion à MySQL : (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
+	}
+	$res = $mysqli->query("SELECT * FROM user WHERE ID='".$mysqli->real_escape_string($id)."' AND  Token='".$mysqli->real_escape_string($token)."' AND Admin=1");
+	$check_user = mysqli_num_rows($res);
+	if($check_user>0){
+		return true;
+	}
+	return false;
+}
+
 function article($id, $number) {
 	$args = "";
 	if ($id != -1) {
@@ -422,6 +435,76 @@ $app->post('/{id}/{token}/devis/create/', function ($request, $response, $args) 
 													."'".$panier["promo"][$i]["total"]."');");
 	}
 
+	$response = $response->withHeader('Content-type', 'text');
+	$response = $response->withJson($retour, 302);
+    return $response;
+});
+$app->get('/{id}/{token}/users/', function ($request, $response, $args) {
+	$id = $args['id'];
+	$token = $args['token'];
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
+
+	$users = array();
+
+	if (isCorrectIdentificationAdmin($id, $token)) {
+		$res = $mysqli->query("SELECT ID, Login, 'DTC je le passe pas' AS Password, Admin FROM user");
+		while(($row =  mysqli_fetch_assoc($res))) {
+			$users[] = $row;
+		}
+	}
+
+
+	$response = $response->withHeader('Content-type', 'text');
+	$response = $response->withJson($users, 302);
+    return $response;
+});
+$app->post('/{id}/{token}/users/insert/', function ($request, $response, $args) {
+	$id = $args['id'];
+	$token = $args['token'];
+	$parsedBody = $request->getParsedBody();
+
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
+	$nb_bag = "0"; $nb_devis = "0";
+
+	$users = array();
+
+	if (isCorrectIdentificationAdmin($id, $token)) {
+		$res = $mysqli->query("INSERT INTO user (Login, Password, Admin) VALUES ('".$mysqli->real_escape_string($parsedBody["Login"])."','".$mysqli->real_escape_string($parsedBody["Password"])."', ".$mysqli->real_escape_string($parsedBody["Admin"]).");");
+	}
+
+
+	$response = $response->withHeader('Content-type', 'text');
+	$response = $response->withJson($parsedBody, 302);
+    return $response;
+});
+$app->post('/{id}/{token}/users/update/statut', function ($request, $response, $args) {
+	$id = $args['id'];
+	$token = $args['token'];
+	$parsedBody = $request->getParsedBody();
+
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
+	$retour = array('item' => $parsedBody["id"],'count' => 0);
+	if (isCorrectIdentificationAdmin($id, $token)) {
+		$mysqli->query("UPDATE user SET Admin = ".$parsedBody["statut"]." WHERE ID= ".$parsedBody["id"]." ");
+		$retour = array('item' => $parsedBody["id"],'count' => 0);
+
+	}
+	$response = $response->withHeader('Content-type', 'text');
+	$response = $response->withJson($retour, 302);
+    return $response;
+});
+$app->post('/{id}/{token}/users/update/mdp', function ($request, $response, $args) {
+	$id = $args['id'];
+	$token = $args['token'];
+	$parsedBody = $request->getParsedBody();
+
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
+	$retour = array('item' => $parsedBody["id"],'count' => 0);
+	if (isCorrectIdentificationAdmin($id, $token)) {
+		$mysqli->query("UPDATE user SET Password = '".$parsedBody["mdp"]."' WHERE ID= ".$parsedBody["id"]." ");
+		$retour = array('item' => $parsedBody["id"],'count' => 0);
+
+	}
 	$response = $response->withHeader('Content-type', 'text');
 	$response = $response->withJson($retour, 302);
     return $response;

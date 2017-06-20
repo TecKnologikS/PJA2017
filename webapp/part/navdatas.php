@@ -11,6 +11,7 @@
           <?php
             if ($_SESSION["really"] == true) {
               echo '<li><a href="./admin_user.php"><button class="btn btn-info">'.S_USER.'</button></a></li>';
+              echo '<li><a href="./admin_promo.php"><button class="btn btn-info">'.S_PROMO.'</button></a></li>';
             }
           ?>
           <li><a href="./bag.php"><button class="btn btn-warning"><?php echo S_PANIER; ?> (<span id="item_count_bag">0</span>)</button></a></li>
