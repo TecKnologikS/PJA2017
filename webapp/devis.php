@@ -36,7 +36,7 @@ $promo = $bag["promo"];
         <tr><td>Adresse :</td><td colspan="3"><?= $devis["Adresse"] ?></td></tr>
         <tr><td>Code Postal :</td><td><?= $devis["CP"] ?></td><td>Ville :</td><td><?= $devis["Ville"] ?></td></tr>
         <tr><td>Nom :</td><td><?= $devis["Nom"] ?></td><td>Prénom :</td><td><?= $devis["Prenom"] ?></td></tr>
-        <tr><td colspan="4"><a target="_blank" href="https://www.google.fr/maps?q=<?= $devis['Adresse'].'%20'.$devis['CP'].'%20'.$devis['Ville'] ?>"><input value="Se rendre chez le client" class="btn btn-info" style="font-size: 1.5em; width:100%; height: 50px"></a></td></tr>
+        <tr><td colspan="4" style="padding: 0;"><a target="_blank" href="https://www.google.fr/maps?q=<?= $devis['Adresse'].'%20'.$devis['CP'].'%20'.$devis['Ville'] ?>"><input value="Se rendre chez le client" class="btn btn-info" style="font-size: 1.5em; width:100%; height: 50px"></a></td></tr>
       </tbody>
     </table>
 

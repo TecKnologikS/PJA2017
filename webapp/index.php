@@ -38,6 +38,13 @@ require_once("part/basicFunctionLoad.php");
 						<?php
 
 						$service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/products";
+
+						if(isset($_POST["search"])) {
+							if (strlen($_POST["search"]) > 2 ) {
+								$service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/products/search/".utf8_encode($_POST["search"])."/";
+							}
+						}
+
 						$toshow = "<tr>
 													<td><a href='page.php?id={id_product}'>{name}</a></td>
 													<td>{descr}</td>

@@ -69,23 +69,23 @@ if (isset($_POST["codepromo"])) {
 </head>
 <body onload="getBasketAndDevis();">
 	<?php include("part/navdatas.php"); ?>
-	<div class="container-fluid" style="margin-top: 70px;">
+	<div class="container-fluid" style="margin-top: 50px;">
 		<table id="quezac" class="display responsive nowrap" width="100%">
 			<thead>
 						<tr>
-							<th></th>
+							<th style="width: 30px;"></th>
 							<th>Nom</th>
 							<th>Quantité</th>
-							<th>Prix de base</th>
-							<th>Réduction</th>
-							<th>Prix final</th>
+							<th style="width: 80px;">Prix de base</th>
+							<th style="width: 140px;">Réduction</th>
+							<th style="width: 80px;">Prix final</th>
 						</tr>
 					</thead>
 					<tbody>
 						<?php
 
 						$service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/bag/";
-						$toshow = "<tr><td><a onclick='removeToBasket({id_product})'>Supprimer</a></td><td><a href='page.html?product={id_product}'>{name}</a></td><td><input name='qte' type='number' min=1 value='{qte}'><a  style='margin-left:30px;' onclick='updateToBasket(this, {id_product})'>Modifier</a></td><td>€ {prix_base}</td><td>€ {reduction}</td><td>€ {prix_final}</td></tr>";
+						$toshow = "<tr><td><a onclick='removeToBasket({id_product})'>Supprimer</a></td><td><a href='page.html?product={id_product}'>{name}</a></td><td><input name='qte' type='number' min=1 value='{qte}'><a  style='margin-left:30px;' onclick='updateToBasket(this, {id_product})'>Modifier</a></td><td style='text-align:right;'>€ {prix_base}</td><td style='text-align:right;'>€ {reduction}</td><td style='text-align:right;'>€ {prix_final}</td></tr>";
 						$bag = json_decode(file_get_contents(
 									str_replace(
 										array("{id}", 					"{token}"),
@@ -113,13 +113,14 @@ if (isset($_POST["codepromo"])) {
 		<form action="/bag.php" method="post" style="margin-left: 20px;">
 			<table class="addition" style="margin-left: 20px; float: left;">
 				<tbody>
-					<tr><td colspan="2"><h4>Ajouter un code promotionnel</h4></td></tr>
+					<tr><td colspan="2" style="font-family: 'Open Sans', sans-serif;"><h4>Ajouter un code promotionnel</h4></td></tr>
 					<tr><td>Code :</td><td><input type="text" name="codepromo" /></td></tr>
-					<tr><td colspan="2"><input type="submit" value="Ajouter" class="btn btn-info" style="font-size: 1.0em; width:100%;"></td></tr>
-					<tr><td colspan="2"><span class="error_message"><?php if(isset($error_promo)) { echo $error_promo; } ?></span></td></tr>
+					<tr><td colspan="2" style="padding: 0;"><input type="submit" value="Ajouter" class="btn btn-info" style=" height: 50px;font-size: 1.5em;"></td></tr>
 				</tbody>
 			</table>
 		</form>
+
+
 		<table class="addition" style="float: right;">
 			<tbody>
 
@@ -132,7 +133,7 @@ if (isset($_POST["codepromo"])) {
 							}
 					}
 				?>
-				<tr> <td colspan="2" style="text-align:center;border-bottom: 2px solid #E0E0E0;border-top: 2px solid #E0E0E0;">Addition</td></tr>
+				<tr> <td colspan="2" style="text-align:center;border-bottom: 2px solid #E0E0E0;border-top: 2px solid #E0E0E0;font-size: 1.30em;font-family: 'Open Sans', sans-serif;">Addition</td></tr>
 				<tr> <td class>Prix total</td><td><?php echo  $bag["prix_total"]; ?> €</td> </tr>
 				<tr> <td>Reduction</td><td><?php echo  "(".round((($bag['reduction_total']/$bag['prix_total'])*100), 2)." %) ".$bag["reduction_total"]; ?> €</td> </tr>
 				<tr> <td>Prix final</td><td><?php echo  $bag["prix_final"]; ?> €</td> </tr>
@@ -140,7 +141,7 @@ if (isset($_POST["codepromo"])) {
 
 			<tfoot>
 				<tr>
-					<td style="border: none" colspan="2"><a style="margin: 20px; margin-left: auto;" href="./validate.php"><button class="btn btn-success" style="font-size: 1.5em; width:100%;"><?php echo S_VALIDER; ?></button></a></td>
+					<td style="border: none; padding: 0;" colspan="2"><a style="margin: 20px; margin-left: auto;" href="./validate.php"><button class="btn btn-success" style="font-size: 1.5em; width:100%;"><?php echo S_VALIDER; ?></button></a></td>
 				</tr>
 			</tfoot>
 		</table>

@@ -74,7 +74,7 @@ $users = json_decode(file_get_contents(
               </label>
             </td>
           </tr>
-					<tr><td class="gris" colspan="3"><input type="submit" value="Ajouter" class="btn btn-info" style="font-size: 1.0em; width:100%;"></td></tr>
+					<tr><td class="gris" colspan="3" style="padding:0;"><input type="submit" value="Ajouter" class="btn btn-info" style="width:100%; height: 50px; font-size: 1.5em;"></td></tr>
 				</tbody>
 			</table>
 		</form>
@@ -94,7 +94,7 @@ $users = json_decode(file_get_contents(
           <?php
           $ligne = '<tr>
                       <td>{login}</td>
-                      <td><input id="addIt" type="button" class="btn btn-success" value="Modifier" onclick="updateMdp({id});" /></td>
+                      <td style="padding:0;"><input id="addIt" type="button" style="height:100%; width:100%;" class="btn btn-success" value="Modifier" onclick="updateMdp({id});" /></td>
                       <td>
                         <label class="switch">
                           <input type="checkbox" name="admin" {admin} onChange="updateStatut({id}, {value});">

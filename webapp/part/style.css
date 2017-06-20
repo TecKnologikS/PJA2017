@@ -77,6 +77,11 @@
 	font-family: 'Open Sans', sans-serif;
 }
 
+h3,
+h4 {
+	font-family: 'Open Sans', sans-serif;
+}
+
 .btn {
 	border-radius: 0;
 	height: 100%;

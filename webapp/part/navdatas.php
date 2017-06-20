@@ -6,7 +6,7 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
 				<li><form accept-charset="UTF-8" role="form" action="index.php" method=post name=form>
-							<fieldset><input class="form-control recherche" placeholder="Rechercher un produit" name="search" type="text"></fieldset>
+							<fieldset><input class="form-control recherche" placeholder="Rechercher un produit" name="search" type="text" value="<?php if(isset($_POST['search'])) {echo $_POST['search'];}?>"></fieldset>
 					</form></li>
           <?php
             if ($_SESSION["really"] == true) {
