@@ -24,7 +24,7 @@ $users = json_decode(file_get_contents(
   <script>
     function updateMdp(id) {
       var txt;
-      var mdp = prompt("Nouveau mot de passe ?", "");
+      var mdp = prompt("Entrez un nouveau mot de passe", "");
       if (mdp == null || mdp == "") {
 
       } else {
@@ -94,7 +94,7 @@ $users = json_decode(file_get_contents(
           <?php
           $ligne = '<tr>
                       <td>{login}</td>
-                      <td><input id="addIt" type="button" class="btn btn-success" value="Modifier" onclick="updateMdp({id});" /></td>
+                      <td><input id="addIt" type="button" class="btn btn-danger" value="Modifier" onclick="updateMdp({id});" /></td>
                       <td>
                         <label class="switch">
                           <input type="checkbox" name="admin" {admin} onChange="updateStatut({id}, {value});">
