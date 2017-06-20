@@ -25,9 +25,9 @@ require_once("part/basicFunctionLoad.php");
 						$service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/devis";
 						$toshow = "<tr><td>{societe}</td><td>{contact}</td><td>{date}</td><td>{prix}</td><td class='action_btn'>"
                           ."<a href='./devis.php?id={id}'><button type='submit' name='See' class='btn btn-success'>VOIR</button></a>"
-                          ."<a href='./devis.php?id={id}&action=share'><button type='submit' name='Share' class='btn btn-info'>PARTAGER</button></a>"
                           ."<a href='./export.php?id={id}'><button type='submit' name='PDF' class='btn btn-danger'>PDF</button></a></td></tr>";
 						$btn = '<input id="addIt" type="button" value="addIt" onclick="addToBasket({id_product});" />';
+						//<a href='./devis.php?id={id}&action=share'><button type='submit' name='Share' class='btn btn-info'>PARTAGER</button></a>
 						$devis = json_decode(file_get_contents(
 									str_replace(
 										array("{id}", 					"{token}"),

@@ -95,7 +95,7 @@ function article($id, $number) {
 	if ($mysqli->connect_errno) {
 		echo "Echec lors de la connexion à MySQL : (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 	}
-	$res = $mysqli->query("SELECT * FROM article WHERE 1=1 ".$args);
+	$res = $mysqli->query("SELECT * , (SELECT SUM(Qte) FROM `devis_article` WHERE ID_Article = article.id) as nb_commande FROM article WHERE 1=1 ".$args);
 	$types = array();
 
 	while(($row =  mysqli_fetch_assoc($res))) {
