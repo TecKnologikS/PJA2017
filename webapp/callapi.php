@@ -28,6 +28,11 @@ if (isset($_GET["function"])) {
         removeUser($_GET["id"]);
       }
       break;
+    case 'removeCode':
+      if (isset($_GET["id"])) {
+        removeCode($_GET["id"]);
+      }
+      break;
     case 'getBasketAndDevis':
       getBasketAndDevis();
       break;

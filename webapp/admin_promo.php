@@ -4,14 +4,13 @@ require("part/basicFunctionLoad.php");
 if (!isset($_GET["id"]) && $_SESSION["really"] != true)
   header('Location: index.php');
 
-if (isset($_POST["login"]) && isset($_POST["password"])) {
-  $admin = isset($_POST["admin"]) ? $_POST["admin"] : 0;
-
+if (isset($_POST["libelle"]) && isset($_POST["code"]) && isset($_POST["reduction"]) && isset($_POST["minimum"])) {
   $postdata = http_build_query(
       array(
-          'Login' => $_POST["login"],
-          'Password' => $_POST["password"],
-          'Admin' => $admin
+          'libelle' => $_POST["libelle"],
+          'code' => $_POST["code"],
+          'reduction' => $_POST["reduction"],
+          'minimum' => $_POST["minimum"]
       )
   );
 
@@ -25,14 +24,14 @@ if (isset($_POST["login"]) && isset($_POST["password"])) {
   );
 
   $context  = stream_context_create($opts);
-  $service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/users/insert/";
+  $service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/promo/insert/";
   $result = json_decode(file_get_contents(str_replace(
       array("{id}", 					"{token}"),
       array($_SESSION["id"], $_SESSION["token"]),
       $service_url),
     false,
     $context), true);
-    if ($result["created"]){
+    if ($result["insert"]){
       Succed($_POST["login"].S_CREATED_USER);
     } else {
       Error(S_ERROR_CREATED_USER);
@@ -72,7 +71,7 @@ $promos = json_decode(file_get_contents(
 	<?php include("part/navdatas.php"); ?>
 	<div class="container-fluid" style="margin-top: 70px;">
 
-    <form action="/admin_user.php" method="post" >
+    <form action="/admin_promo.php" method="post" >
 			<table class="devis" style="margin: 0 auto 0 auto; ">
         <thead>
           <tr><th colspan="4"><h4>Nouveau code promotionnel</h4></th></tr>
@@ -87,8 +86,8 @@ $promos = json_decode(file_get_contents(
           <tr>
             <td><input type="text" name="libelle" placeholder="Libelle" /></td>
             <td><input type="text" name="code" placeholder="Code" /></td>
-            <td><input type="text" name="reduction" placeholder="Reduction en %" /></td>
-            <td><input type="text" name="minimum" placeholder="Minimum en €" /></td>
+            <td><input type="number" name="reduction" placeholder="Reduction en %" /></td>
+            <td><input type="number" name="minimum" placeholder="Minimum en €" /></td>
           </tr>
 					<tr><td class="gris" colspan="4" style="padding:0;"><input type="submit" value="Ajouter" class="btn btn-info" style="font-size: 1.5em; width:100%; height:50px;"></td></tr>
 				</tbody>

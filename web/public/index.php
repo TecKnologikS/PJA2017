@@ -335,19 +335,33 @@ $app->post('/{id}/{token}/promo/insert/', function ($request, $response, $args) 
 	$id = $args['id'];
 	$token = $args['token'];
 	$parsedBody = $request->getParsedBody();
+	$retour = array('item' => $parsedBody["code"],'insert' => false);
 
 	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
-	$retour = array('item' => $parsedBody["code"],'insert' => false);
+	$mysqli->set_charset("utf8");
 	$res = $mysqli->query("SELECT * FROM `promocode` WHERE code='".$mysqli->real_escape_string($parsedBody["code"])."'");
-	$id_promo = 0;
-	if ($row = $res->fetch_assoc()){
-		$retour = array('item' => $parsedBody["code"],'insert' => false);
-		$id_promo = $row['ID'];
-	} else {
-		$mysqli->query("INSERT INTO promocode (Nom, Code, Reduction, Minimum, Type, Catégorie, Validity) VALUES ('".$parsedBody["libelle"]."', '".$parsedBody["code"]."', $parsedBody["reduction"], $parsedBody["minimum"] ,1,0,(CURRENT_TIMESTAMP + interval '30' day))");
-		$retour = array('item' => $parsedBody["code"],'insert' => false);
+	$check_promo = mysqli_num_rows($res);
+	if($check_promo <= 0){
+		$mysqli->query("INSERT INTO promocode (Nom, Code, Reduction, Minimum, Type, Catégorie, Validity) VALUES ('".$parsedBody["libelle"]."', '".$parsedBody["code"]."', ".$parsedBody["reduction"].", ".$parsedBody["minimum"]." ,1,0, NOW() + INTERVAL 15 DAY);");
+		$retour = array('item' => $parsedBody["code"],'insert' => true);
 	}
 
+	$response = $response->withHeader('Content-type', 'text');
+	$response = $response->withJson($retour, 302);
+    return $response;
+});
+$app->delete('/{id}/{token}/promo/delete/', function ($request, $response, $args) {
+	$id = $args['id'];
+	$token = $args['token'];
+	$parsedBody = $request->getParsedBody();
+
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
+	$retour = array('item' => $parsedBody["id"],'count' => 0);
+	if (isCorrectIdentificationAdmin($id, $token)) {
+		$mysqli->query("DELETE FROM promocode WHERE ID= ".$parsedBody["id"]." ");
+		$retour = array('item' => $parsedBody["id"],'count' => 0);
+
+	}
 	$response = $response->withHeader('Content-type', 'text');
 	$response = $response->withJson($retour, 302);
     return $response;
