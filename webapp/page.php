@@ -50,8 +50,8 @@ if (!isset($_GET["id"])) {
 		<p style="text-align:center; font-style: italic;"><?= $article["smallDesc"] ?></p>
 		<table  style="margin-left:auto; margin-right:auto;" class="addition" style="margin-left: 0px;">
 			<tbody>
-				<tr><td colspan="2"><h4 style="text-align:center">S_ADDTOBASKET</h4></td></tr>
-				<tr><td>S_NUMBER</td><td><input type='number' min=1 name="nomber" value="1" /></td></tr>
+				<tr><td colspan="2"><h4 style="text-align:center"><?= S_ADDTOBASKET ?></h4></td></tr>
+				<tr><td><?= S_NUMBER ?></td><td><input type='number' min=1 name="nomber" value="1" /></td></tr>
 				<tr><td colspan="2" style="padding: 0;"><input value="Ajouter" class="btn btn-success" style="font-size: 1.0em; width:100%; padding: 20px 20px 20px 20px; font-size: 1.5em;" onclick="addToBasket(<?= $article['id'] ?>);"></td></tr>
 			</tbody>
 		</table>

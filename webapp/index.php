@@ -27,10 +27,10 @@ require_once("part/basicFunctionLoad.php");
 		<table id="quezac" class="display responsive nowrap" width="100%">
 			<thead>
 						<tr>
-							<th>S_PRODUCTNAME</th>
-							<th>S_PRODUCTDESCRPTION</th>
-							<th style="width:60px;">S_COMMANDE</th>
-							<th style="width:60px;">S_UNITYPRICE</th>
+							<th><?= S_PRODUCTNAME ?></th>
+							<th><?= S_PRODUCTDESCRPTION ?></th>
+							<th style="width:60px;"><?= S_COMMANDE ?></th>
+							<th style="width:60px;"><?= S_UNITYPRICE ?></th>
 							<th style="width:20px;"></th>
 						</tr>
 					</thead>

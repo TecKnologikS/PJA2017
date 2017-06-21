@@ -74,11 +74,11 @@ if (isset($_POST["codepromo"])) {
 			<thead>
 						<tr>
 							<th></th>
-							<th>S_PRODUCTNAME</th>
-							<th>S_QUANTITE</th>
-							<th>S_BASEPRICE</th>
-							<th>S_REDUCTION</th>
-							<th>S_FINALPRICE</th>
+							<th><?= S_PRODUCTNAME ?></th>
+							<th><?= S_QUANTITE ?></th>
+							<th><?= S_BASEPRICE ?></th>
+							<th><?= S_REDUCTION ?></th>
+							<th><?= S_FINALPRICE ?></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -113,8 +113,8 @@ if (isset($_POST["codepromo"])) {
 		<form action="/bag.php" method="post" style="margin-left: 20px;">
 			<table class="addition" style="margin-left: 20px; float: left;">
 				<tbody>
-					<tr><td colspan="2"><h4>S_CODEMORE</h4></td></tr>
-					<tr><td>S_CODE</td><td><input type="text" name="codepromo" /></td></tr>
+					<tr><td colspan="2"><h4><?= S_CODEMORE ?></h4></td></tr>
+					<tr><td><?= S_CODE ?></td><td><input type="text" name="codepromo" /></td></tr>
 					<tr><td colspan="2"><input type="submit" value="Ajouter" class="btn btn-info" style="font-size: 1.0em; width:100%;"></td></tr>
 					<tr><td colspan="2"><span class="error_message"><?php if(isset($error_promo)) { echo $error_promo; } ?></span></td></tr>
 				</tbody>
@@ -132,10 +132,10 @@ if (isset($_POST["codepromo"])) {
 							}
 					}
 				?>
-				<tr> <td colspan="2" style="text-align:center;border-bottom: 2px solid #E0E0E0;border-top: 2px solid #E0E0E0;">Addition</td></tr>
-				<tr> <td class>S_TOTALPRICE</td><td><?php echo  $bag["prix_total"]; ?> €</td> </tr>
-				<tr> <td>S_REDUCTION</td><td><?php echo  "(".round((($bag['reduction_total']/$bag['prix_total'])*100), 2)." %) ".$bag["reduction_total"]; ?> €</td> </tr>
-				<tr> <td>S_FINALPRICE</td><td><?php echo  $bag["prix_final"]; ?> €</td> </tr>
+				<tr> <td colspan="2" style="text-align:center;border-bottom: 2px solid #E0E0E0;border-top: 2px solid #E0E0E0;"><?= S_ADDITION ?></td></tr>
+				<tr> <td class><?= S_TOTALPRICE ?></td><td><?php echo  $bag["prix_total"]; ?> €</td> </tr>
+				<tr> <td><?= S_REDUCTION ?></td><td><?php echo  "(".round((($bag['reduction_total']/$bag['prix_total'])*100), 2)." %) ".$bag["reduction_total"]; ?> €</td> </tr>
+				<tr> <td><?= S_FINALPRICE ?></td><td><?php echo  $bag["prix_final"]; ?> €</td> </tr>
 			</tbody>
 
 			<tfoot>
