@@ -85,7 +85,7 @@ if (isset($_POST["codepromo"])) {
 						<?php
 
 						$service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/bag/";
-						$toshow = "<tr><td><a onclick='removeToBasket({id_product})'>Supprimer</a></td><td><a href='page.html?product={id_product}'>{name}</a></td><td><input name='qte' type='number' min=1 value='{qte}'><a  style='margin-left:30px;' onclick='updateToBasket(this, {id_product})'>Modifier</a></td><td>€ {prix_base}</td><td>€ {reduction}</td><td>€ {prix_final}</td></tr>";
+						$toshow = "<tr><td><a onclick='removeToBasket({id_product})'>Supprimer</a></td><td><a href='page.html?product={id_product}'>{name}</a></td><td><input name='qte' type='number' min=1 value='{qte}'><a  style='margin-left:30px;' onclick='updateToBasket(this, {id_product})'><i class='material-icons'>cached</i></a></td><td>€ {prix_base}</td><td>€ {reduction}</td><td>€ {prix_final}</td></tr>";
 						$bag = json_decode(file_get_contents(
 									str_replace(
 										array("{id}", 					"{token}"),
