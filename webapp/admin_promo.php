@@ -41,8 +41,8 @@ if (isset($_POST["login"]) && isset($_POST["password"])) {
 }
 
 
-$service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/users/";
-$users = json_decode(file_get_contents(
+$service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/promo/";
+$promos = json_decode(file_get_contents(
       str_replace(
         array("{id}", 					"{token}"),
         array($_SESSION["id"], $_SESSION["token"]),
@@ -55,35 +55,10 @@ $users = json_decode(file_get_contents(
 <head>
 	<?php include('part/header.php'); ?>
   <script>
-    function updateMdp(id) {
-      var txt;
-      var mdp = prompt("Entrez un nouveau mot de passe", "");
-      if (mdp == null || mdp == "") {
-
-      } else {
-        $.ajax({
-            url: 'callapi.php?function=updateMDP&id={id_user}&mdp={mdp}'.replace("{id_user}", id).replace("{mdp}", mdp),
-            dataType: "json",
-            complete: function (response) {
-                location.reload();
-            }
-        });
-      }
-    }
-
-    function updateStatut(id, value) {
-      $.ajax({
-          url: 'callapi.php?function=updateSTATUT&id={id_user}&statut={value}'.replace("{id_user}", id).replace("{value}", value),
-          dataType: "json",
-          complete: function (response) {
-              location.reload();
-          }
-      });
-    }
-    function removeUser(id) {
+    function removeCode(id) {
       if (confirm('Etes vous sur de vouloir supprimer l utilisateur ?')) {
         $.ajax({
-            url: 'callapi.php?function=removeUser&id={id_user}'.replace("{id_user}", id),
+            url: 'callapi.php?function=removeCode&id={id_code}'.replace("{id_code}", id),
             dataType: "json",
             complete: function (response) {
                 location.reload();
@@ -100,25 +75,22 @@ $users = json_decode(file_get_contents(
     <form action="/admin_user.php" method="post" >
 			<table class="devis" style="margin: 0 auto 0 auto; ">
         <thead>
-          <tr><th colspan="3"><h4><?= S_NEWUSER ?></h4></th></tr>
+          <tr><th colspan="4"><h4>Nouveau code promotionnel</h4></th></tr>
           <tr>
-            <th><?= S_LOGIN ?></th>
-            <th><?= S_MDP ?></th>
-            <th><?= S_ADMINUSER ?></th>
+            <th>Libelle</th>
+            <th>Code</th>
+            <th style="text-align: right;">Reduction (en %)</th>
+            <th style="text-align: right;">Minimum d'Achat</th>
           </tr>
         </thead>
 				<tbody>
           <tr>
-            <td><input type="text" name="login" placeholder="login" /></td>
-            <td><input type="text" name="password" placeholder="mot de passe" /></td>
-            <td>
-              <label class="switch">
-                <input type="checkbox" name="admin" value="1">
-                <div class="slider round"></div>
-              </label>
-            </td>
+            <td><input type="text" name="libelle" placeholder="Libelle" /></td>
+            <td><input type="text" name="code" placeholder="Code" /></td>
+            <td><input type="text" name="reduction" placeholder="Reduction en %" /></td>
+            <td><input type="text" name="minimum" placeholder="Minimum en €" /></td>
           </tr>
-					<tr><td class="gris" colspan="3" style="padding:0;"><input type="submit" value="Ajouter" class="btn btn-info" style="font-size: 1.5em; width:100%; height:50px;"></td></tr>
+					<tr><td class="gris" colspan="4" style="padding:0;"><input type="submit" value="Ajouter" class="btn btn-info" style="font-size: 1.5em; width:100%; height:50px;"></td></tr>
 				</tbody>
 			</table>
 		</form>
@@ -126,38 +98,29 @@ $users = json_decode(file_get_contents(
     <br />
     <table class="devis" style="margin: 0 auto 0 auto; ">
       <thead>
-        <tr><th colspan="4"><h4><?= S_LISTUSER ?></h4></th></tr>
+        <tr><th colspan="5"><h4>Liste codes promotionnels</h4></th></tr>
         <tr>
-          <th><?= S_LOGIN ?></th>
-          <th><?= S_MDP ?></th>
-          <th><?= S_ADMINUSER ?></th>
+          <th>Libelle</th>
+          <th>Code</th>
+          <th style="text-align: right;">Reduction</th>
+          <th style="text-align: right;">Minimum d'Achat</th>
           <th></th>
         </tr>
       </thead>
       <tbody>
           <?php
           $ligne = '<tr>
-                      <td>{login}</td>
-                      <td><input id="addIt" type="button" class="btn btn-danger" value="Modifier" onclick="updateMdp({id});" /></td>
-                      <td>
-                        <label class="switch">
-                          <input type="checkbox" name="admin" {admin} onChange="updateStatut({id}, {value});">
-                          <div class="slider round"></div>
-                        </label>
-                      </td>
-                      <td><a onclick="removeUser({id});"><i class="material-icons" style="vertical-align: bottom; color:#F44336;">delete</i></a></td>
+                      <td>{libelle}</td>
+                      <td>{code}</td>
+                      <td style="text-align: right;">{reduction} %</td>
+                      <td style="text-align: right;">{minimum} €</td>
+                      <td><a onclick="removeCode({id});"><i class="material-icons" style="vertical-align: bottom; color:#F44336;">delete</i></a></td>
                     </tr>';
-                    if (count($users) > 0) {
-                      for($i = 0; $i < count($users); $i++) {
-                        $checked = '';
-                        $toclick = '1';
-                        if ($users[$i]["Admin"] == 1){
-                          $checked = 'checked';
-                          $toclick = '0';
-                        }
+                    if (count($promos) > 0) {
+                      for($i = 0; $i < count($promos); $i++) {
                         echo str_replace(
-                          array("{id}",								"{login}", 					"{password}", 			"{admin}", "{value}" ),
-                          array($users[$i]["ID"], $users[$i]["Login"], $users[$i]["Password"], $checked, $toclick),
+                          array("{libelle}",								"{code}", 					"{reduction}", 			"{minimum}", "{id}" ),
+                          array($promos[$i]["Nom"], $promos[$i]["Code"], $promos[$i]["Reduction"], $promos[$i]["Minimum"], $promos[$i]["ID"]),
                           $ligne);
                       }
                     } else {

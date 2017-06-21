@@ -150,7 +150,7 @@ function updateSTATUT($id, $statut) {
   print_r($result);
 }
 
-function removeUser($id, $statut) {
+function removeUser($id) {
   $postdata = http_build_query(
       array(
           'id' => $id
@@ -167,6 +167,31 @@ function removeUser($id, $statut) {
 
   $context  = stream_context_create($opts);
   $service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/users/delete/";
+  $result = file_get_contents(str_replace(
+      array("{id}", 					"{token}"),
+      array($_SESSION["id"], $_SESSION["token"]),
+      $service_url),
+    false,
+    $context);
+  print_r($result);
+}
+function removeCode($id) {
+  $postdata = http_build_query(
+      array(
+          'id' => $id
+      )
+  );
+
+  $opts = array('http' =>
+      array(
+          'method'  => 'DELETE',
+          'header'  => 'Content-type: application/x-www-form-urlencoded',
+          'content' => $postdata
+      )
+  );
+
+  $context  = stream_context_create($opts);
+  $service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/promo/delete/";
   $result = file_get_contents(str_replace(
       array("{id}", 					"{token}"),
       array($_SESSION["id"], $_SESSION["token"]),

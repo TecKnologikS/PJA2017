@@ -211,9 +211,9 @@ $app->get('/{id}/{token}/products', function (Request $request, Response $respon
     return $response;
 });
 $app->get('/{id}/{token}/products/search/{recherche}/', function (Request $request, Response $response) {
-    $id = $request->getAttribute('id');
+  $id = $request->getAttribute('id');
 	$token =  $request->getAttribute('token');
-$recherche =  $request->getAttribute('recherche');
+	$recherche =  $request->getAttribute('recherche');
 
 	$timestamps =  time();
 	$data = array();
@@ -291,6 +291,24 @@ $app->get('/{id}/{token}/devis/{id_devis}/', function (Request $request, Respons
 	$response = $response->withJson($retour, 302);
     return $response;
 });
+$app->get('/{id}/{token}/promo/', function ($request, $response, $args) {
+	$id = $args['id'];
+	$token = $args['token'];
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
+	$mysqli->set_charset("utf8");
+	$promos = array();
+	if (isCorrectIdentificationAdmin($id, $token)) {
+		$res = $mysqli->query("SELECT  * FROM promocode");
+		while(($row =  mysqli_fetch_assoc($res))) {
+			$promos[] = $row;
+		}
+	}
+
+
+	$response = $response->withHeader('Content-type', 'text');
+	$response = $response->withJson($promos, 302);
+  return $response;
+});
 $app->post('/{id}/{token}/promo/add/', function ($request, $response, $args) {
 	$id = $args['id'];
 	$token = $args['token'];
@@ -307,6 +325,27 @@ $app->post('/{id}/{token}/promo/add/', function ($request, $response, $args) {
 	if ($id_promo > 0) {
 		$mysqli->query("DELETE FROM `panier_promo` WHERE ID_User = ".$id."");
 		$mysqli->query("INSERT INTO panier_promo (ID_User,ID_Promo) VALUES (".$id.", ".$id_promo.") ON DUPLICATE KEY UPDATE ID_Promo=ID_Promo;");
+	}
+
+	$response = $response->withHeader('Content-type', 'text');
+	$response = $response->withJson($retour, 302);
+    return $response;
+});
+$app->post('/{id}/{token}/promo/insert/', function ($request, $response, $args) {
+	$id = $args['id'];
+	$token = $args['token'];
+	$parsedBody = $request->getParsedBody();
+
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
+	$retour = array('item' => $parsedBody["code"],'insert' => false);
+	$res = $mysqli->query("SELECT * FROM `promocode` WHERE code='".$mysqli->real_escape_string($parsedBody["code"])."'");
+	$id_promo = 0;
+	if ($row = $res->fetch_assoc()){
+		$retour = array('item' => $parsedBody["code"],'insert' => false);
+		$id_promo = $row['ID'];
+	} else {
+		$mysqli->query("INSERT INTO promocode (Nom, Code, Reduction, Minimum, Type, Catégorie, Validity) VALUES ('".$parsedBody["libelle"]."', '".$parsedBody["code"]."', $parsedBody["reduction"], $parsedBody["minimum"] ,1,0,(CURRENT_TIMESTAMP + interval '30' day))");
+		$retour = array('item' => $parsedBody["code"],'insert' => false);
 	}
 
 	$response = $response->withHeader('Content-type', 'text');
