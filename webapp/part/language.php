@@ -56,22 +56,13 @@
    define("S_PRICETOPAIE", 			"Prix à payer");
    define("S_ADDITION", 			"Addition");
    define("S_PRODUCTNAME", 			"Nom du produit");
-   define("S_PRODUCTDESCRPTION", 	"Description du produit");
+   define("S_PRODUCTDESCRIPTION", 	"Description du produit");
    define("S_COMMANDE", 			"Commande");
    define("S_CONTACT", 				"Contact");
    define("S_ADDTOBASKET", 			"Ajouter au panier");
    define("S_NUMBER", 				"Nombre :");
    define("S_PRICETOPAIE", 			"Prix à payer");
-   define("S_DATETIME", 			"Date / Heure");
-   define("S_DATETIME", 			"Date / Heure");
-   define("S_DATETIME", 			"Date / Heure");
-   
-   
-   
-   
-   
-   
-   
+
    
    
 ?>

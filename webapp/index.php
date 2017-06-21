@@ -28,7 +28,7 @@ require_once("part/basicFunctionLoad.php");
 			<thead>
 						<tr>
 							<th><?= S_PRODUCTNAME ?></th>
-							<th><?= S_PRODUCTDESCRPTION ?></th>
+							<th><?= S_PRODUCTDESCRIPTION ?></th>
 							<th style="width:60px; text-align: right;"><?= S_COMMANDE ?></th>
 							<th style="width:60px; text-align: right;"><?= S_UNITYPRICE ?></th>
 							<th style="width:40px;"></th>

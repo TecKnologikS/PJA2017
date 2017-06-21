@@ -23,5 +23,43 @@
    define("S_ERROR", 				"A problem has occurred, please wait");
    define("S_NOTHING_DOC", 			"There is no document on this file");
    define("S_DATETIME", 			"Date / Hour");
+  
+  //Ajout 
+   define("S_NEWUSER", 				"New user");
+   define("S_ADMINUSER", 			"Administrator");
+   define("S_LISTUSER", 			"User list");
+   define("S_PRODUCTNAME", 			"Product name");
+   define("S_QUANTITE", 			"Quantity");
+   define("S_BASEPRICE", 			"Base price");
+   define("S_REDUCTION", 			"Reduction");
+   define("S_FINALPRICE", 			"Final price");
+   define("S_UNITYPRICE", 			"Unity price");
+   define("S_TOTALPRICE", 			"Total price");
+   define("S_CODEMORE", 			"Add promotional code");
+   define("S_CODE", 				"Code :");
+   define("S_DATECREATE", 			"Create the :");
+   define("S_DATEVALIDITY", 		"Validity to :");
+   define("S_SOCIETY", 				"Society :");
+   define("S_SIRET", 				"Siret number :");
+   define("S_TELEPHONE", 			"Telephone :");
+   define("S_FAX", 					"Fax :");
+   define("S_EMAIL", 				"Email :");
+   define("S_ADRESSUSER", 			"Adress :");
+   define("S_POSTALNUM", 			"Postal code :");
+   define("S_CITYUSER", 			"City :");
+   define("S_USERNAME", 			"Name :");
+   define("S_USERFIRSTNAME", 		"First Name :");
+   define("S_USERSINFO", 			"Client information");
+   define("S_PRICE", 				"Price");
+   define("S_CONTAIN", 				"Contain");
+   define("S_RECAPITULATIF", 		"Recapitulatory");
+   define("S_PRICETOPAIE", 			"Price to paie");
+   define("S_ADDITION", 			"Addition");
+   define("S_PRODUCTDESCRIPTION", 	"Product description");
+   define("S_COMMANDE", 			"Order");
+   define("S_CONTACT", 				"Contact");
+   define("S_ADDTOBASKET", 			"Add to basket");
+   define("S_NUMBER", 				"Number :");
+   define("S_PRICETOPAIE", 			"Price to paie");
 
 ?>
