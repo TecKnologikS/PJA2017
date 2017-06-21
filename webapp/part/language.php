@@ -58,9 +58,9 @@
    define("S_PRODUCTNAME", 			"Nom du produit");
    define("S_PRODUCTDESCRPTION", 	"Description du produit");
    define("S_COMMANDE", 			"Commande");
-   define("S_DATETIME", 			"Date / Heure");
-   define("S_DATETIME", 			"Date / Heure");
-   define("S_DATETIME", 			"Date / Heure");
+   define("S_CONTACT", 				"Contact");
+   define("S_PUSHTOPANIER", 		"Ajouter au panier");
+   define("S_NUMBER", 				"Nombre :");
    define("S_DATETIME", 			"Date / Heure");
    define("S_DATETIME", 			"Date / Heure");
    define("S_DATETIME", 			"Date / Heure");

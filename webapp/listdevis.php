@@ -12,10 +12,10 @@ require_once("part/basicFunctionLoad.php");
 		<table id="quezac" class="display responsive nowrap" width="100%">
 			<thead>
 						<tr>
-							<th>Societe</th>
-							<th>Contact</th>
-							<th style="width: 100px;">Date</th>
-							<th style="width: 70px;">Prix</th>
+							<th>S_SOCIETY</th>
+							<th>S_CONTACT</th>
+							<th style="width: 100px;">S_DATETIME</th>
+							<th style="width: 70px;">S_TOTALPRICE</th>
 							<th style="width: 40px;"></th>
 						</tr>
 					</thead>
