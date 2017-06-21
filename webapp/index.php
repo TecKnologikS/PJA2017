@@ -22,16 +22,16 @@ require_once("part/basicFunctionLoad.php");
 	</script>
 </head>
 <body onload="getBasketAndDevis();">
-	<?php include("part/navdatas.php"); ?>
+	<?php include("part/navdatas_icon.php"); ?>
 	<div class="container-fluid" style="margin-top: 35px;">
 		<table id="quezac" class="display responsive nowrap" width="100%">
 			<thead>
 						<tr>
 							<th><?= S_PRODUCTNAME ?></th>
 							<th><?= S_PRODUCTDESCRPTION ?></th>
-							<th style="width:60px;"><?= S_COMMANDE ?></th>
-							<th style="width:60px;"><?= S_UNITYPRICE ?></th>
-							<th style="width:20px;"></th>
+							<th style="width:60px; text-align: right;"><?= S_COMMANDE ?></th>
+							<th style="width:60px; text-align: right;"><?= S_UNITYPRICE ?></th>
+							<th style="width:40px;"></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -49,10 +49,10 @@ require_once("part/basicFunctionLoad.php");
 													<td><a href='page.php?id={id_product}'>{name}</a></td>
 													<td>{descr}</td>
 													<td style='text-align:right;'>{commande}</td>
-													<td style='text-align:right;'>{prix}</td>
+													<td style='text-align:right;'><i class='material-icons' style='vertical-align:bottom'>euro_symbol</i> {prix}</td>
 													<td style='text-align:center;'>{btn}</td>
 												</tr>";
-						$btn = '<input id="addIt" type="button" class="btn btn-success" value="+" onclick="addToBasket({id_product});" />';
+						$btn = '<a id="addIt" type="button" class="btn btn-success" value="+" onclick="addToBasket({id_product});"><i class="material-icons">add_shopping_cart</i></a>';
 						$articles = json_decode(file_get_contents(
 									str_replace(
 										array("{id}", 					"{token}"),

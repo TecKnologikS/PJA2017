@@ -73,19 +73,26 @@ if (isset($_POST["codepromo"])) {
 		<table id="quezac" class="display responsive nowrap" width="100%">
 			<thead>
 						<tr>
-							<th></th>
-							<th><?= S_PRODUCTNAME ?></th>
-							<th><?= S_QUANTITE ?></th>
-							<th><?= S_BASEPRICE ?></th>
-							<th><?= S_REDUCTION ?></th>
-							<th><?= S_FINALPRICE ?></th>
+							<th style="width: 20px;"></th>
+							<th style='text-align:center;'><?= S_PRODUCTNAME ?></th>
+							<th style="width: 160px;text-align:center;"><?= S_QUANTITE ?></th>
+							<th style='text-align:right;width: 100px;'><?= S_BASEPRICE ?></th>
+							<th style='text-align:right;width: 120px;'><?= S_REDUCTION ?></th>
+							<th style='text-align:right;width: 100px;'><?= S_FINALPRICE ?></th>
 						</tr>
 					</thead>
 					<tbody>
 						<?php
 
 						$service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/bag/";
-						$toshow = "<tr><td><a onclick='removeToBasket({id_product})'>Supprimer</a></td><td><a href='page.html?product={id_product}'>{name}</a></td><td><input name='qte' type='number' min=1 value='{qte}'><a  style='margin-left:30px;' onclick='updateToBasket(this, {id_product})'><i class='material-icons'>cached</i></a></td><td>€ {prix_base}</td><td>€ {reduction}</td><td>€ {prix_final}</td></tr>";
+						$toshow = "<tr>
+												<td><a onclick='removeToBasket({id_product})'><i class='material-icons' style='vertical-align: bottom; color:#F44336;'>delete</i></a></td>
+												<td><a href='page.html?product={id_product}'>{name}</a></td>
+												<td style='text-align:right;'><input name='qte' type='number' min=1 value='{qte}' style='width:100px;'><a  style='margin-left:10px;' onclick='updateToBasket(this, {id_product})'><i class='material-icons' style='vertical-align: bottom;'>cached</i></a></td>
+												<td style='text-align:right;'>€ {prix_base}</td>
+												<td style='text-align:right;'>€ {reduction}</td>
+												<td style='text-align:right;'>€ {prix_final}</td>
+											</tr>";
 						$bag = json_decode(file_get_contents(
 									str_replace(
 										array("{id}", 					"{token}"),
@@ -113,10 +120,9 @@ if (isset($_POST["codepromo"])) {
 		<form action="/bag.php" method="post" style="margin-left: 20px;">
 			<table class="addition" style="margin-left: 20px; float: left;">
 				<tbody>
-					<tr><td colspan="2"><h4><?= S_CODEMORE ?></h4></td></tr>
+					<tr><td colspan="2" style="text-align:center;"><h4><?= S_CODEMORE ?></h4></td></tr>
 					<tr><td><?= S_CODE ?></td><td><input type="text" name="codepromo" /></td></tr>
-					<tr><td colspan="2"><input type="submit" value="Ajouter" class="btn btn-info" style="font-size: 1.0em; width:100%;"></td></tr>
-					<tr><td colspan="2"><span class="error_message"><?php if(isset($error_promo)) { echo $error_promo; } ?></span></td></tr>
+					<tr><td colspan="2" style="padding:0;"><input type="submit" value="Ajouter" class="btn btn-info" style="font-size: 1.5em; width:100%; height:50px;"></td></tr>
 				</tbody>
 			</table>
 		</form>
@@ -126,13 +132,13 @@ if (isset($_POST["codepromo"])) {
 				<?php
 				$promo = $bag["promo"];
 					if (count($promo) > 0) {
-							echo '<tr> <td colspan="2" style="text-align:center;">Code Promo</td></tr>';
+							echo '<tr> <td colspan="2" style="text-align:center;"><h4>Code Promo</h4></td></tr>';
 							for($i = 0; $i < count($promo); $i++) {
 								echo '<tr> <td>'.$promo[$i]["Code"].'</td><td>'.$promo[$i]["Nom"].'</td> </tr>';
 							}
 					}
 				?>
-				<tr> <td colspan="2" style="text-align:center;border-bottom: 2px solid #E0E0E0;border-top: 2px solid #E0E0E0;"><?= S_ADDITION ?></td></tr>
+				<tr> <td colspan="2" style="text-align:center;border-bottom: 2px solid #E0E0E0;border-top: 2px solid #E0E0E0;"><h4><?= S_ADDITION ?></h4></td></tr>
 				<tr> <td class><?= S_TOTALPRICE ?></td><td><?php echo  $bag["prix_total"]; ?> €</td> </tr>
 				<tr> <td><?= S_REDUCTION ?></td><td><?php echo  "(".round((($bag['reduction_total']/$bag['prix_total'])*100), 2)." %) ".$bag["reduction_total"]; ?> €</td> </tr>
 				<tr> <td><?= S_FINALPRICE ?></td><td><?php echo  $bag["prix_final"]; ?> €</td> </tr>
@@ -140,7 +146,7 @@ if (isset($_POST["codepromo"])) {
 
 			<tfoot>
 				<tr>
-					<td style="border: none" colspan="2"><a style="margin: 20px; margin-left: auto;" href="./validate.php"><button class="btn btn-success" style="font-size: 1.5em; width:100%;"><?php echo S_VALIDER; ?></button></a></td>
+					<td style="border: none; padding:0;" colspan="2"><a href="./validate.php"><button class="btn btn-success" style="font-size: 1.5em; width:100%; height:50px;"><?php echo S_VALIDER; ?></button></a></td>
 				</tr>
 			</tfoot>
 		</table>

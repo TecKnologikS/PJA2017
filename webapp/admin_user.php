@@ -67,8 +67,8 @@ $users = json_decode(file_get_contents(
         </thead>
 				<tbody>
           <tr>
-            <td><input type="text" name="login" /></td>
-            <td><input type="text" name="password" /></td>
+            <td><input type="text" name="login" placeholder="login" /></td>
+            <td><input type="text" name="password" placeholder="mot de passe" /></td>
             <td>
               <label class="switch">
                 <input type="checkbox" name="admin" value="1">
@@ -76,7 +76,7 @@ $users = json_decode(file_get_contents(
               </label>
             </td>
           </tr>
-					<tr><td class="gris" colspan="3"><input type="submit" value="Ajouter" class="btn btn-info" style="font-size: 1.0em; width:100%;"></td></tr>
+					<tr><td class="gris" colspan="3" style="padding:0;"><input type="submit" value="Ajouter" class="btn btn-info" style="font-size: 1.5em; width:100%; height:50px;"></td></tr>
 				</tbody>
 			</table>
 		</form>

@@ -21,7 +21,7 @@ function Succed($message) {
 }
 
 function InformationMessage($type, $message, $duration) {
-	echo '<div id="information_message" class="'.$type.'">'.$message.'<a onclick="document.getElementById(\'information_message\').remove();">X<a></div>
+	echo '<div id="information_message" class="'.$type.'"><i style="vertical-align:middle; margin-right: 20px;" class="material-icons">warning</i> '.$message.'<a onclick="document.getElementById(\'information_message\').remove();">X<a></div>
 				<script>
 				setTimeout(function() {
 				    document.getElementById("information_message").remove();
