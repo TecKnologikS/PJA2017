@@ -110,6 +110,46 @@ h4 {
 		border-bottom: 2px solid #E0E0E0;
 }
 
+.alert_message,
+.info_message,
+.succed_message {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100vw;
+	height: 50px;
+	line-height: 50px;
+	padding-left: 20px;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 1.5em;
+}
+
+.alert_message a,
+.info_message a,
+.succed_message a {
+	right: 20;
+  position: absolute;
+  color: white;
+  font-weight: bold;
+  font-size: 1.5em;
+	text-decoration:none;
+}
+
+.alert_message {
+	background-color: #F44336;
+	color: white;
+}
+
+.info_message {
+	background-color: #2196F3;
+	color: white;
+}
+
+.succed_message {
+	background-color: #4CAF50;
+	color: white;
+}
+
 .addition td,
 .devis td {
 	padding: 5px 20px 5px 20px;

@@ -4,9 +4,11 @@ require("part/basicFunctionLoad.php");
 if (!isset($_GET["id"]) && $_SESSION["really"] != true)
   header('Location: index.php');
 
-if (isset($_POST["login"]) && isset($_POST["password"]) && isset($_POST["admin"])) {
-
+if (isset($_POST["login"]) && isset($_POST["password"])) {
+  $admin = isset($_POST["admin"]) ? $_POST["admin"] : 0;
+  Error("message");
 }
+
 
 $service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/users/";
 $users = json_decode(file_get_contents(
@@ -53,7 +55,7 @@ $users = json_decode(file_get_contents(
 	<?php include("part/navdatas.php"); ?>
 	<div class="container-fluid" style="margin-top: 70px;">
 
-    <form action="/bag.php" method="post" >
+    <form action="/admin_user.php" method="post" >
 			<table class="devis" style="margin: 0 auto 0 auto; ">
         <thead>
           <tr><th colspan="3"><h4>S_NEWUSER</h4></th></tr>
@@ -69,7 +71,7 @@ $users = json_decode(file_get_contents(
             <td><input type="text" name="password" /></td>
             <td>
               <label class="switch">
-                <input type="checkbox" name="admin">
+                <input type="checkbox" name="admin" value="1">
                 <div class="slider round"></div>
               </label>
             </td>
