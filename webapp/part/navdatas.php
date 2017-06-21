@@ -1,12 +1,12 @@
 <div class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="index.php"><?php echo NOM;  ?></a>
+            <a class="navbar-brand" href="index.php" style="font-family: 'Roboto', sans-serif;"><?php echo NOM;  ?></a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
 				<li><form accept-charset="UTF-8" role="form" action="index.php" method=post name=form>
-							<fieldset style="padding-top: 15px;"><input class="form-control" placeholder="search" name="search" type="text"></fieldset>
+							<fieldset><input class="form-control recherche" placeholder="Rechercher un produit" name="search" type="text" value="<?php if(isset($_POST['search'])) {echo $_POST['search'];}?>"></fieldset>
 					</form></li>
           <?php
             if ($_SESSION["really"] == true) {

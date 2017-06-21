@@ -95,7 +95,29 @@ function article($id, $number) {
 	if ($mysqli->connect_errno) {
 		echo "Echec lors de la connexion à MySQL : (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 	}
-	$res = $mysqli->query("SELECT * FROM article WHERE 1=1 ".$args);
+	$res = $mysqli->query("SELECT * , (SELECT SUM(Qte) FROM `devis_article` WHERE ID_Article = article.id) as nb_commande FROM article WHERE 1=1 ".$args);
+	$types = array();
+
+	while(($row =  mysqli_fetch_assoc($res))) {
+		$types[] = $row;
+	}
+	return $types;
+}
+
+function search($type, $recherche) {
+	$args = "";
+	if ($type == 0) {
+		//Juste le nom
+		$args .= " AND name LIKE '%".$recherche."%' ";
+	} else {
+
+	}
+
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
+	if ($mysqli->connect_errno) {
+		echo "Echec lors de la connexion à MySQL : (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
+	}
+	$res = $mysqli->query("SELECT * , (SELECT SUM(Qte) FROM `devis_article` WHERE ID_Article = article.id) as nb_commande FROM article WHERE 1=1 ".$args);
 	$types = array();
 
 	while(($row =  mysqli_fetch_assoc($res))) {
@@ -168,6 +190,20 @@ $app->get('/{id}/{token}/products', function (Request $request, Response $respon
 		$data = article(-1, -1);
 	else
 		$data = article(-1, $limit);
+
+	$response = $response->withHeader('Content-type', 'application/json');
+	$response = $response->withJson($data, 302);
+    return $response;
+});
+$app->get('/{id}/{token}/products/search/{recherche}/', function (Request $request, Response $response) {
+    $id = $request->getAttribute('id');
+	$token =  $request->getAttribute('token');
+$recherche =  $request->getAttribute('recherche');
+
+	$timestamps =  time();
+	$data = array();
+
+	$data = search(0, $recherche);
 
 	$response = $response->withHeader('Content-type', 'application/json');
 	$response = $response->withJson($data, 302);

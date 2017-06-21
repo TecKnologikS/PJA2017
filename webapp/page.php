@@ -29,7 +29,7 @@ if (!isset($_GET["id"])) {
 </head>
 <body onload="getBasketAndDevis();">
 	<?php include("part/navdatas.php"); ?>
-	<div class="container-fluid" style="margin-top: 70px;">
+	<div style="padding-top: 70px; height:100vh; width:70vw; background-color:white; margin-left: auto; margin-right:auto;">
 					<?php
 
 						$service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/products/{id_p}/";
@@ -45,14 +45,14 @@ if (!isset($_GET["id"])) {
 							header('Location: index.php');
 						}
 					?>
-	<div style="margin: 10px 20px 10px 20px;">
-		<h1><?= $article["name"] ?></h1>
-		<i><?= $article["smallDesc"] ?></i>
-		<table class="addition" style="margin-left: 0px;">
+	<div style="margin: 20px 20px 20px 20px;">
+		<h1 style="text-align:center;"><?= $article["name"] ?></h1>
+		<p style="text-align:center; font-style: italic;"><?= $article["smallDesc"] ?></p>
+		<table  style="margin-left:auto; margin-right:auto;" class="addition" style="margin-left: 0px;">
 			<tbody>
 				<tr><td colspan="2"><h4 style="text-align:center">Ajouter au panier</h4></td></tr>
 				<tr><td>Nombre :</td><td><input type='number' min=1 name="nomber" value="1" /></td></tr>
-				<tr><td colspan="2"><input value="Ajouter" class="btn btn-success" style="font-size: 1.0em; width:100%;" onclick="addToBasket(<?= $article['id'] ?>);"></td></tr>
+				<tr><td colspan="2" style="padding: 0;"><input value="Ajouter" class="btn btn-success" style="font-size: 1.0em; width:100%; padding: 20px 20px 20px 20px; font-size: 1.5em;" onclick="addToBasket(<?= $article['id'] ?>);"></td></tr>
 			</tbody>
 		</table>
 		<br />

@@ -83,7 +83,7 @@ if (isset($_POST["societe"]) && isset($_POST["email"]) && isset($_POST["nom"]) &
     <form method="post" >
     <table class="addition" style="margin: 20px auto 20px auto; width:800px">
       <tbody>
-        <tr><td colspan="2"><h3>Information client</h3></td></tr>
+        <tr><td colspan="2"><h3 style="text-align:center;">Informations client</h3></td></tr>
         <tr><td>Société :</td><td><input type="text" name="societe" /></td></tr>
         <tr><td>Siret :</td><td><input type="text" name="siret" /></td></tr>
         <tr><td>Téléphone :</td><td><input type="tel" pattern="^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$" name="tel" /></td></tr>
@@ -94,7 +94,7 @@ if (isset($_POST["societe"]) && isset($_POST["email"]) && isset($_POST["nom"]) &
         <tr><td>Ville :</td><td><input type="text" name="ville" /></td></tr>
         <tr><td>Nom :</td><td><input type="text" name="nom" /></td></tr>
         <tr><td>Prénom :</td><td><input type="text" name="prenom" /></td></tr>
-        <tr><td colspan="2"><input type="submit" value="Valider le devis" class="btn btn-info" style="font-size: 1.5em; width:100%; height: 50px"></td></tr>
+        <tr><td colspan="2" style="padding:0;"><input type="submit" value="Valider le devis" class="btn btn-info" style="font-size: 1.5em; width:100%; height: 50px"></td></tr>
       </tbody>
     </table>
   </form>

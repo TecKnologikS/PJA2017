@@ -52,6 +52,41 @@
 	padding-left: 0px;
 }
 
+.nav>li>a {
+	padding: 15px 5px 15px 5px;
+	height: 50px;
+	padding: 0;
+	font-family: 'Open Sans', sans-serif;
+}
+
+.nav {
+	height: 50px;
+}
+
+.container {
+    width: 100%;
+}
+
+
+.recherche {
+	width: 300px;
+	height: 50px;
+	border-color: transparent;
+	border-bottom-color: #E0E0E0;
+	border-radius: 0;
+	font-family: 'Open Sans', sans-serif;
+}
+
+h3,
+h4 {
+	font-family: 'Open Sans', sans-serif;
+}
+
+.btn {
+	border-radius: 0;
+	height: 100%;
+}
+
 .addition,
 .devis {
 	border: solid 3px #E0E0E0;
@@ -88,6 +123,7 @@
 	border-bottom-color: #E0E0E0;
 
 }
+
 
 .addition td:first-child {
 	background-color: #EEEEEE;

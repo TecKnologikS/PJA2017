@@ -23,23 +23,35 @@ require_once("part/basicFunctionLoad.php");
 </head>
 <body onload="getBasketAndDevis();">
 	<?php include("part/navdatas.php"); ?>
-	<div class="container-fluid" style="margin-top: 50px;">
+	<div class="container-fluid" style="margin-top: 35px;">
 		<table id="quezac" class="display responsive nowrap" width="100%">
 			<thead>
 						<tr>
-							<th>Image</th>
-							<th>Nom</th>
-							<th>Description du produit</th>
-							<th>Commande</th>
-							<th>Prix</th>
-							<th></th>
+							<th>S_PRODUCTNAME</th>
+							<th>S_PRODUCTDESCRPTION</th>
+							<th style="width:60px;">S_COMMANDE</th>
+							<th style="width:60px;">S_UNITYPRICE</th>
+							<th style="width:20px;"></th>
 						</tr>
 					</thead>
 					<tbody>
 						<?php
 
 						$service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/products";
-						$toshow = "<tr><td>{img}</td><td><a href='page.php?id={id_product}'>{name}</a></td><td>{descr}</td><td>{commande}</td><td>{prix}</td><td>{btn}</td></tr>";
+
+						if(isset($_POST["search"])) {
+							if (strlen($_POST["search"]) > 2 ) {
+								$service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/products/search/".utf8_encode($_POST["search"])."/";
+							}
+						}
+
+						$toshow = "<tr>
+													<td><a href='page.php?id={id_product}'>{name}</a></td>
+													<td>{descr}</td>
+													<td style='text-align:right;'>{commande}</td>
+													<td style='text-align:right;'>{prix}</td>
+													<td style='text-align:center;'>{btn}</td>
+												</tr>";
 						$btn = '<input id="addIt" type="button" class="btn btn-success" value="+" onclick="addToBasket({id_product});" />';
 						$articles = json_decode(file_get_contents(
 									str_replace(
@@ -49,8 +61,8 @@ require_once("part/basicFunctionLoad.php");
 						if (count($articles) > 0) {
 							for($i = 0; $i < count($articles); $i++) {
 								echo str_replace(
-									array("{id_product}",								"{name}", 					"{descr}", 										"{prix}" , 							"{btn}"),
-									array($articles[$i]["id"], $articles[$i]["name"], $articles[$i]["smallDesc"], $articles[$i]["prix"], str_replace("{id_product}", $articles[$i]["id"], $btn)),
+									array("{id_product}",								"{name}", 					"{descr}", 										"{prix}" , 							"{btn}", "{commande}"),
+									array($articles[$i]["id"], $articles[$i]["name"], $articles[$i]["smallDesc"], $articles[$i]["prix"], str_replace("{id_product}", $articles[$i]["id"], $btn), $articles[$i]["nb_commande"]),
 									$toshow);
 							}
 						} else {
