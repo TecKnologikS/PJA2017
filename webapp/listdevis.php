@@ -25,7 +25,7 @@ require_once("part/basicFunctionLoad.php");
 						$service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/devis";
 						$toshow = "<tr><td>{societe}</td><td>{contact}</td><td>{date}</td><td style='text-align:right;'>€ {prix} </td><td class='action_btn'>"
                           ."<a href='./devis.php?id={id}'><button type='submit' name='See' class='btn btn-success'><i style='vertical-align:bottom;' class='material-icons'>find_in_page</i></button></a>"
-                          ."<a href='./export.php?id={id}'><button type='submit' name='PDF' class='btn btn-danger'><i style='vertical-align:bottom;' class='material-icons'>print</i></button></a>"
+                          ."<a href='./export.php?id={id}'><button type='submit' name='PDF' class='btn btn-info'><i style='vertical-align:bottom;' class='material-icons'>print</i></button></a>"
                           ."<a href='./deleteit.php?id={id}'><button type='submit' name='PDF' class='btn btn-danger'><i style='vertical-align:bottom;' class='material-icons'>delete_forever</i></button></a></td></tr>";
 						$btn = '<input id="addIt" type="button" value="addIt" onclick="addToBasket({id_product});" />';
 						//<a href='./devis.php?id={id}&action=share'><button type='submit' name='Share' class='btn btn-info'>PARTAGER</button></a>

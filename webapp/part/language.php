@@ -24,7 +24,7 @@
    define("S_NOTHING_DOC", 			"Il n'y a aucun document sur ce dossier");
    define("S_DATETIME", 			"Date / Heure");
 
-   //Ajout 
+   //Ajout
    define("S_NEWUSER", 				"Nouvel utilisateur");
    define("S_ADMINUSER", 			"Administrateur");
    define("S_LISTUSER", 			"Liste des utilisateurs");
@@ -62,16 +62,16 @@
    define("S_ADDTOBASKET", 			"Ajouter au panier");
    define("S_NUMBER", 				"Nombre :");
    define("S_PRICETOPAIE", 			"Prix à payer");
+   define("S_CREATED_USER", 			" a bien été crée");
+   define("S_ERROR_CREATED_USER", 			"Erreur : L'utilisateur n'a pas été crée");
    define("S_DATETIME", 			"Date / Heure");
-   define("S_DATETIME", 			"Date / Heure");
-   define("S_DATETIME", 			"Date / Heure");
-   
-   
-   
-   
-   
-   
-   
-   
-   
+
+
+
+
+
+
+
+
+
 ?>

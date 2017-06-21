@@ -22,7 +22,7 @@ require_once("part/basicFunctionLoad.php");
 	</script>
 </head>
 <body onload="getBasketAndDevis();">
-	<?php include("part/navdatas_icon.php"); ?>
+	<?php include("part/navdatas.php"); ?>
 	<div class="container-fluid" style="margin-top: 35px;">
 		<table id="quezac" class="display responsive nowrap" width="100%">
 			<thead>
