@@ -17,7 +17,7 @@
             }
           ?>
           <li><a href="./bag.php"><button class="btn btn-warning"><i class="material-icons" style="vertical-align: bottom">shopping_cart</i> (<span id="item_count_bag">0</span>)</button></a></li>
-          <li><a href="./listdevis.php"><button class="btn btn-success"><i class="material-icons" style="vertical-align: bottom">shopping_basket</i> <i class="material-icons" style="vertical-align: bottom">store</i> (<span id="item_count_devis">0</span>)</button></a></li>
+          <li><a href="./listdevis.php"><button class="btn btn-success"><i class="material-icons" style="vertical-align: bottom">insert_drive_file</i> (<span id="item_count_devis">0</span>)</button></a></li>
           <li><a href="./logout.php" onclick="return confirm('Voulez-vous vraiment vous déconnecter ?')"><button type="submit" name="logOut" class="btn btn-danger"><i class="material-icons" style="vertical-align: bottom">power_settings_new</i></button></a></li>
             </div>
         </div>

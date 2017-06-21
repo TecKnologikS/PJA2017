@@ -14,30 +14,45 @@ function CalculateBag($article, $promo) {
 		$article[$i]["reduction"] = 0;
 	}
 
-	for($i = 0; $i < count($promo); $i++) {
-		$promo[$i]["total"] = 0;
-		$promo_total = 0;
-		switch($promo[$i]["Type"]) {
-			case "1":
-			if ($prix_total >= $promo[$i]["Minimum"]) {
-				$prix_final = 0; $reduction_total = 0;
-				for($j = 0; $j < count($article); $j++) {
-					$prix_group = $article[$j]["prix"]*$article[$j]["Qte"];
-					$reduction = (($prix_group*$promo[$i]["Reduction"]) / 100);
-          $article[$j]["prix_final"] = $prix_group - $reduction;
-          $article[$j]["prix_group"] = $prix_group;
-          $article[$j]["reduction"] = $reduction;
-					$prix_final += $article[$j]["prix_final"];
-					$reduction_total += $reduction;
-					$promo_total += $reduction;
-	            }
+	if (count($promo) > 0) {
+		for($i = 0; $i < count($promo); $i++) {
+			$promo[$i]["total"] = 0;
+			$promo_total = 0;
+			switch($promo[$i]["Type"]) {
+				case "1":
+				if ($prix_total >= $promo[$i]["Minimum"]) {
+					$prix_final = 0; $reduction_total = 0;
+					for($j = 0; $j < count($article); $j++) {
+						$prix_group = $article[$j]["prix"]*$article[$j]["Qte"];
+						$reduction = (($prix_group*$promo[$i]["Reduction"]) / 100);
+						$article[$j]["prix_final"] = $prix_group - $reduction;
+						$article[$j]["prix_group"] = $prix_group;
+						$article[$j]["reduction"] = $reduction;
+						$prix_final += $article[$j]["prix_final"];
+						$reduction_total += $reduction;
+						$promo_total += $reduction;
+								}
+				}
+				break;
+				default:
+				break;
 			}
-			break;
-			default:
-			break;
+			$promo[$i]["total"] = $promo_total;
 		}
-		$promo[$i]["total"] = $promo_total;
+	} else {
+		$prix_final = 0; $reduction_total = 0;
+		for($j = 0; $j < count($article); $j++) {
+			$prix_group = $article[$j]["prix"]*$article[$j]["Qte"];
+			$reduction = (($prix_group*$promo[$i]["Reduction"]) / 100);
+			$article[$j]["prix_final"] = $prix_group - $reduction;
+			$article[$j]["prix_group"] = $prix_group;
+			$article[$j]["reduction"] = $reduction;
+			$prix_final += $article[$j]["prix_final"];
+			$reduction_total += $reduction;
+			$promo_total += $reduction;
+		}
 	}
+
 
 	return array("articles" => $article, "promo" => $promo, "prix_total" => $prix_total, "prix_final" => $prix_final, "reduction_total" => $reduction_total);
 }
@@ -290,6 +305,7 @@ $app->post('/{id}/{token}/promo/add/', function ($request, $response, $args) {
 		$id_promo = $row['ID'];
 	}
 	if ($id_promo > 0) {
+		$mysqli->query("DELETE FROM `panier_promo` WHERE ID_User = ".$id."");
 		$mysqli->query("INSERT INTO panier_promo (ID_User,ID_Promo) VALUES (".$id.", ".$id_promo.") ON DUPLICATE KEY UPDATE ID_Promo=ID_Promo;");
 	}
 
@@ -503,14 +519,20 @@ $app->post('/{id}/{token}/users/insert/', function ($request, $response, $args) 
 	$nb_bag = "0"; $nb_devis = "0";
 
 	$users = array();
-
+	$retour = array('item' => $parsedBody, 'created' => false);
 	if (isCorrectIdentificationAdmin($id, $token)) {
-		$res = $mysqli->query("INSERT INTO user (Login, Password, Admin) VALUES ('".$mysqli->real_escape_string($parsedBody["Login"])."','".$mysqli->real_escape_string($parsedBody["Password"])."', ".$mysqli->real_escape_string($parsedBody["Admin"]).");");
+		$res = $mysqli->query("SELECT * FROM user WHERE Login='".$mysqli->real_escape_string($parsedBody["Login"])."'");
+		if ($row = $res->fetch_assoc()){
+
+		} else {
+			$res = $mysqli->query("INSERT INTO user (Login, Password, Admin) VALUES ('".$mysqli->real_escape_string($parsedBody["Login"])."','".$mysqli->real_escape_string($parsedBody["Password"])."', ".$mysqli->real_escape_string($parsedBody["Admin"]).");");
+			$retour = array('item' => $parsedBody, 'created' => true);
+		}
 	}
 
 
 	$response = $response->withHeader('Content-type', 'text');
-	$response = $response->withJson($parsedBody, 302);
+	$response = $response->withJson($retour, 302);
     return $response;
 });
 $app->post('/{id}/{token}/users/update/statut', function ($request, $response, $args) {
@@ -520,7 +542,7 @@ $app->post('/{id}/{token}/users/update/statut', function ($request, $response, $
 
 	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
 	$retour = array('item' => $parsedBody["id"],'count' => 0);
-	if (isCorrectIdentificationAdmin($id, $token)) {
+	if (isCorrectIdentificationAdmin($id, $token) && ($parsedBody["id"] != $id)) {
 		$mysqli->query("UPDATE user SET Admin = ".$parsedBody["statut"]." WHERE ID= ".$parsedBody["id"]." ");
 		$retour = array('item' => $parsedBody["id"],'count' => 0);
 
@@ -538,6 +560,22 @@ $app->post('/{id}/{token}/users/update/mdp', function ($request, $response, $arg
 	$retour = array('item' => $parsedBody["id"],'count' => 0);
 	if (isCorrectIdentificationAdmin($id, $token)) {
 		$mysqli->query("UPDATE user SET Password = '".$parsedBody["mdp"]."' WHERE ID= ".$parsedBody["id"]." ");
+		$retour = array('item' => $parsedBody["id"],'count' => 0);
+
+	}
+	$response = $response->withHeader('Content-type', 'text');
+	$response = $response->withJson($retour, 302);
+    return $response;
+});
+$app->delete('/{id}/{token}/users/delete/', function ($request, $response, $args) {
+	$id = $args['id'];
+	$token = $args['token'];
+	$parsedBody = $request->getParsedBody();
+
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
+	$retour = array('item' => $parsedBody["id"],'count' => 0);
+	if (isCorrectIdentificationAdmin($id, $token)) {
+		$mysqli->query("DELETE FROM user WHERE ID= ".$parsedBody["id"]." ");
 		$retour = array('item' => $parsedBody["id"],'count' => 0);
 
 	}
