@@ -56,11 +56,11 @@ $users = json_decode(file_get_contents(
     <form action="/bag.php" method="post" >
 			<table class="devis" style="margin: 0 auto 0 auto; ">
         <thead>
-          <tr><th colspan="3"><h4>Nouvel utilisateur</h4></th></tr>
+          <tr><th colspan="3"><h4>S_NEWUSER</h4></th></tr>
           <tr>
-            <th>Login </th>
-            <th>Mot de passe </th>
-            <th>Administrateur ?</th>
+            <th>S_LOGIN</th>
+            <th>S_MDP</th>
+            <th>S_ADMINUSER</th>
           </tr>
         </thead>
 				<tbody>
@@ -82,11 +82,11 @@ $users = json_decode(file_get_contents(
     <br />
     <table class="devis" style="margin: 0 auto 0 auto; ">
       <thead>
-        <tr><th colspan="4"><h4>Liste des Utilisateurs</h4></th></tr>
+        <tr><th colspan="4"><h4>S_LISTUSER</h4></th></tr>
         <tr>
-          <th>Login </th>
-          <th>Mot de passe </th>
-          <th>Administrateur ?</th>
+          <th>S_LOGIN</th>
+          <th>S_MDP</th>
+          <th>S_ADMINUSER</th>
           <th></th>
         </tr>
       </thead>

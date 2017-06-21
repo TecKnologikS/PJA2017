@@ -24,4 +24,58 @@
    define("S_NOTHING_DOC", 			"Il n'y a aucun document sur ce dossier");
    define("S_DATETIME", 			"Date / Heure");
 
+   //Ajout 
+   define("S_NEWUSER", 				"Nouvel utilisateur");
+   define("S_ADMINUSER", 			"Administrateur");
+   define("S_LISTUSER", 			"Liste des utilisateurs");
+   define("S_PRODUCTNAME", 			"Nom du produit");
+   define("S_QUANTITE", 			"Quantite");
+   define("S_BASEPRICE", 			"Prix de base");
+   define("S_REDUCTION", 			"Reduction");
+   define("S_FINALPRICE", 			"Prix final");
+   define("S_UNITYPRICE", 			"Prix unitaire");
+   define("S_TOTALPRICE", 			"Prix total");
+   define("S_CODEMORE", 			"Ajouter un code promotionnel");
+   define("S_CODE", 				"Code :");
+   define("S_DATECREATE", 			"Crée le :");
+   define("S_DATEVALIDITY", 		"Expire le :");
+   define("S_SOCIETY", 				"Société :");
+   define("S_SIRET", 				"Siret :");
+   define("S_TELEPHONE", 			"Téléphone :");
+   define("S_FAX", 					"Fax :");
+   define("S_EMAIL", 				"Courriel :");
+   define("S_ADRESSUSER", 			"Adresse :");
+   define("S_POSTALNUM", 			"Code Postal :");
+   define("S_CITYUSER", 			"Ville :");
+   define("S_USERNAME", 			"Nom :");
+   define("S_USERFIRSTNAME", 		"Prénom :");
+   define("S_USERSINFO", 			"Information client");
+   define("S_DATETIME", 			"Date / Heure");
+   define("S_DATETIME", 			"Date / Heure");
+   define("S_DATETIME", 			"Date / Heure");
+   define("S_DATETIME", 			"Date / Heure");
+   define("S_DATETIME", 			"Date / Heure");
+   define("S_DATETIME", 			"Date / Heure");
+   define("S_DATETIME", 			"Date / Heure");
+   define("S_DATETIME", 			"Date / Heure");
+   define("S_DATETIME", 			"Date / Heure");
+   define("S_DATETIME", 			"Date / Heure");
+   define("S_DATETIME", 			"Date / Heure");
+   define("S_DATETIME", 			"Date / Heure");
+   define("S_DATETIME", 			"Date / Heure");
+   define("S_DATETIME", 			"Date / Heure");
+   define("S_DATETIME", 			"Date / Heure");
+   define("S_DATETIME", 			"Date / Heure");
+   define("S_DATETIME", 			"Date / Heure");
+   define("S_DATETIME", 			"Date / Heure");
+   define("S_DATETIME", 			"Date / Heure");
+   
+   
+   
+   
+   
+   
+   
+   
+   
 ?>
