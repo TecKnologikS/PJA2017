@@ -1,10 +1,8 @@
 A faire:
 
-- Dans la liste des devis, ajouter un bouton supprimer (identique à la liste du panier)
 - Pouvoir envoyer les devis par mail
 - Mettre les images des articles
 - Calcul statistitiel
-- alt sous bouton (titre informatif)
 - ajout / modification / suppression produit
 
 
@@ -13,3 +11,5 @@ Fait:
 - Finir la page des Codes promos
 - Gerer les utilisateurs en double
 - erreur bag
+- alt sous bouton (titre informatif)
+- Dans la liste des devis, ajouter un bouton supprimer (identique à la liste du panier)

@@ -39,7 +39,7 @@ function updateStatut(id, value) {
   });
 }
 function removeUser(id) {
-  if (confirm('Etes vous sur de vouloir supprimer l utilisateur ?')) {
+  if (confirm('Etes vous sur de vouloir supprimer cet utilisateur ?')) {
     $.ajax({
         url: 'callapi.php?function=removeUser&id={id_user}'.replace("{id_user}", id),
         dataType: "json",
@@ -51,7 +51,7 @@ function removeUser(id) {
 }
 
 function removeCode(id) {
-  if (confirm('Etes vous sur de vouloir supprimer l utilisateur ?')) {
+  if (confirm('Etes vous sur de vouloir supprimer ce code promotionnel ?')) {
     $.ajax({
         url: 'callapi.php?function=removeCode&id={id_code}'.replace("{id_code}", id),
         dataType: "json",
@@ -63,13 +63,15 @@ function removeCode(id) {
 }
 
 function removeToBasket(p1) {
-  $.ajax({
-      url: 'callapi.php?function=removeToBasket&id={id_product}'.replace("{id_product}", p1),
-      dataType: "json",
-      complete: function (response) {
-          location.href = "?delete=true";
-      }
-  });
+  if (confirm('Etes vous sur de vouloir supprimer cet article du panier ?')) {
+	  $.ajax({
+		  url: 'callapi.php?function=removeToBasket&id={id_product}'.replace("{id_product}", p1),
+		  dataType: "json",
+		  complete: function (response) {
+			  location.href = "?delete=true";
+		  }
+	  });
+  }
 }
 
 function updateToBasket(elem, p1) {
