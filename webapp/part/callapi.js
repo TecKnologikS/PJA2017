@@ -85,3 +85,39 @@ function updateToBasket(elem, p1) {
     });
   }
 }
+
+function removeDevis(id) {
+  if (confirm('Etes vous sur de vouloir supprimer le devis ?')) {
+    $.ajax({
+        url: 'callapi.php?function=removeDevis&id={id_code}'.replace("{id_code}", id),
+        dataType: "json",
+        complete: function (response) {
+            //location.href = "?delete=true";
+        }
+    });
+  }
+}
+
+function addToBasketFromPage(p1) {
+  $.ajax({
+      url: 'callapi.php?function=addToBasket&id={id_product}'.replace("{id_product}", p1),
+      dataType: "json",
+      complete: function (response) {
+          var obj = JSON.parse(response.responseText);
+          document.getElementById("item_count_bag").innerText =  obj.count;
+          //TODO: alert
+      }
+  });
+}
+
+function addToBasket(p1) {
+  $.ajax({
+      url: 'callapi.php?function=addToBasket&id={id_product}'.replace("{id_product}", p1),
+      dataType: "json",
+      complete: function (response) {
+          var obj = JSON.parse(response.responseText);
+          document.getElementById("item_count_bag").innerText =  obj.count;
+          //TODO: alert
+      }
+  });
+}

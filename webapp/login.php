@@ -6,14 +6,11 @@ include("const/param.php");
 
 
 if (isset($_POST["id"]) && isset($_POST["password"])) {
-
-	$service_url = 'http://commercial.tecknologiks.com/index.php/login?login={login}&mdp={mdp}';
-
-	$login = json_decode(file_get_contents(
-				str_replace(
-					array("{login}", 		"{mdp}"),
-					array($_POST["id"], $_POST["password"]),
-					$service_url)), true);
+	$login = fromJSON(
+							GET_REQ(
+								"http://commercial.tecknologiks.com/index.php/login?login={login}&mdp={mdp}",
+								array("{login}", 		"{mdp}"),
+								array($_POST["id"], $_POST["password"])));
 
 	if (count($login) > 0) {
 		$_SESSION['id'] = $login['ID'];
@@ -22,7 +19,7 @@ if (isset($_POST["id"]) && isset($_POST["password"])) {
 		$_SESSION['really'] = $login['really'];
 		header('Location: index.php');
 	} else {
-		$error = "ERREUR";
+		Error(S_BAD_CONNECTION);
 	}
 }
 
@@ -51,10 +48,10 @@ if (isset($_POST["id"]) && isset($_POST["password"])) {
 						<form accept-charset="UTF-8" role="form" action="login.php" method=post name=form>
 							<fieldset>
 								<div class="form-group">
-									<input class="form-control login_pass" placeholder="<?php echo S_LOGIN; ?>" name="id" type="text">
+									<input class="form-control login_pass" placeholder="<?php echo S_LOGIN; ?>" name="id" type="text" pattern=".{1,}" required >
 								</div>
 								<div class="form-group">
-									<input class="form-control login_pass" placeholder="<?php echo S_MDP; ?>" name="password" type="password">
+									<input class="form-control login_pass" placeholder="<?php echo S_MDP; ?>" name="password" type="password" pattern=".{1,}" required >
 								</div>
 								<input class="btn btn-lg btn-success btn-block" type="submit" value="Se Connecter">
 							</fieldset>

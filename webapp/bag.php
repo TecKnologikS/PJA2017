@@ -47,7 +47,7 @@ $bag = fromJSON(
 						<?php
 						$toshow = "<tr>
 												<td><a onclick='removeToBasket({id_product})'><i class='material-icons' style='vertical-align: bottom; color:#F44336;'>delete</i></a></td>
-												<td><a href='page.html?product={id_product}'>{name}</a></td>
+												<td><a href='page.php?id={id_product}'>{name}</a></td>
 												<td style='text-align:right;'><input name='qte' type='number' min=1 value='{qte}' style='width:100px;'><a  style='margin-left:10px;' onclick='updateToBasket(this, {id_product})'><i class='material-icons' style='vertical-align: bottom;'>cached</i></a></td>
 												<td style='text-align:right;'>€ {prix_base}</td>
 												<td style='text-align:right;'>€ {reduction}</td>

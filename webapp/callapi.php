@@ -33,6 +33,11 @@ if (isset($_GET["function"])) {
         removeCode($_GET["id"]);
       }
       break;
+    case 'removeDevis':
+      if (isset($_GET["id"])) {
+        removeDevis($_GET["id"]);
+      }
+      break;
     case 'getBasketAndDevis':
       getBasketAndDevis();
       break;
@@ -91,6 +96,14 @@ function removeUser($id) {
 function removeCode($id) {
   print_r(
     DELETE_REQ("http://commercial.tecknologiks.com/index.php/{id}/{token}/promo/delete/",
+      array( 'id' => $id ),
+      array("{id}", 				"{token}"),
+      array($_SESSION["id"], $_SESSION["token"])));
+}
+
+function removeDevis($id) {
+  print_r(
+    DELETE_REQ("http://commercial.tecknologiks.com/index.php/{id}/{token}/devis/delete/",
       array( 'id' => $id ),
       array("{id}", 				"{token}"),
       array($_SESSION["id"], $_SESSION["token"])));

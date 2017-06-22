@@ -1,25 +1,23 @@
 ﻿<?php
 require_once("part/basicFunctionLoad.php");
+
+
+
+$service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/products";
+if(isset($_POST["search"]))
+	if (strlen($_POST["search"]) > 2 )
+		$service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/products/search/".utf8_encode($_POST["search"])."/";
+
+$articles = fromJSON(
+							GET_REQ(
+								$service_url,
+								array("{id}", 					"{token}"),
+								array($_SESSION["id"], $_SESSION["token"])));
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 	<?php include('part/header.php'); ?>
-	<script>
-
-	function addToBasket(p1) {
-		//TODO: call api / receive nb articles into basket / change basket number
-		$.ajax({
-		    url: 'callapi.php?function=addToBasket&id={id_product}'.replace("{id_product}", p1),
-		    dataType: "json",
-		    complete: function (response) {
-		        var obj = JSON.parse(response.responseText);
-						document.getElementById("item_count_bag").innerText =  obj.count;
-		    }
-		});
-	}
-
-	</script>
 </head>
 <body onload="getBasketAndDevis();">
 	<?php include("part/navdatas.php"); ?>
@@ -36,15 +34,6 @@ require_once("part/basicFunctionLoad.php");
 					</thead>
 					<tbody>
 						<?php
-
-						$service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/products";
-
-						if(isset($_POST["search"])) {
-							if (strlen($_POST["search"]) > 2 ) {
-								$service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/products/search/".utf8_encode($_POST["search"])."/";
-							}
-						}
-
 						$toshow = "<tr>
 													<td><a href='page.php?id={id_product}'>{name}</a></td>
 													<td>{descr}</td>
@@ -53,11 +42,7 @@ require_once("part/basicFunctionLoad.php");
 													<td style='text-align:center;'>{btn}</td>
 												</tr>";
 						$btn = '<a id="addIt" type="button" class="btn btn-success" value="+" onclick="addToBasket({id_product});"><i class="material-icons">add_shopping_cart</i></a>';
-						$articles = json_decode(file_get_contents(
-									str_replace(
-										array("{id}", 					"{token}"),
-										array($_SESSION["id"], $_SESSION["token"]),
-										$service_url)), true);
+
 						if (count($articles) > 0) {
 							for($i = 0; $i < count($articles); $i++) {
 								echo str_replace(
@@ -66,12 +51,9 @@ require_once("part/basicFunctionLoad.php");
 									$toshow);
 							}
 						} else {
-							$error = "ERREUR";
+							Error(S_ERREUR);
 						}
-
-
 						?>
-
 					</tbody>
 		</table>
 

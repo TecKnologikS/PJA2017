@@ -2,7 +2,6 @@
 require("part/basicFunctionLoad.php");
 
 if (isset($_POST["societe"]) && isset($_POST["email"]) && isset($_POST["nom"]) && isset($_POST["prenom"])) {
-  //Minimum pour valider le devis
   $societe = "";
   $siret = "";
   $tel = "";
