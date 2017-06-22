@@ -50,7 +50,6 @@ function removeUser(id) {
   }
 }
 
-
 function removeCode(id) {
   if (confirm('Etes vous sur de vouloir supprimer l utilisateur ?')) {
     $.ajax({

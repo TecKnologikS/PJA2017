@@ -7,11 +7,13 @@ if (!isset($_SESSION["id"])) {
 include('part/language.php');
 include('const/param.php');
 
+// Accepte les admins, pas les users
 function isAdminOrExit() {
 	if (!isset($_SESSION["id"]) && $_SESSION["really"] != true)
 	  header('Location: index.php');
 }
 
+//Types de message
 function Message($message) {
 	InformationMessage("info_message", $message, 5000);
 }
@@ -24,6 +26,8 @@ function Succed($message) {
 	InformationMessage("succed_message", $message, 3000);
 }
 
+//Les messages appellent cette fonction
+//Affiche la barre en bas du site (rouge, verte...) avec le message de succes ou erreur
 function InformationMessage($type, $message, $duration) {
 	echo '<div id="information_message" class="'.$type.'"><i style="vertical-align:middle; margin-right: 20px;" class="material-icons">warning</i> '.$message.'<a onclick="document.getElementById(\'information_message\').remove();">X<a></div>
 				<script>

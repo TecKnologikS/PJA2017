@@ -1,8 +1,7 @@
 <?php
 require("part/basicFunctionLoad.php");
-
+//Que pour les admins
 isAdminOrExit();
-
 
 if (isset($_GET["delete"]))
   if ($_GET["delete"] == "true")
