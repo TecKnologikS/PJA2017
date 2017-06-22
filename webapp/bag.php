@@ -64,8 +64,6 @@ $bag = fromJSON(
 									array($articles[$i]["id"], $articles[$i]["name"], $articles[$i]["Qte"], $articles[$i]["prix_group"], $articles[$i]["prix_final"], $articles[$i]["prix"], $articles[$i]["reduction"]." (".(($articles[$i]['reduction']*100) / $articles[$i]['prix_group'])." %)"),
 									$toshow);
 							}
-						} else {
-							Error(S_ERREUR);
 						}
 
 

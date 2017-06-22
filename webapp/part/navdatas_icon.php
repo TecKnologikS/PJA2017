@@ -12,13 +12,13 @@
 					</form></li>
           <?php
             if ($_SESSION["really"] == true) {
-              echo '<li><a href="./admin_user.php"><button class="btn btn-info"><i style="vertical-align: bottom" class="material-icons">supervisor_account</i></button></a></li>';
-              echo '<li><a href="./admin_promo.php"><button class="btn btn-info"><i style="vertical-align: bottom" class="material-icons">redeem</i></button></a></li>';
+              echo '<li><a href="./admin_user.php" title="Utilisateurs (Administration)"><button class="btn btn-info"><i style="vertical-align: bottom" class="material-icons">supervisor_account</i></button></a></li>';
+              echo '<li><a href="./admin_promo.php" title="Promotions (Administration)"><button class="btn btn-info"><i style="vertical-align: bottom" class="material-icons">redeem</i></button></a></li>';
             }
           ?>
-          <li><a href="./bag.php"><button class="btn btn-warning"><i class="material-icons" style="vertical-align: bottom">shopping_cart</i> (<span id="item_count_bag">0</span>)</button></a></li>
-          <li><a href="./listdevis.php"><button class="btn btn-success"><i class="material-icons" style="vertical-align: bottom">insert_drive_file</i> (<span id="item_count_devis">0</span>)</button></a></li>
-          <li><a href="./logout.php" onclick="return confirm('Voulez-vous vraiment vous déconnecter ?')"><button type="submit" name="logOut" class="btn btn-danger"><i class="material-icons" style="vertical-align: bottom">power_settings_new</i></button></a></li>
+          <li><a href="./bag.php" title="Panier"><button class="btn btn-warning"><i class="material-icons" style="vertical-align: bottom">shopping_cart</i> (<span id="item_count_bag">0</span>)</button></a></li>
+          <li><a href="./listdevis.php" title="Listes des devis"><button class="btn btn-success"><i class="material-icons" style="vertical-align: bottom">insert_drive_file</i> (<span id="item_count_devis">0</span>)</button></a></li>
+          <li><a href="./logout.php" title="Se déconnecter" onclick="return confirm('Voulez-vous vraiment vous déconnecter ?')"><button type="submit" name="logOut" class="btn btn-danger"><i class="material-icons" style="vertical-align: bottom">power_settings_new</i></button></a></li>
             </div>
         </div>
     </div>

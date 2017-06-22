@@ -48,7 +48,7 @@ $promo = $bag["promo"];
 $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 // set document information
 $pdf->SetCreator(PDF_CREATOR);
-$pdf->SetAuthor('Robin PAUQUET');
+$pdf->SetAuthor('Robin PAUQUET & Pierre MEHU');
 $pdf->SetTitle('Devis n°'.$ID_DEVIS);
 $pdf->SetSubject('Pour la société '.$devis["Societe"]);
 $pdf->SetKeywords('Devis, PDF, export');
@@ -93,6 +93,6 @@ $html = ob_get_clean();
 $pdf->writeHTML($html, true, false, true, false, '');
 
 
-$pdf->Output('devis_.pdf', 'I');
+$pdf->Output('devis_'.$_GET["id"].'.pdf', 'I');
 
  ?>
