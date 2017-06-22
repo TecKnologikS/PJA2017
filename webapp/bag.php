@@ -17,7 +17,7 @@ if (isset($_GET["delete"]))
 if (isset($_GET["update"]))
   if ($_GET["update"] == "true")
       Succed(S_UPDATE_BAG);
-			
+
 $bag = fromJSON(
 				GET_REQ(
 					"http://commercial.tecknologiks.com/index.php/{id}/{token}/bag/",
@@ -76,7 +76,7 @@ $bag = fromJSON(
 			<table class="addition" style="margin-left: 20px; float: left;">
 				<tbody>
 					<tr><td colspan="2" style="text-align:center;"><h4><?= S_CODEMORE ?></h4></td></tr>
-					<tr><td><?= S_CODE ?></td><td><input type="text" name="codepromo" /></td></tr>
+					<tr><td><?= S_CODE ?></td><td><input type="text" name="codepromo" pattern=".{1,}" required /></td></tr>
 					<tr><td colspan="2" style="padding:0;"><input type="submit" value="Ajouter" class="btn btn-info" style="font-size: 1.5em; width:100%; height:50px;"></td></tr>
 				</tbody>
 			</table>
