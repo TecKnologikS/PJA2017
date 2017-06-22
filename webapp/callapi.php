@@ -1,5 +1,5 @@
 <?php
-
+require_once("part/basicFunctionLoad.php");
 session_start();
 if (isset($_GET["function"])) {
   switch ($_GET["function"]) {
@@ -50,199 +50,62 @@ if (isset($_GET["function"])) {
 
 
 function AddToBasket($id) {
-  $postdata = http_build_query(
-      array(
-          'id' => $id
-      )
-  );
-
-  $opts = array('http' =>
-      array(
-          'method'  => 'POST',
-          'header'  => 'Content-type: application/x-www-form-urlencoded',
-          'content' => $postdata
-      )
-  );
-
-  $context  = stream_context_create($opts);
-  $service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/bag/add/";
-  $result = file_get_contents(str_replace(
-      array("{id}", 					"{token}"),
-      array($_SESSION["id"], $_SESSION["token"]),
-      $service_url),
-    false,
-    $context);
-  print_r($result);
+  POST_REQ("http://commercial.tecknologiks.com/index.php/{id}/{token}/bag/add/",
+          array('id' => $id),
+          array("{id}", 					"{token}"),
+          array($_SESSION["id"], $_SESSION["token"]));
 }
 
 function removeToBasket($id) {
-  $postdata = http_build_query(
-      array(
-          'id' => $id
-      )
-  );
-
-  $opts = array('http' =>
-      array(
-          'method'  => 'POST',
-          'header'  => 'Content-type: application/x-www-form-urlencoded',
-          'content' => $postdata
-      )
-  );
-
-  $context  = stream_context_create($opts);
-  $service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/bag/remove/";
-  $result = file_get_contents(str_replace(
-      array("{id}", 					"{token}"),
-      array($_SESSION["id"], $_SESSION["token"]),
-      $service_url),
-    false,
-    $context);
-  print_r($result);
+  POST_REQ("http://commercial.tecknologiks.com/index.php/{id}/{token}/bag/remove/",
+          array( 'id' => $id ),
+          array("{id}",         "{token}"),
+          array($_SESSION["id"], $_SESSION["token"])
+        );
 }
 
 function updateMDP($id, $mdp) {
-  $postdata = http_build_query(
-      array(
-          'id' => $id,
-          'mdp' => $mdp
-      )
-  );
-
-  $opts = array('http' =>
-      array(
-          'method'  => 'POST',
-          'header'  => 'Content-type: application/x-www-form-urlencoded',
-          'content' => $postdata
-      )
-  );
-
-  $context  = stream_context_create($opts);
-  $service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/users/update/mdp";
-  $result = file_get_contents(str_replace(
-      array("{id}", 					"{token}"),
-      array($_SESSION["id"], $_SESSION["token"]),
-      $service_url),
-    false,
-    $context);
-  print_r($result);
+  POST_REQ("http://commercial.tecknologiks.com/index.php/{id}/{token}/users/update/mdp",
+          array( 'id' => $id, 'mdp' => $mdp ),
+          array("{id}", 				"{token}"),
+          array($_SESSION["id"], $_SESSION["token"])
+        );
 }
 
 function updateSTATUT($id, $statut) {
-  $postdata = http_build_query(
-      array(
-          'id' => $id,
-          'statut' => $statut
-      )
-  );
-
-  $opts = array('http' =>
-      array(
-          'method'  => 'POST',
-          'header'  => 'Content-type: application/x-www-form-urlencoded',
-          'content' => $postdata
-      )
-  );
-
-  $context  = stream_context_create($opts);
-  $service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/users/update/statut";
-  $result = file_get_contents(str_replace(
-      array("{id}", 					"{token}"),
-      array($_SESSION["id"], $_SESSION["token"]),
-      $service_url),
-    false,
-    $context);
-  print_r($result);
+  POST_REQ("http://commercial.tecknologiks.com/index.php/{id}/{token}/users/update/statut",
+          array( 'id' => $id, 'statut' => $statut ),
+          array("{id}", 				"{token}"),
+          array($_SESSION["id"], $_SESSION["token"])
+        );
 }
 
 function removeUser($id) {
-  $postdata = http_build_query(
-      array(
-          'id' => $id
-      )
-  );
-
-  $opts = array('http' =>
-      array(
-          'method'  => 'DELETE',
-          'header'  => 'Content-type: application/x-www-form-urlencoded',
-          'content' => $postdata
-      )
-  );
-
-  $context  = stream_context_create($opts);
-  $service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/users/delete/";
-  $result = file_get_contents(str_replace(
-      array("{id}", 					"{token}"),
-      array($_SESSION["id"], $_SESSION["token"]),
-      $service_url),
-    false,
-    $context);
-  print_r($result);
+  DELETE_REQ("http://commercial.tecknologiks.com/index.php/{id}/{token}/users/delete/",
+          array( 'id' => $id ),
+          array("{id}", 				"{token}"),
+          array($_SESSION["id"], $_SESSION["token"])
+        );
 }
 function removeCode($id) {
-  $postdata = http_build_query(
-      array(
-          'id' => $id
-      )
-  );
-
-  $opts = array('http' =>
-      array(
-          'method'  => 'DELETE',
-          'header'  => 'Content-type: application/x-www-form-urlencoded',
-          'content' => $postdata
-      )
-  );
-
-  $context  = stream_context_create($opts);
-  $service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/promo/delete/";
-  $result = file_get_contents(str_replace(
-      array("{id}", 					"{token}"),
-      array($_SESSION["id"], $_SESSION["token"]),
-      $service_url),
-    false,
-    $context);
-  print_r($result);
+  DELETE_REQ("http://commercial.tecknologiks.com/index.php/{id}/{token}/promo/delete/",
+          array( 'id' => $id ),
+          array("{id}", 				"{token}"),
+          array($_SESSION["id"], $_SESSION["token"])
+        );
 }
 
 function getBasketAndDevis() {
-  $service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/count_bag_and_devis/";
-
-    $result  = file_get_contents(
-        str_replace(
-          array("{id}", 					"{token}"),
-          array($_SESSION["id"], $_SESSION["token"]),
-          $service_url));
-
-  print_r($result);
+  GET_REQ("http://commercial.tecknologiks.com/index.php/{id}/{token}/count_bag_and_devis/",
+          array("{id}", 				"{token}"),
+          array($_SESSION["id"], $_SESSION["token"]));
 }
 
 function updateToBasket($id, $qte) {
-  $postdata = http_build_query(
-      array(
-          'id' => $id,
-          'qte' => $qte
-      )
-  );
-
-  $opts = array('http' =>
-      array(
-          'method'  => 'POST',
-          'header'  => 'Content-type: application/x-www-form-urlencoded',
-          'content' => $postdata
-      )
-  );
-
-  $context  = stream_context_create($opts);
-  $service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/bag/update/";
-  $result = file_get_contents(str_replace(
-      array("{id}", 					"{token}"),
-      array($_SESSION["id"], $_SESSION["token"]),
-      $service_url),
-    false,
-    $context);
-  print_r($result);
+  POST_REQ("http://commercial.tecknologiks.com/index.php/{id}/{token}/bag/update/",
+            array( 'id' => $id, 'qte' => $qte ),
+            array("{id}", 				"{token}"),
+            array($_SESSION["id"], $_SESSION["token"]));
 }
 
 ?>

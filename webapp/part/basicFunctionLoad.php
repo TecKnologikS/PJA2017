@@ -29,4 +29,45 @@ function InformationMessage($type, $message, $duration) {
 				</script>';
 }
 
+function POST_REQ($url, $body, $param, $value) {
+	REQ($url, $body, $param, $value, "POST");
+}
+
+function DELETE_REQ($url, $body, $param, $value) {
+	REQ($url, $body, $param, $value, "DELETE");
+}
+
+function REQ($url, $body, $param, $value, $type) {
+
+	$postdata = http_build_query( $body );
+
+  $opts = array('http' =>
+      array(
+          'method'  => $type,
+          'header'  => 'Content-type: application/x-www-form-urlencoded',
+          'content' => $postdata
+      )
+  );
+
+  $context  = stream_context_create($opts);
+  print_r(
+		file_get_contents(
+			str_replace(
+	      $param,
+	      $value,
+	      $url),
+    	false,
+    	$context));
+}
+
+function GET_REQ($url, $param, $value) {
+	print_r(
+		file_get_contents(
+		  str_replace(
+		    $param,
+		    $value,
+		    $url)));
+}
+
+
 ?>
