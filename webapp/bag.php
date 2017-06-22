@@ -1,71 +1,33 @@
 <?php
 require("part/basicFunctionLoad.php");
-
-function isGoodPromo($code) {
-	$postdata = http_build_query(
-			array(
-					'code' => $code
-			)
-	);
-
-	$opts = array('http' =>
-			array(
-					'method'  => 'POST',
-					'header'  => 'Content-type: application/x-www-form-urlencoded',
-					'content' => $postdata
-			)
-	);
-
-	$context  = stream_context_create($opts);
-	$service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/promo/add/";
-	$result = json_decode(file_get_contents(str_replace(
-			array("{id}", 					"{token}"),
-			array($_SESSION["id"], $_SESSION["token"]),
-			$service_url),
-		false,
-		$context), true);
-	if ($result["insert"] == "OK") {
-		return true;
-	}
-	return false;
-}
+require("function/Promo.php");
 
 if (isset($_POST["codepromo"])) {
-	if (!isGoodPromo($_POST["codepromo"])) {
-		$error_promo = $_POST["codepromo"]." est non valide";
+	if (Promo::isGoodPromo($_POST["codepromo"])) {
+		Succed($_POST["codepromo"]." ".S_CODE_PROMO_ADD);
+	} else {
+		Error($_POST["codepromo"]." ".S_CODE_PROMO_FALSE);
 	}
 }
+
+if (isset($_GET["delete"]))
+  if ($_GET["delete"] == "true")
+      Succed(S_DELETED_BAG);
+
+if (isset($_GET["update"]))
+  if ($_GET["update"] == "true")
+      Succed(S_UPDATE_BAG);
+			
+$bag = fromJSON(
+				GET_REQ(
+					"http://commercial.tecknologiks.com/index.php/{id}/{token}/bag/",
+					array("{id}", 					"{token}"),
+					array($_SESSION["id"], $_SESSION["token"])));
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 	<?php include('part/header.php'); ?>
-	<script>
-	function removeToBasket(p1) {
-		$.ajax({
-		    url: 'callapi.php?function=removeToBasket&id={id_product}'.replace("{id_product}", p1),
-		    dataType: "json",
-		    complete: function (response) {
-            location.reload();
-		    }
-		});
-	}
-  function updateToBasket(elem, p1) {
-		var val = (elem.parentElement).getElementsByTagName("input")[0].value;
-		if (val > 0) {
-			$.ajax({
-			    url: 'callapi.php?function=updateToBasket&id={id_product}&qte={qte}'.replace("{id_product}", p1).replace("{qte}", val),
-			    dataType: "json",
-			    complete: function (response) {
-							location.reload();
-			    }
-			});
-		}
-	}
-
-
-
-	</script>
 </head>
 <body onload="getBasketAndDevis();">
 	<?php include("part/navdatas.php"); ?>
@@ -83,8 +45,6 @@ if (isset($_POST["codepromo"])) {
 					</thead>
 					<tbody>
 						<?php
-
-						$service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/bag/";
 						$toshow = "<tr>
 												<td><a onclick='removeToBasket({id_product})'><i class='material-icons' style='vertical-align: bottom; color:#F44336;'>delete</i></a></td>
 												<td><a href='page.html?product={id_product}'>{name}</a></td>
@@ -93,22 +53,17 @@ if (isset($_POST["codepromo"])) {
 												<td style='text-align:right;'>€ {reduction}</td>
 												<td style='text-align:right;'>€ {prix_final}</td>
 											</tr>";
-						$bag = json_decode(file_get_contents(
-									str_replace(
-										array("{id}", 					"{token}"),
-										array($_SESSION["id"], $_SESSION["token"]),
-										$service_url)), true);
+
 						$articles = $bag["articles"];
 						if (count($articles) > 0) {
 							for($i = 0; $i < count($articles); $i++) {
-              //TODO: ca ....
-								echo str_replace(
+            		echo str_replace(
 									array("{id_product}",								"{name}", 					"{qte}", 										"{prix_base}" , 							"{prix_final}", 							"{reduction}", "{btn}"),
 									array($articles[$i]["id"], $articles[$i]["name"], $articles[$i]["Qte"], $articles[$i]["prix"], $articles[$i]["prix_final"], $articles[$i]["reduction"]." (".(($articles[$i]['reduction']*100) / $articles[$i]['prix'])." %)", "supprimer"),
 									$toshow);
 							}
 						} else {
-							$error = "ERREUR";
+							Error(S_ERREUR);
 						}
 
 

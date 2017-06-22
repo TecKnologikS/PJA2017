@@ -62,3 +62,26 @@ function removeCode(id) {
     });
   }
 }
+
+function removeToBasket(p1) {
+  $.ajax({
+      url: 'callapi.php?function=removeToBasket&id={id_product}'.replace("{id_product}", p1),
+      dataType: "json",
+      complete: function (response) {
+          location.href = "?delete=true";
+      }
+  });
+}
+
+function updateToBasket(elem, p1) {
+  var val = (elem.parentElement).getElementsByTagName("input")[0].value;
+  if (val > 0) {
+    $.ajax({
+        url: 'callapi.php?function=updateToBasket&id={id_product}&qte={qte}'.replace("{id_product}", p1).replace("{qte}", val),
+        dataType: "json",
+        complete: function (response) {
+            location.href = "?update=true";
+        }
+    });
+  }
+}
