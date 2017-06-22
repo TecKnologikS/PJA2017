@@ -1,51 +1,34 @@
 <?php
 require("part/basicFunctionLoad.php");
 
-if (!isset($_GET["id"]) && $_SESSION["really"] != true)
-  header('Location: index.php');
+isAdminOrExit();
+
+if (isset($_GET["delete"]))
+  if ($_GET["delete"] == "true")
+      Succed(S_DELETED_PROMO);
+
 
 if (isset($_POST["libelle"]) && isset($_POST["code"]) && isset($_POST["reduction"]) && isset($_POST["minimum"])) {
-  $postdata = http_build_query(
-      array(
-          'libelle' => $_POST["libelle"],
-          'code' => $_POST["code"],
-          'reduction' => $_POST["reduction"],
-          'minimum' => $_POST["minimum"]
-      )
-  );
-
-
-  $opts = array('http' =>
-      array(
-          'method'  => 'POST',
-          'header'  => 'Content-type: application/x-www-form-urlencoded',
-          'content' => $postdata
-      )
-  );
-
-  $context  = stream_context_create($opts);
-  $service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/promo/insert/";
-  $result = json_decode(file_get_contents(str_replace(
-      array("{id}", 					"{token}"),
-      array($_SESSION["id"], $_SESSION["token"]),
-      $service_url),
-    false,
-    $context), true);
+  $result = fromJSON(
+              POST_REQ("http://commercial.tecknologiks.com/index.php/{id}/{token}/promo/insert/",
+                array(  'libelle' => $_POST["libelle"],
+                        'code' => $_POST["code"],
+                        'reduction' => $_POST["reduction"],
+                        'minimum' => $_POST["minimum"] ),
+                array("{id}", 					"{token}"),
+                array($_SESSION["id"], $_SESSION["token"])));
     if ($result["insert"]){
-      Succed($_POST["login"].S_CREATED_USER);
+      Succed($_POST["code"]." ".S_CREATED_PROMO);
     } else {
-      Error(S_ERROR_CREATED_USER);
+      Error($_POST["code"]." ".S_ERROR_CREATED_PROMO);
     }
-
 }
 
-
-$service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/promo/";
-$promos = json_decode(file_get_contents(
-      str_replace(
-        array("{id}", 					"{token}"),
-        array($_SESSION["id"], $_SESSION["token"]),
-        $service_url)), true);
+$promos = fromJSON(
+            GET_REQ(
+              "http://commercial.tecknologiks.com/index.php/{id}/{token}/promo/",
+              array("{id}", 					"{token}"),
+              array($_SESSION["id"], $_SESSION["token"])));
 
 
 ?>
@@ -53,19 +36,6 @@ $promos = json_decode(file_get_contents(
 <html lang="fr">
 <head>
 	<?php include('part/header.php'); ?>
-  <script>
-    function removeCode(id) {
-      if (confirm('Etes vous sur de vouloir supprimer l utilisateur ?')) {
-        $.ajax({
-            url: 'callapi.php?function=removeCode&id={id_code}'.replace("{id_code}", id),
-            dataType: "json",
-            complete: function (response) {
-                location.reload();
-            }
-        });
-      }
-    }
-  </script>
 </head>
 <body onload="getBasketAndDevis();">
 	<?php include("part/navdatas.php"); ?>
@@ -84,10 +54,10 @@ $promos = json_decode(file_get_contents(
         </thead>
 				<tbody>
           <tr>
-            <td><input type="text" name="libelle" placeholder="Libelle" /></td>
-            <td><input type="text" name="code" placeholder="Code" /></td>
-            <td><input type="number" name="reduction" placeholder="Reduction en %" /></td>
-            <td><input type="number" name="minimum" placeholder="Minimum en €" /></td>
+            <td><input type="text" name="libelle" placeholder="Libelle" pattern=".{1,}" required /></td>
+            <td><input type="text" name="code" placeholder="Code" pattern=".{1,}" required /></td>
+            <td><input type="number" name="reduction" placeholder="Reduction en %" pattern=".{1,}" required /></td>
+            <td><input type="number" name="minimum" placeholder="Minimum en €" pattern=".{1,}" required /></td>
           </tr>
 					<tr><td class="gris" colspan="4" style="padding:0;"><input type="submit" value="Ajouter" class="btn btn-info" style="font-size: 1.5em; width:100%; height:50px;"></td></tr>
 				</tbody>

@@ -1,52 +1,44 @@
 <?php
 require("part/basicFunctionLoad.php");
 
-if (!isset($_GET["id"]) && $_SESSION["really"] != true)
-  header('Location: index.php');
+isAdminOrExit();
+
+
+if (isset($_GET["delete"]))
+  if ($_GET["delete"] == "true")
+      Succed(S_DELETED_USER);
+
+if (isset($_GET["mdp"]))
+  if ($_GET["mdp"] == "true")
+      Succed(S_CHANGED_MDP);
+
+if (isset($_GET["statut"]))
+  if ($_GET["statut"] == "true")
+      Succed(S_CHANGED_STATUT);
 
 if (isset($_POST["login"]) && isset($_POST["password"])) {
   $admin = isset($_POST["admin"]) ? $_POST["admin"] : 0;
+  $result = fromJSON(
+              POST_REQ("http://commercial.tecknologiks.com/index.php/{id}/{token}/users/insert/",
+                array(  'Login' => $_POST["login"],
+                        'Password' => $_POST["password"],
+                        'Admin' => $admin ),
+                array("{id}", 					"{token}"),
+                array($_SESSION["id"], $_SESSION["token"])));
 
-  $postdata = http_build_query(
-      array(
-          'Login' => $_POST["login"],
-          'Password' => $_POST["password"],
-          'Admin' => $admin
-      )
-  );
-
-
-  $opts = array('http' =>
-      array(
-          'method'  => 'POST',
-          'header'  => 'Content-type: application/x-www-form-urlencoded',
-          'content' => $postdata
-      )
-  );
-
-  $context  = stream_context_create($opts);
-  $service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/users/insert/";
-  $result = json_decode(file_get_contents(str_replace(
-      array("{id}", 					"{token}"),
-      array($_SESSION["id"], $_SESSION["token"]),
-      $service_url),
-    false,
-    $context), true);
     if ($result["created"]){
-      Succed($_POST["login"].S_CREATED_USER);
+      Succed($_POST["code"]." ".S_CREATED_USER);
     } else {
-      Error(S_ERROR_CREATED_USER);
+      Error($_POST["code"]." ".S_ERROR_CREATED_USER);
     }
-
 }
 
+$users = fromJSON(
+            GET_REQ(
+              "http://commercial.tecknologiks.com/index.php/{id}/{token}/users/",
+              array("{id}", 					"{token}"),
+              array($_SESSION["id"], $_SESSION["token"])));
 
-$service_url = "http://commercial.tecknologiks.com/index.php/{id}/{token}/users/";
-$users = json_decode(file_get_contents(
-      str_replace(
-        array("{id}", 					"{token}"),
-        array($_SESSION["id"], $_SESSION["token"]),
-        $service_url)), true);
 
 
 ?>
@@ -54,44 +46,6 @@ $users = json_decode(file_get_contents(
 <html lang="fr">
 <head>
 	<?php include('part/header.php'); ?>
-  <script>
-    function updateMdp(id) {
-      var txt;
-      var mdp = prompt("Entrez un nouveau mot de passe", "");
-      if (mdp == null || mdp == "") {
-
-      } else {
-        $.ajax({
-            url: 'callapi.php?function=updateMDP&id={id_user}&mdp={mdp}'.replace("{id_user}", id).replace("{mdp}", mdp),
-            dataType: "json",
-            complete: function (response) {
-                location.reload();
-            }
-        });
-      }
-    }
-
-    function updateStatut(id, value) {
-      $.ajax({
-          url: 'callapi.php?function=updateSTATUT&id={id_user}&statut={value}'.replace("{id_user}", id).replace("{value}", value),
-          dataType: "json",
-          complete: function (response) {
-              location.reload();
-          }
-      });
-    }
-    function removeUser(id) {
-      if (confirm('Etes vous sur de vouloir supprimer l utilisateur ?')) {
-        $.ajax({
-            url: 'callapi.php?function=removeUser&id={id_user}'.replace("{id_user}", id),
-            dataType: "json",
-            complete: function (response) {
-                location.reload();
-            }
-        });
-      }
-    }
-  </script>
 </head>
 <body onload="getBasketAndDevis();">
 	<?php include("part/navdatas.php"); ?>
@@ -109,8 +63,8 @@ $users = json_decode(file_get_contents(
         </thead>
 				<tbody>
           <tr>
-            <td><input type="text" name="login" placeholder="login" /></td>
-            <td><input type="text" name="password" placeholder="mot de passe" /></td>
+            <td><input type="text" name="login" placeholder="login" pattern=".{1,}" required /></td>
+            <td><input type="text" name="password" placeholder="mot de passe" pattern=".{1,}" required /></td>
             <td>
               <label class="switch">
                 <input type="checkbox" name="admin" value="1">
