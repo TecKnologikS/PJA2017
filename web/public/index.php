@@ -291,6 +291,21 @@ $app->get('/{id}/{token}/devis/{id_devis}/', function (Request $request, Respons
 	$response = $response->withJson($retour, 302);
     return $response;
 });
+$app->delete('/{id}/{token}/devis/delete/', function ($request, $response, $args) {
+	$id = $args['id'];
+	$token = $args['token'];
+	$parsedBody = $request->getParsedBody();
+
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
+	$retour = array('delete' => false,'admin' => false);
+	if (isCorrectIdentificationAdmin($id, $token)) {
+		$mysqli->query("DELETE FROM devis WHERE ID= ".$parsedBody["id"]." ");
+		$retour = array('delete' => true,'admin' => true);
+	}
+	$response = $response->withHeader('Content-type', 'text');
+	$response = $response->withJson($retour, 302);
+  return $response;
+});
 $app->get('/{id}/{token}/promo/', function ($request, $response, $args) {
 	$id = $args['id'];
 	$token = $args['token'];
@@ -437,7 +452,7 @@ $app->post('/{id}/{token}/bag/add/', function ($request, $response, $args) {
 	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
 	$retour = array('item' => $parsedBody["id"],'count' => 0);
 
-	$mysqli->query("INSERT INTO panier_article (ID_User,ID_Article,Qte) VALUES (".$id.", ".$parsedBody["id"].", 1) ON DUPLICATE KEY UPDATE Qte=Qte+1;");
+	$mysqli->query("INSERT INTO panier_article (ID_User,ID_Article,Qte) VALUES (".$id.", ".$parsedBody["id"].", ".$parsedBody["nb"].") ON DUPLICATE KEY UPDATE Qte=Qte+".$parsedBody["nb"].";");
 	$res = $mysqli->query("SELECT COUNT(*) as nb FROM panier_article WHERE ID_User=".$mysqli->real_escape_string($id)." ");
 	if ($row = $res->fetch_assoc()){
 		$retour = array('item' => $parsedBody["id"],'count' => $row['nb']);

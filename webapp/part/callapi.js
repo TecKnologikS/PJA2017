@@ -91,20 +91,30 @@ function removeDevis(id) {
         url: 'callapi.php?function=removeDevis&id={id_code}'.replace("{id_code}", id),
         dataType: "json",
         complete: function (response) {
-            //location.href = "?delete=true";
+            if (response.responseJSON.delete) {
+              location.href = "?delete=true";
+            } else {
+              location.href = "?delete=false&admin=" + response.responseJSON.admin;
+            }
         }
     });
   }
 }
 
+function MessageFromJS(message) {
+  document.body.innerHTML += '<div id="information_message" class="succed_message"><i style="vertical-align:middle; margin-right: 20px;" class="material-icons">warning</i> ' + message + '</div> <script> setTimeout(function() { var element =  document.getElementById("information_message"); if (typeof(element) != \'undefined\' && element != null) { document.getElementById("information_message").remove(); } }, 3000); </script>';
+}
+
 function addToBasketFromPage(p1) {
+  var nb = 0;
+  nb = document.getElementById('nbItem').value;
   $.ajax({
-      url: 'callapi.php?function=addToBasket&id={id_product}'.replace("{id_product}", p1),
+      url: 'callapi.php?function=addToBasket&id={id_product}&nb={nb}'.replace("{id_product}", p1).replace("{nb}", nb),
       dataType: "json",
       complete: function (response) {
           var obj = JSON.parse(response.responseText);
           document.getElementById("item_count_bag").innerText =  obj.count;
-          //TODO: alert
+          MessageFromJS(nb + " Elements Ajouté(s)");
       }
   });
 }
@@ -116,7 +126,7 @@ function addToBasket(p1) {
       complete: function (response) {
           var obj = JSON.parse(response.responseText);
           document.getElementById("item_count_bag").innerText =  obj.count;
-          //TODO: alert
+          MessageFromJS(" Element Ajouté");
       }
   });
 }

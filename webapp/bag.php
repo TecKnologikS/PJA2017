@@ -38,6 +38,7 @@ $bag = fromJSON(
 							<th style="width: 20px;"></th>
 							<th style='text-align:center;'><?= S_PRODUCTNAME ?></th>
 							<th style="width: 160px;text-align:center;"><?= S_QUANTITE ?></th>
+							<th style='text-align:right;width: 100px;'><?= S_UNITYPRICE ?></th>
 							<th style='text-align:right;width: 100px;'><?= S_BASEPRICE ?></th>
 							<th style='text-align:right;width: 120px;'><?= S_REDUCTION ?></th>
 							<th style='text-align:right;width: 100px;'><?= S_FINALPRICE ?></th>
@@ -49,6 +50,7 @@ $bag = fromJSON(
 												<td><a onclick='removeToBasket({id_product})'><i class='material-icons' style='vertical-align: bottom; color:#F44336;'>delete</i></a></td>
 												<td><a href='page.php?id={id_product}'>{name}</a></td>
 												<td style='text-align:right;'><input name='qte' type='number' min=1 value='{qte}' style='width:100px;'><a  style='margin-left:10px;' onclick='updateToBasket(this, {id_product})'><i class='material-icons' style='vertical-align: bottom;'>cached</i></a></td>
+												<td style='text-align:right;'>€ {prix_unitaire}</td>
 												<td style='text-align:right;'>€ {prix_base}</td>
 												<td style='text-align:right;'>€ {reduction}</td>
 												<td style='text-align:right;'>€ {prix_final}</td>
@@ -58,8 +60,8 @@ $bag = fromJSON(
 						if (count($articles) > 0) {
 							for($i = 0; $i < count($articles); $i++) {
             		echo str_replace(
-									array("{id_product}",								"{name}", 					"{qte}", 										"{prix_base}" , 							"{prix_final}", 							"{reduction}", "{btn}"),
-									array($articles[$i]["id"], $articles[$i]["name"], $articles[$i]["Qte"], $articles[$i]["prix"], $articles[$i]["prix_final"], $articles[$i]["reduction"]." (".(($articles[$i]['reduction']*100) / $articles[$i]['prix'])." %)", "supprimer"),
+									array("{id_product}",			 "{name}", 							"{qte}", 							"{prix_base}" , 						"{prix_final}", 							"{prix_unitaire}", 		 "{reduction}",																																	),
+									array($articles[$i]["id"], $articles[$i]["name"], $articles[$i]["Qte"], $articles[$i]["prix_group"], $articles[$i]["prix_final"], $articles[$i]["prix"], $articles[$i]["reduction"]." (".(($articles[$i]['reduction']*100) / $articles[$i]['prix_group'])." %)"),
 									$toshow);
 							}
 						} else {

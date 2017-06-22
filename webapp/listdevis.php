@@ -26,7 +26,7 @@ if (isset($_GET["delete"]))
 							<th><?= S_CONTACT ?></th>
 							<th style="width: 100px;"><?= S_DATETIME ?></th>
 							<th style="width: 70px;"><?= S_TOTALPRICE ?></th>
-							<th style="width: 40px;"></th>
+							<th style="width: 165px;"></th>
 						</tr>
 					</thead>
 					<tbody>

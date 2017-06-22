@@ -1,6 +1,6 @@
 <?php
 
-session_start();
+include_once("part/basicFunctionLoad.php");
 include("part/language.php");
 include("const/param.php");
 
@@ -53,7 +53,7 @@ if (isset($_POST["id"]) && isset($_POST["password"])) {
 								<div class="form-group">
 									<input class="form-control login_pass" placeholder="<?php echo S_MDP; ?>" name="password" type="password" pattern=".{1,}" required >
 								</div>
-								<input class="btn btn-lg btn-success btn-block" type="submit" value="Se Connecter">
+								<input style="height:50px;" class="btn btn-lg btn-success btn-block" type="submit" value="Se Connecter">
 							</fieldset>
 						</form>
 					</div>

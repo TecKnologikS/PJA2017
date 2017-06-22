@@ -1,12 +1,16 @@
 <?php
 require_once("part/basicFunctionLoad.php");
-session_start();
+
 if (isset($_GET["function"])) {
   switch ($_GET["function"]) {
     case 'addToBasket':
-    if (isset($_GET["id"])) {
-      AddToBasket($_GET["id"]);
-    }
+      if (isset($_GET["id"])) {
+        if (isset($_GET["nb"])) {
+          AddToBasketNb($_GET["id"], $_GET["nb"]);
+        } else {
+          AddToBasket($_GET["id"]);
+        }
+      }
       break;
     case 'removeToBasket':
       if (isset($_GET["id"])) {
@@ -55,9 +59,13 @@ if (isset($_GET["function"])) {
 
 
 function AddToBasket($id) {
+  AddToBasketNb($id, 1);
+}
+
+function AddToBasketNb($id, $nb) {
   print_r(
     POST_REQ("http://commercial.tecknologiks.com/index.php/{id}/{token}/bag/add/",
-      array('id' => $id),
+      array('id' => $id, 'nb' => $nb ),
       array("{id}", 					"{token}"),
       array($_SESSION["id"], $_SESSION["token"])));
 }
