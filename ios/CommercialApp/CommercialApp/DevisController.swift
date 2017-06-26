@@ -10,9 +10,21 @@ import UIKit
 
 class DevisController: UITableViewController {
     
+    
+    var devis:[Devis] = []
+    
     let CELL_IDENTIFIER = "cell"
     override func viewDidLoad() {
         super.viewDidLoad()
+        API.APIRequest(type: Request.GET, url: RequestBuilder.Articles(id: "\(User.shared.id)", token: User.shared.token), body:"") { (ok, data) in
+            let json = API.listJSON(data: data)
+            if json.count > 0 {
+                self.devis = DevisBuilder.toListFromJSON(json: json)
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+        }
         self.tableView.dataSource = self
         
     }
@@ -29,7 +41,9 @@ class DevisController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell :CellDevis = tableView.dequeueReusableCell(withIdentifier: CELL_IDENTIFIER)  as! CellDevis
-        cell.tvClient!.text = "ESGI"
+        
+        cell.tvNom.text = devis[indexPath.row].name
+        cell.tvPrix.text = "€ \(devis[indexPath.row].prix)"
         
         return cell
     }
@@ -41,8 +55,18 @@ class DevisController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return self.devis.count
     }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        /*if let indexPath = self.tableView.indexPathForSelectedRow {
+            let controller = segue.destination as! ArticleViewController
+            let value = articles[indexPath.row]
+            controller.article = articles[indexPath.row]
+        }*/
+    }
+
 
 
 }

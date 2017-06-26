@@ -1,25 +1,25 @@
 //
-//  ArticleBuilder.swift
+//  DevisBuilder.swift
 //  CommercialApp
 //
-//  Created by Robin PAUQUET on 31/05/2017.
+//  Created by Robin PAUQUET on 26/06/2017.
 //  Copyright © 2017 Robin PAUQUET. All rights reserved.
 //
 
 import Foundation
 
-open class ArticleBuilder {
-    static func toListFromJSON(json:[[String:Any]]) -> [Article] {
-        var retour = [Article]()
+open class DevisBuilder {
+    static func toListFromJSON(json:[[String:Any]]) -> [Devis] {
+        var retour = [Devis]()
         for art in json {
             retour.append(self.jsonToArticle(json: art as [String:Any]))
         }
         return retour
     }
     
-    static func jsonToArticle(json:[String:Any]) -> Article {
-        var retour = Article()
-        
+    static func jsonToArticle(json:[String:Any]) -> Devis {
+        var retour = Devis()
+        /*
         retour.id = Int(json["id"] as! String)!
         retour.name = json["name"] as! String
         retour.smallDesc = json["smallDesc"] as! String
@@ -28,7 +28,7 @@ open class ArticleBuilder {
         retour.categorie = Int(json["categorie"] as! String)!
         retour.tags = json["tags"] as! String
         retour.prix = Double(json["prix"] as! String)!
-        
+        */
         return retour
     }
 }

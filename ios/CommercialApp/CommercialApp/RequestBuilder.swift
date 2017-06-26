@@ -10,8 +10,9 @@
 import Foundation
 
 open class RequestBuilder {
-	static let URL = "http://commercial.tecknologiks.com/index.php"
-	static let LOGIN = "/login?login={login}&mdp={mdp}"
+    static let URL = "http://commercial.tecknologiks.com/index.php"
+    static let LOGIN = "/login?login={login}&mdp={mdp}"
+    static let COUNT = "/{id}/{token}/count_bag_and_devis/"
 
 // Declaration des Articles
 	static let ARTICLES = "/{id}/{token}/products?limit={limit}&start={start}";
@@ -23,8 +24,13 @@ open class RequestBuilder {
 
 // Login
 	static func Login(user:String, mdp:String) -> String {
-		return self.LOGIN.replacingOccurrences(of: "{login}", with: user)
+		return self.URL + self.LOGIN.replacingOccurrences(of: "{login}", with: user)
 			.replacingOccurrences(of: "{mdp}", with: mdp)
+    }
+    
+    static func Count(id:String, token:String) -> String {
+        return self.URL + self.COUNT.replacingOccurrences(of: "{id}", with: id)
+            .replacingOccurrences(of: "{token}", with: token)
     }
 
 // static pour les articles
@@ -33,28 +39,28 @@ open class RequestBuilder {
    }
 
     static func Articles(id:String, token:String, limit:Int, start:Int) -> String {
-       	return self.ARTICLES.replacingOccurrences(of: "{id}", with: id)
+       	return  self.URL + self.ARTICLES.replacingOccurrences(of: "{id}", with: id)
                        .replacingOccurrences(of: "{token}", with: token)
                        .replacingOccurrences(of: "{limit}", with: "\(limit)")
                        .replacingOccurrences(of: "{start}", with: "\(start)")
    }
 
 	static func Article(String id:String, String token:String, int id_art:Int) -> String {
-		return self.ARTICLE.replacingOccurrences(of: "{id}", with: id)
+		return  self.URL + self.ARTICLE.replacingOccurrences(of: "{id}", with: id)
 			.replacingOccurrences(of: "{token}", with: token)
 			.replacingOccurrences(of: "{id_product}", with: "\(id_art)")
     }
 	
 //static pour les devis
 	static func Devis(id:String, token:String, limit:Int, start:Int) -> String {
-		return self.DEVIS.replacingOccurrences(of: "{id}", with: id)
+		return  self.URL + self.DEVIS.replacingOccurrences(of: "{id}", with: id)
 			.replacingOccurrences(of: "{token}", with: token)
 			.replacingOccurrences(of: "{limit}", with: "\(limit)")
 			.replacingOccurrences(of: "{start}", with: "\(start)")
     }
 	
 	static func Devi(id:String, token:String, id_dev:Int) -> String {
-		return self.DEVI.replacingOccurrences(of: "{id}", with: id)
+		return  self.URL + self.DEVI.replacingOccurrences(of: "{id}", with: id)
 			.replacingOccurrences(of: "{token}", with: token)
 			.replacingOccurrences(of: "{id_devis}", with: "\(id_dev)")
     }

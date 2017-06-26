@@ -18,23 +18,30 @@ open class API {
             }
             body += "\"\(key)\":\"\(value)\""
             
-            print("\(body)")
         }
         body += "}"
+        
         return body
     }
     
-    func APIRequest(type:Int, url:String) -> String {
-        
-        let request = NSMutableURLRequest(url: URL(string: url)!)
-        
+    static func listJSON(data:Data) -> [[String:Any]] {
+        return try! JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [[String:Any]]
+    }
+    
+    static func JSON(data:Data) -> [String:Any] {
+        return try! JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String:Any]
+    }
+    
+    public class func APIRequest(type:Int, url: String, body:String, finish: @escaping (Bool, Data) -> ()) {
+        let myUrl = URL(string: url);
+        let request = NSMutableURLRequest(url:myUrl!);
         switch(type) {
         case Request.GET:
             request.httpMethod = "GET"
             break;
         case Request.POST:
             request.httpMethod = "POST"
-            let postString = "ce que vous voulez envoyer à l'API'"
+            let postString = body
             request.httpBody = postString.data(using: String.Encoding.utf8)
             break;
         case Request.PUT:
@@ -46,27 +53,18 @@ open class API {
         default:
             break;
         }
-        
-        var responseString:String?
-        
-        let requestAPI = URLSession.shared.dataTask(with: request as URLRequest) {data, response, error in
-            if (error != nil) {
-                print(error!.localizedDescription) // On indique dans la console ou est le problème dans la requête
+
+
+        let session = URLSession(configuration: URLSessionConfiguration.default)
+        let task = session.dataTask(with: request as URLRequest, completionHandler: {(data, response, error) -> Void in
+            if let data = data {
+                if let response = response as? HTTPURLResponse , 200...299 ~= response.statusCode {
+                    finish(true, data)
+                } else {
+                    finish(false, data)
+                }
             }
-            if let httpStatus = response as? HTTPURLResponse , httpStatus.statusCode != 200 {
-                print("statusCode devrait être de 200, mais il est de \(httpStatus.statusCode)")
-                print("réponse = \(String(describing: response))") // On affiche dans la console si le serveur ne nous renvoit pas un code de 200 qui est le code normal
-            }
-            
-            responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue) as! String
-            print("responseString = \(responseString)") // Affiche dans la console la réponse de l'API
-            
-            if error == nil {
-                // Ce que vous voulez faire.
-            }
-        }
-        requestAPI.resume()
-        return responseString!
+        })
+        task.resume()
     }
-    
 }

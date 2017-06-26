@@ -16,9 +16,11 @@ final class User {
     
     var name:String
     var token:String
+    var id:Int
     
     init() {
         self.name = ""
         self.token = ""
+        self.id = 0
     }
 }

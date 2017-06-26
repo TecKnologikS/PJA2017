@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B58DFE071F01B1C000960CBC /* DevisBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58DFE061F01B1C000960CBC /* DevisBuilder.swift */; };
+		B58DFE091F01B22000960CBC /* ArticleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58DFE081F01B22000960CBC /* ArticleViewController.swift */; };
+		B58DFE0B1F01B5FA00960CBC /* PanierDevis.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58DFE0A1F01B5FA00960CBC /* PanierDevis.swift */; };
 		B5B72A321EFD089000BEAFF7 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B72A311EFD089000BEAFF7 /* API.swift */; };
 		B5B72A351EFD092C00BEAFF7 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B72A341EFD092C00BEAFF7 /* Request.swift */; };
 		B5D32C3F1EC1D2AA00BA4F71 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D32C3E1EC1D2AA00BA4F71 /* AppDelegate.swift */; };
@@ -29,6 +32,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B58DFE061F01B1C000960CBC /* DevisBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DevisBuilder.swift; sourceTree = "<group>"; };
+		B58DFE081F01B22000960CBC /* ArticleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleViewController.swift; sourceTree = "<group>"; };
+		B58DFE0A1F01B5FA00960CBC /* PanierDevis.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PanierDevis.swift; sourceTree = "<group>"; };
 		B5B72A311EFD089000BEAFF7 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		B5B72A341EFD092C00BEAFF7 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		B5D32C3B1EC1D2AA00BA4F71 /* CommercialApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CommercialApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -105,6 +111,7 @@
 				B5D32C4C1EC1D2AA00BA4F71 /* Info.plist */,
 				B5D32C521EC1D6E200BA4F71 /* DevisController.swift */,
 				B5D4C39A1EDECF6F005535D4 /* ArticlesController.swift */,
+				B58DFE081F01B22000960CBC /* ArticleViewController.swift */,
 			);
 			path = CommercialApp;
 			sourceTree = "<group>";
@@ -142,6 +149,8 @@
 				B5D4C39D1EDED35B005535D4 /* ArticleBuilder.swift */,
 				B5D4C3911EDD7DF5005535D4 /* RequestBuilder.swift */,
 				B5B72A311EFD089000BEAFF7 /* API.swift */,
+				B58DFE061F01B1C000960CBC /* DevisBuilder.swift */,
+				B58DFE0A1F01B5FA00960CBC /* PanierDevis.swift */,
 			);
 			name = Function;
 			sourceTree = "<group>";
@@ -232,9 +241,12 @@
 				B5D4C3921EDD7DF5005535D4 /* RequestBuilder.swift in Sources */,
 				B5D4C39B1EDECF6F005535D4 /* ArticlesController.swift in Sources */,
 				B5D32C5B1EC1F6A600BA4F71 /* Panier.swift in Sources */,
+				B58DFE091F01B22000960CBC /* ArticleViewController.swift in Sources */,
 				B5D4C3941EDD7ECC005535D4 /* LoginController.swift in Sources */,
+				B58DFE0B1F01B5FA00960CBC /* PanierDevis.swift in Sources */,
 				B5D4C39E1EDED35B005535D4 /* ArticleBuilder.swift in Sources */,
 				B5D4C3971EDD9CEF005535D4 /* User.swift in Sources */,
+				B58DFE071F01B1C000960CBC /* DevisBuilder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

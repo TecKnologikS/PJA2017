@@ -9,12 +9,12 @@
 import Foundation
 
 open class Article {
-    var id:Int32
+    var id:Int
     var name:String
     var smallDesc:String
     var about:String
     var image:String
-    var categorie:Int32
+    var categorie:Int
     var tags:String
     var prix:Double
     var prixFinal:Double
