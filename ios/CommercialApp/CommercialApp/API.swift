@@ -2,60 +2,71 @@
 //  API.swift
 //  CommercialApp
 //
-//  Created by Robin PAUQUET on 30/05/2017.
-//  Update  by pierre on 30/05/2017.
+//  Created by Robin PAUQUET on 23/06/2017.
 //  Copyright © 2017 Robin PAUQUET. All rights reserved.
 //
 
 import Foundation
 
 open class API {
-	static let URL = "http://commercial.tecknologiks.com/index.php"
-	static let LOGIN = "/login?login={login}&mdp={mdp}"
-
-// Declaration des Articles
-	static let ARTICLES = "/{id}/{token}/products?limit={limit}&start={start}";
-	static let ARTICLE = "/{id}/{token}/products/{id_product}/";
-
-// Declaration des Devis
-	static let DEVIS = "/{id}/{token}/devis?limit={limit}&start={start}";
-	static let DEVI = "/{id}/{token}/devis/{id_devis}/";
-
-// Login
-	static func Login(user:String, mdp:String) -> String {
-		return self.LOGIN.replacingOccurrences(of: "{login}", with: user)
-			.replacingOccurrences(of: "{mdp}", with: mdp)
+    
+    static func createBody(dict:[String: String]) -> String {
+        var body:String = "{"
+        for (key, value) in dict {
+            if (body.characters.count > 1) {
+                body += ", "
+            }
+            body += "\"\(key)\":\"\(value)\""
+            
+            print("\(body)")
+        }
+        body += "}"
+        return body
     }
-
-// static pour les articles
-    static func Articles(id:String, token:String) -> String {
-		return self.Articles(id: id, token: token, limit: 100, start: 0);
-   }
-
-    static func Articles(id:String, token:String, limit:Int, start:Int) -> String {
-       	return self.ARTICLES.replacingOccurrences(of: "{id}", with: id)
-                       .replacingOccurrences(of: "{token}", with: token)
-                       .replacingOccurrences(of: "{limit}", with: "\(limit)")
-                       .replacingOccurrences(of: "{start}", with: "\(start)")
-   }
-
-	static func Article(String id:String, String token:String, int id_art:Int) -> String {
-		return self.ARTICLE.replacingOccurrences(of: "{id}", with: id)
-			.replacingOccurrences(of: "{token}", with: token)
-			.replacingOccurrences(of: "{id_product}", with: "\(id_art)")
+    
+    func APIRequest(type:Int, url:String) -> String {
+        
+        let request = NSMutableURLRequest(url: URL(string: url)!)
+        
+        switch(type) {
+        case Request.GET:
+            request.httpMethod = "GET"
+            break;
+        case Request.POST:
+            request.httpMethod = "POST"
+            let postString = "ce que vous voulez envoyer à l'API'"
+            request.httpBody = postString.data(using: String.Encoding.utf8)
+            break;
+        case Request.PUT:
+            request.httpMethod = "PUT"
+            break;
+        case Request.DELETE:
+            request.httpMethod = "DELETE"
+            break;
+        default:
+            break;
+        }
+        
+        var responseString:String?
+        
+        let requestAPI = URLSession.shared.dataTask(with: request as URLRequest) {data, response, error in
+            if (error != nil) {
+                print(error!.localizedDescription) // On indique dans la console ou est le problème dans la requête
+            }
+            if let httpStatus = response as? HTTPURLResponse , httpStatus.statusCode != 200 {
+                print("statusCode devrait être de 200, mais il est de \(httpStatus.statusCode)")
+                print("réponse = \(String(describing: response))") // On affiche dans la console si le serveur ne nous renvoit pas un code de 200 qui est le code normal
+            }
+            
+            responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue) as! String
+            print("responseString = \(responseString)") // Affiche dans la console la réponse de l'API
+            
+            if error == nil {
+                // Ce que vous voulez faire.
+            }
+        }
+        requestAPI.resume()
+        return responseString!
     }
-	
-//static pour les devis
-	static func Devis(id:String, token:String, limit:Int, start:Int) -> String {
-		return self.DEVIS.replacingOccurrences(of: "{id}", with: id)
-			.replacingOccurrences(of: "{token}", with: token)
-			.replacingOccurrences(of: "{limit}", with: "\(limit)")
-			.replacingOccurrences(of: "{start}", with: "\(start)")
-    }
-	
-	static func Devi(id:String, token:String, id_dev:Int) -> String {
-		return self.DEVI.replacingOccurrences(of: "{id}", with: id)
-			.replacingOccurrences(of: "{token}", with: token)
-			.replacingOccurrences(of: "{id_devis}", with: "\(id_dev)")
-    }
+    
 }

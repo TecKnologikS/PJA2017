@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B5B72A321EFD089000BEAFF7 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B72A311EFD089000BEAFF7 /* API.swift */; };
+		B5B72A351EFD092C00BEAFF7 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B72A341EFD092C00BEAFF7 /* Request.swift */; };
 		B5D32C3F1EC1D2AA00BA4F71 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D32C3E1EC1D2AA00BA4F71 /* AppDelegate.swift */; };
 		B5D32C411EC1D2AA00BA4F71 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D32C401EC1D2AA00BA4F71 /* FirstViewController.swift */; };
 		B5D32C431EC1D2AA00BA4F71 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D32C421EC1D2AA00BA4F71 /* SecondViewController.swift */; };
@@ -18,7 +20,7 @@
 		B5D32C591EC1F69700BA4F71 /* Devis.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D32C581EC1F69700BA4F71 /* Devis.swift */; };
 		B5D32C5B1EC1F6A600BA4F71 /* Panier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D32C5A1EC1F6A600BA4F71 /* Panier.swift */; };
 		B5D32C5D1EC1F6B000BA4F71 /* Article.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D32C5C1EC1F6B000BA4F71 /* Article.swift */; };
-		B5D4C3921EDD7DF5005535D4 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D4C3911EDD7DF5005535D4 /* API.swift */; };
+		B5D4C3921EDD7DF5005535D4 /* RequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D4C3911EDD7DF5005535D4 /* RequestBuilder.swift */; };
 		B5D4C3941EDD7ECC005535D4 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D4C3931EDD7ECC005535D4 /* LoginController.swift */; };
 		B5D4C3971EDD9CEF005535D4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D4C3961EDD9CEF005535D4 /* User.swift */; };
 		B5D4C3991EDECF04005535D4 /* CellArticles.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D4C3981EDECF04005535D4 /* CellArticles.swift */; };
@@ -27,6 +29,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B5B72A311EFD089000BEAFF7 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		B5B72A341EFD092C00BEAFF7 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		B5D32C3B1EC1D2AA00BA4F71 /* CommercialApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CommercialApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5D32C3E1EC1D2AA00BA4F71 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B5D32C401EC1D2AA00BA4F71 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
@@ -40,7 +44,7 @@
 		B5D32C581EC1F69700BA4F71 /* Devis.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Devis.swift; sourceTree = "<group>"; };
 		B5D32C5A1EC1F6A600BA4F71 /* Panier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Panier.swift; sourceTree = "<group>"; };
 		B5D32C5C1EC1F6B000BA4F71 /* Article.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Article.swift; sourceTree = "<group>"; };
-		B5D4C3911EDD7DF5005535D4 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		B5D4C3911EDD7DF5005535D4 /* RequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestBuilder.swift; sourceTree = "<group>"; };
 		B5D4C3931EDD7ECC005535D4 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		B5D4C3961EDD9CEF005535D4 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		B5D4C3981EDECF04005535D4 /* CellArticles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellArticles.swift; sourceTree = "<group>"; };
@@ -59,6 +63,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B5B72A331EFD091C00BEAFF7 /* Param */ = {
+			isa = PBXGroup;
+			children = (
+				B5B72A341EFD092C00BEAFF7 /* Request.swift */,
+			);
+			name = Param;
+			sourceTree = "<group>";
+		};
 		B5D32C321EC1D2AA00BA4F71 = {
 			isa = PBXGroup;
 			children = (
@@ -78,9 +90,9 @@
 		B5D32C3D1EC1D2AA00BA4F71 /* CommercialApp */ = {
 			isa = PBXGroup;
 			children = (
+				B5B72A331EFD091C00BEAFF7 /* Param */,
 				B5D4C39C1EDED337005535D4 /* Function */,
 				B5D4C3951EDD9C11005535D4 /* Static */,
-				B5D4C3901EDD7DE6005535D4 /* Param */,
 				B5D32C571EC1F67C00BA4F71 /* Class */,
 				B5D32C561EC1F66500BA4F71 /* Cell */,
 				B5D32C3E1EC1D2AA00BA4F71 /* AppDelegate.swift */,
@@ -116,14 +128,6 @@
 			name = Class;
 			sourceTree = "<group>";
 		};
-		B5D4C3901EDD7DE6005535D4 /* Param */ = {
-			isa = PBXGroup;
-			children = (
-				B5D4C3911EDD7DF5005535D4 /* API.swift */,
-			);
-			name = Param;
-			sourceTree = "<group>";
-		};
 		B5D4C3951EDD9C11005535D4 /* Static */ = {
 			isa = PBXGroup;
 			children = (
@@ -136,6 +140,8 @@
 			isa = PBXGroup;
 			children = (
 				B5D4C39D1EDED35B005535D4 /* ArticleBuilder.swift */,
+				B5D4C3911EDD7DF5005535D4 /* RequestBuilder.swift */,
+				B5B72A311EFD089000BEAFF7 /* API.swift */,
 			);
 			name = Function;
 			sourceTree = "<group>";
@@ -214,14 +220,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5D4C3991EDECF04005535D4 /* CellArticles.swift in Sources */,
+				B5B72A351EFD092C00BEAFF7 /* Request.swift in Sources */,
 				B5D32C551EC1D7D800BA4F71 /* CellDevis.swift in Sources */,
 				B5D32C431EC1D2AA00BA4F71 /* SecondViewController.swift in Sources */,
 				B5D32C3F1EC1D2AA00BA4F71 /* AppDelegate.swift in Sources */,
+				B5B72A321EFD089000BEAFF7 /* API.swift in Sources */,
 				B5D32C411EC1D2AA00BA4F71 /* FirstViewController.swift in Sources */,
 				B5D32C5D1EC1F6B000BA4F71 /* Article.swift in Sources */,
 				B5D32C531EC1D6E200BA4F71 /* DevisController.swift in Sources */,
 				B5D32C591EC1F69700BA4F71 /* Devis.swift in Sources */,
-				B5D4C3921EDD7DF5005535D4 /* API.swift in Sources */,
+				B5D4C3921EDD7DF5005535D4 /* RequestBuilder.swift in Sources */,
 				B5D4C39B1EDECF6F005535D4 /* ArticlesController.swift in Sources */,
 				B5D32C5B1EC1F6A600BA4F71 /* Panier.swift in Sources */,
 				B5D4C3941EDD7ECC005535D4 /* LoginController.swift in Sources */,

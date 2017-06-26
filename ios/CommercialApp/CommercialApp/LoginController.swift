@@ -17,6 +17,12 @@ class LoginController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        var emptyDict: [String: String] = [:]
+        emptyDict.updateValue("test", forKey: "key")
+        emptyDict.updateValue("test2", forKey: "key2")
+        emptyDict.updateValue("test3", forKey: "key34")
+        emptyDict.updateValue("test4", forKey: "key4")
+        _ = API.createBody(dict: emptyDict)
         // Do any additional setup after loading the view, typically from a nib.
     }
     
@@ -29,7 +35,7 @@ class LoginController: UIViewController {
         
         if (!(tfLogin.text?.isEmpty)! && !(tfPassword.text?.isEmpty)!)
         {
-            let url = URL(string: API.URL + API.Login(user: tfLogin.text!, mdp: tfPassword.text!))
+            /*let url = URL(string: API.URL + API.Login(user: tfLogin.text!, mdp: tfPassword.text!))
             URLSession.shared.dataTask(with:url!, completionHandler: {(data, response, error) in
                 guard let data = data, error == nil else { return }
                 
@@ -48,7 +54,7 @@ class LoginController: UIViewController {
                 } catch let error as NSError {
                     print(error)
                 }
-            }).resume()
+            }).resume()*/
         }
         
     }
