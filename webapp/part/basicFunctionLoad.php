@@ -2,10 +2,12 @@
 
 session_start();
 if (!isset($_SESSION["id"])) {
-	header('Location: login.php');
+	if (!isset($loginpage))
+			header('Location: login.php');
 }
-include('part/language.php');
-include('const/param.php');
+require_once('part/language.php');
+require_once('const/param.php');
+
 
 // Accepte les admins, pas les users
 function isAdminOrExit() {

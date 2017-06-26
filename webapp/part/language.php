@@ -24,7 +24,7 @@
    define("S_NOTHING_DOC", 			"Il n'y a aucun document sur ce dossier");
    define("S_DATETIME", 			"Date / Heure");
 
-   //Ajout 
+   //Ajout
    define("S_NEWUSER", 				"Nouvel utilisateur");
    define("S_ADMINUSER", 			"Administrateur");
    define("S_LISTUSER", 			"Liste des utilisateurs");
@@ -55,14 +55,12 @@
    define("S_RECAPITULATIF", 		"Récapitulatif");
    define("S_PRICETOPAIE", 			"Prix à payer");
    define("S_ADDITION", 			"Addition");
-   define("S_PRODUCTNAME", 			"Nom du produit");
    define("S_PRODUCTDESCRIPTION", 	"Description du produit");
    define("S_COMMANDE", 			"Commande");
    define("S_CONTACT", 				"Contact");
    define("S_ADDTOBASKET", 			"Ajouter au panier");
    define("S_NUMBER", 				"Nombre :");
-   define("S_PRICETOPAIE", 			"Prix à payer");
 
-   
-   
+
+
 ?>

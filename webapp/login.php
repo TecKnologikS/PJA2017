@@ -1,8 +1,7 @@
 <?php
 
+$loginpage = true;
 include_once("part/basicFunctionLoad.php");
-include("part/language.php");
-include("const/param.php");
 
 
 if (isset($_POST["id"]) && isset($_POST["password"])) {
