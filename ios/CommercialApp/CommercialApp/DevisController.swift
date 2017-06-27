@@ -42,8 +42,8 @@ class DevisController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell :CellDevis = tableView.dequeueReusableCell(withIdentifier: CELL_IDENTIFIER)  as! CellDevis
         
-        cell.tvNom.text = devis[indexPath.row].name
-        cell.tvPrix.text = "€ \(devis[indexPath.row].prix)"
+        cell.tvNom.text = devis[indexPath.row].Societe
+        cell.tvPrix.text = "€ \(devis[indexPath.row].PrixFinal)"
         
         return cell
     }

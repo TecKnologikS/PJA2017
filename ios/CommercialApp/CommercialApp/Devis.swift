@@ -8,22 +8,50 @@
 open class Devis {
     
     var articles:[Article]
-    var prix:Double
-    var prixFinal:Double
-    var name:String
-    var idClient:Int32
-    var libelle:String
-    var date:String
+    
+    var ID:Int
+    var ID_User:Int
+    var Societe:String
+    var DateCreation:String
+    var Facture:Bool
+    var DateFacture:String
+    var DateValidity:String
+    var Siret:String
+    var Tel:String
+    var Fax:String
+    var Email:String
+    var Adresse:String
+    var CP:String
+    var Ville:String
+    var Nom:String
+    var Prenom:String
+    var Prix:Double
+    var Reduction:Double
+    var PrixFinal:Double
     
     
     init() {
         self.articles = [Article]()
-        self.prix = 0
-        self.prixFinal = 0
-        self.name = ""
-        self.idClient = 0
-        self.libelle = "Devis"
-        self.date = "01/01/2017"
+        self.ID = 0
+        self.ID_User = 0
+        self.Societe = ""
+        self.DateCreation = ""
+        self.Facture = false
+        self.DateFacture = ""
+        self.DateValidity = ""
+        self.Siret = ""
+        self.Tel = ""
+        self.Fax = ""
+        self.Email = ""
+        self.Adresse = ""
+        self.CP = ""
+        self.Ville = ""
+        self.Nom = ""
+        self.Prenom = ""
+        self.Prix = 0.0
+        self.Reduction = 0.0
+        self.PrixFinal = 0.0
     }
+    
     
 }
