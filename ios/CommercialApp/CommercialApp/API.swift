@@ -42,6 +42,7 @@ open class API {
         case Request.POST:
             request.httpMethod = "POST"
             let postString = body
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             request.httpBody = postString.data(using: String.Encoding.utf8)
             break;
         case Request.PUT:

@@ -13,6 +13,7 @@ open class RequestBuilder {
     static let URL = "http://commercial.tecknologiks.com/index.php"
     static let LOGIN = "/login?login={login}&mdp={mdp}"
     static let COUNT = "/{id}/{token}/count_bag_and_devis/"
+    static let BAG_ADD = "/{id}/{token}/bag/add/"
 
 // Declaration des Articles
 	static let ARTICLES = "/{id}/{token}/products?limit={limit}&start={start}";
@@ -31,6 +32,11 @@ open class RequestBuilder {
     static func Count(id:String, token:String) -> String {
         return self.URL + self.COUNT.replacingOccurrences(of: "{id}", with: id)
             .replacingOccurrences(of: "{token}", with: token)
+    }
+    
+    static func AddArticle() -> String {
+        return self.URL + self.BAG_ADD.replacingOccurrences(of: "{id}", with: "\(User.shared.id)")
+            .replacingOccurrences(of: "{token}", with: User.shared.token)
     }
 
 // static pour les articles

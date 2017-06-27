@@ -37,9 +37,14 @@ class ArticleViewController: UIViewController {
     }
     
     @IBAction func AjoutProduit(_ sender: Any) {
-        
-        tabBarController?.tabBar.items![1].badgeValue = "10"
-        
+        var emptyDict: [String: String] = [:]
+        emptyDict.updateValue("\(article?.id ?? 0)", forKey: "id")
+        emptyDict.updateValue(tbNumber.text!, forKey: "nb")
+
+        API.APIRequest(type: Request.POST, url: RequestBuilder.AddArticle(), body: API.createBody(dict: emptyDict)) { (ok, data) in
+            print(data)
+            PanierDevis.shared.reload()
+        }
     }
     
 }
