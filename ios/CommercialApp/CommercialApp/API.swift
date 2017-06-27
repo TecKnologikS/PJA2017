@@ -35,6 +35,7 @@ open class API {
     public class func APIRequest(type:Int, url: String, body:String, finish: @escaping (Bool, Data) -> ()) {
         let myUrl = URL(string: url);
         let request = NSMutableURLRequest(url:myUrl!);
+        print(url)
         switch(type) {
         case Request.GET:
             request.httpMethod = "GET"

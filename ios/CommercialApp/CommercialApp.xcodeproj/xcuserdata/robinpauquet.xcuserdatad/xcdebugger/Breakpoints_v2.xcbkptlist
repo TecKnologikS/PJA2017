@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CommercialApp/API.swift"
-            timestampString = "520264881.497027"
+            timestampString = "520271677.893505"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "76"
-            endingLineNumber = "76">
+            startingLineNumber = "77"
+            endingLineNumber = "77">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -167,76 +167,12 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "CommercialApp/ArticlesController.swift"
-            timestampString = "520206689.547149"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "25"
-            endingLineNumber = "25"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CommercialApp/ArticlesController.swift"
-            timestampString = "520206689.547149"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "26"
-            endingLineNumber = "26"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "CommercialApp.ArticlesController.(viewDidLoad () -&gt; ()).(closure #1)"
-                  moduleName = "CommercialApp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/robinpauquet/Desktop/PROJET_TKS/ProjetAnnuel/PJA2017/ios/CommercialApp/CommercialApp/ArticlesController.swift"
-                  timestampString = "520204669.24102"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "22"
-                  endingLineNumber = "22"
-                  offsetFromSymbolStart = "176">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "CommercialApp.ArticlesController.(viewDidLoad () -&gt; ()).(closure #1).(closure #1)"
-                  moduleName = "CommercialApp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/robinpauquet/Desktop/PROJET_TKS/ProjetAnnuel/PJA2017/ios/CommercialApp/CommercialApp/ArticlesController.swift"
-                  timestampString = "520204669.244005"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "23"
-                  endingLineNumber = "23"
-                  offsetFromSymbolStart = "12">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "CommercialApp/API.swift"
-            timestampString = "520203972.874621"
+            timestampString = "520271677.893505"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "38"
-            endingLineNumber = "38"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
             landmarkName = "APIRequest(type:url:body:finish:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -248,11 +184,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CommercialApp/API.swift"
-            timestampString = "520264881.497027"
+            timestampString = "520271677.893505"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "72"
-            endingLineNumber = "72">
+            startingLineNumber = "73"
+            endingLineNumber = "73">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -262,7 +198,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CommercialApp/ArticlesController.swift"
-            timestampString = "520206689.547149"
+            timestampString = "520271903.972331"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "22"
@@ -310,11 +246,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CommercialApp/ArticlesController.swift"
-            timestampString = "520206689.547149"
+            timestampString = "520271903.972331"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "23"
-            endingLineNumber = "23"
+            startingLineNumber = "24"
+            endingLineNumber = "24"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
@@ -326,11 +262,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CommercialApp/API.swift"
-            timestampString = "520264881.497027"
+            timestampString = "520271677.893505"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "62"
-            endingLineNumber = "62"
+            startingLineNumber = "63"
+            endingLineNumber = "63"
             landmarkName = "APIRequest(type:url:body:finish:)"
             landmarkType = "7">
             <Locations>
@@ -374,11 +310,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CommercialApp/API.swift"
-            timestampString = "520264881.497027"
+            timestampString = "520271677.893505"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
             landmarkName = "APIRequest(type:url:body:finish:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -518,11 +454,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CommercialApp/API.swift"
-            timestampString = "520264881.497027"
+            timestampString = "520271677.893505"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
+            startingLineNumber = "61"
+            endingLineNumber = "61"
             landmarkName = "APIRequest(type:url:body:finish:)"
             landmarkType = "7">
             <Locations>
@@ -566,11 +502,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CommercialApp/API.swift"
-            timestampString = "520264881.497027"
+            timestampString = "520271677.893505"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "59"
-            endingLineNumber = "59"
+            startingLineNumber = "60"
+            endingLineNumber = "60"
             landmarkName = "APIRequest(type:url:body:finish:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -582,13 +518,77 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CommercialApp/API.swift"
-            timestampString = "520264881.497027"
+            timestampString = "520271677.893505"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
             landmarkName = "APIRequest(type:url:body:finish:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CommercialApp/ArticlesController.swift"
+            timestampString = "520271923.622955"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
+            landmarkName = "loadArticle(search:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CommercialApp/ArticlesController.swift"
+            timestampString = "520271939.478892"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "30"
+            endingLineNumber = "30"
+            landmarkName = "loadArticle(search:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CommercialApp.ArticlesController.loadArticle (search : Swift.String) -&gt; ()"
+                  moduleName = "CommercialApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/robinpauquet/Desktop/PROJET_TKS/PJA2017/ios/CommercialApp/CommercialApp/ArticlesController.swift"
+                  timestampString = "520271989.712175"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "30"
+                  endingLineNumber = "30"
+                  offsetFromSymbolStart = "174">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CommercialApp.ArticlesController.(loadArticle (search : Swift.String) -&gt; ()).(closure #1)"
+                  moduleName = "CommercialApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/robinpauquet/Desktop/PROJET_TKS/PJA2017/ios/CommercialApp/CommercialApp/ArticlesController.swift"
+                  timestampString = "520271989.714237"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "31"
+                  endingLineNumber = "31"
+                  offsetFromSymbolStart = "27">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

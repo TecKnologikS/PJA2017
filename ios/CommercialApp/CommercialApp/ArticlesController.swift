@@ -8,9 +8,10 @@
 
 import UIKit
 
-class ArticlesController: UITableViewController {
+class ArticlesController: UITableViewController, UISearchBarDelegate {
     
     var articles:[Article] = []
+    @IBOutlet weak var search: UISearchBar!
     
     let CELL_IDENTIFIER = "cell"
     override func viewDidLoad() {
@@ -19,17 +20,33 @@ class ArticlesController: UITableViewController {
         PanierDevis.shared.setNavigation(nav: self.tabBarController!)
         PanierDevis.shared.reload()
         
-        API.APIRequest(type: Request.GET, url: RequestBuilder.Articles(id: "\(User.shared.id)", token: User.shared.token), body:"") { (ok, data) in
-            let json = API.listJSON(data: data)
-            if json.count > 0 {
-                self.articles = ArticleBuilder.toListFromJSON(json: json)
-                DispatchQueue.main.async {
+        self.tableView.dataSource = self
+        loadArticle(search: "")
+        
+    }
+    
+    func loadArticle(search:String) {
+        if search.characters.count > 0 {
+            API.APIRequest(type: Request.GET, url: RequestBuilder.Search(search: search), body:"") { (ok, data) in
+                let json = API.listJSON(data: data)
+                if json.count > 0 {
+                    self.articles = ArticleBuilder.toListFromJSON(json: json)
+                    DispatchQueue.main.async {
                         self.tableView.reloadData()
+                    }
+                }
+            }
+        } else {
+            API.APIRequest(type: Request.GET, url: RequestBuilder.Articles(id: "\(User.shared.id)", token: User.shared.token), body:"") { (ok, data) in
+                let json = API.listJSON(data: data)
+                if json.count > 0 {
+                    self.articles = ArticleBuilder.toListFromJSON(json: json)
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
                 }
             }
         }
-        self.tableView.dataSource = self
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -62,12 +79,18 @@ class ArticlesController: UITableViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-            if let indexPath = self.tableView.indexPathForSelectedRow {
-                let controller = segue.destination as! ArticleViewController
-                let value = articles[indexPath.row]
-                controller.article = articles[indexPath.row]
-            }
+        if let indexPath = self.tableView.indexPathForSelectedRow {
+            let controller = segue.destination as! ArticleViewController
+            controller.article = articles[indexPath.row]
+        }
     }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        loadArticle(search: searchBar.text!)
+        
+    }
+    
+    
     
     
     
