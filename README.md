@@ -37,8 +37,9 @@ Cordialement
 
 Robin PAUQUET & Pierre MEHU
 
-##Avancement
-35% du projet 
-La partie web est la plus avancée, elle évolue avec l'API. Quand elle sera terminée, l'api le sera aussi. 
-Et ensuite les parties iOs et Android pourront être terminées.
-Actuellement les vues & la connexion sont finalisée sur les plateformes mobiles
+# Avancement
+80% du projet 
+La partie web OK (reste a ajouter les fonctions supplémentaires)
+IOS : Quasiment terminées (ajouter fonction de partage de pdf et appel etc + fonction bonus)
+Android: en cours
+API : OK a corriger 2/3 minor fix
