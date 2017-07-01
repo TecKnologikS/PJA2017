@@ -15,6 +15,11 @@ open class RequestBuilder {
     static let COUNT = "/{id}/{token}/count_bag_and_devis/"
     static let BAG_ADD = "/{id}/{token}/bag/add/"
     static let SEARCH = "/{id}/{token}/products/search/{search}/"
+    static let REMOVE_ITEM = "/{id}/{token}/bag/remove/"
+    static let UPDATE_ITEM = "/{id}/{token}/bag/update/"
+    static let PANIER = "/{id}/{token}/bag/"
+    static let ADD_PROMO = "/{id}/{token}/promo/add/"
+    static let VALIDATE = "/{id}/{token}/devis/create/"
     
     // Declaration des Articles
     static let ARTICLES = "/{id}/{token}/products?limit={limit}&start={start}";
@@ -65,16 +70,44 @@ open class RequestBuilder {
     }
     
     //static pour les devis
-    static func Devis(id:String, token:String, limit:Int, start:Int) -> String {
-        return  self.URL + self.DEVIS.replacingOccurrences(of: "{id}", with: id)
-            .replacingOccurrences(of: "{token}", with: token)
+    static func Devis(limit:Int, start:Int) -> String {
+        return  self.URL + self.DEVIS.replacingOccurrences(of: "{id}", with: "\(User.shared.id)")
+            .replacingOccurrences(of: "{token}", with: User.shared.token)
             .replacingOccurrences(of: "{limit}", with: "\(limit)")
             .replacingOccurrences(of: "{start}", with: "\(start)")
     }
     
-    static func Devi(id:String, token:String, id_dev:Int) -> String {
-        return  self.URL + self.DEVI.replacingOccurrences(of: "{id}", with: id)
-            .replacingOccurrences(of: "{token}", with: token)
+    static func Devis() -> String {
+        return self.Devis(limit: 1000, start: 0);
+    }
+    
+    static func Devi(id_dev:Int) -> String {
+        return  self.URL + self.DEVI.replacingOccurrences(of: "{id}", with: "\(User.shared.id)")
+            .replacingOccurrences(of: "{token}", with: User.shared.token)
             .replacingOccurrences(of: "{id_devis}", with: "\(id_dev)")
+    }
+    
+    static func RemoveToBasket() -> String {
+        return  self.URL + self.REMOVE_ITEM.replacingOccurrences(of: "{id}", with: "\(User.shared.id)")
+            .replacingOccurrences(of: "{token}", with: User.shared.token)
+    }
+    static func UpdateToBasket() -> String {
+        return  self.URL + self.UPDATE_ITEM.replacingOccurrences(of: "{id}", with: "\(User.shared.id)")
+            .replacingOccurrences(of: "{token}", with: User.shared.token)
+    }
+    
+    static func Panier() -> String {
+        return  self.URL + self.PANIER.replacingOccurrences(of: "{id}", with: "\(User.shared.id)")
+            .replacingOccurrences(of: "{token}", with: User.shared.token)
+    }
+    
+    static func AddPromo() -> String {
+        return  self.URL + self.ADD_PROMO.replacingOccurrences(of: "{id}", with: "\(User.shared.id)")
+            .replacingOccurrences(of: "{token}", with: User.shared.token)
+    }
+    
+    static func Validate() -> String {
+        return  self.URL + self.VALIDATE.replacingOccurrences(of: "{id}", with: "\(User.shared.id)")
+            .replacingOccurrences(of: "{token}", with: User.shared.token)
     }
 }

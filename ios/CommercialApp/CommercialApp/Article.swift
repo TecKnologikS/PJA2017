@@ -18,6 +18,7 @@ open class Article {
     var tags:String
     var prix:Double
     var prixFinal:Double
+    var qte:Int
     
     init() {
         self.id = 0
@@ -29,6 +30,7 @@ open class Article {
         self.image = ""
         self.prix = 0
         self.prixFinal = 0
+        self.qte = 0
     }
 
 }

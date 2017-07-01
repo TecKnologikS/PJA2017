@@ -16,7 +16,7 @@ class DevisController: UITableViewController {
     let CELL_IDENTIFIER = "cell"
     override func viewDidLoad() {
         super.viewDidLoad()
-        API.APIRequest(type: Request.GET, url: RequestBuilder.Articles(id: "\(User.shared.id)", token: User.shared.token), body:"") { (ok, data) in
+        API.APIRequest(type: Request.GET, url: RequestBuilder.Devis(), body:"") { (ok, data) in
             let json = API.listJSON(data: data)
             if json.count > 0 {
                 self.devis = DevisBuilder.toListFromJSON(json: json)
@@ -41,9 +41,12 @@ class DevisController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell :CellDevis = tableView.dequeueReusableCell(withIdentifier: CELL_IDENTIFIER)  as! CellDevis
-        
+       // print(tableView.restorationIdentifier ?? "")
+       // print(tableView.accessibilityLabel ?? "")
         cell.tvNom.text = devis[indexPath.row].Societe
         cell.tvPrix.text = "€ \(devis[indexPath.row].PrixFinal)"
+        cell.tvDate.text = "  \(devis[indexPath.row].DateCreation)"
+        cell.tvClient.text = "\(devis[indexPath.row].Nom) \(devis[indexPath.row].Prenom) "
         
         return cell
     }
@@ -60,11 +63,10 @@ class DevisController: UITableViewController {
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        /*if let indexPath = self.tableView.indexPathForSelectedRow {
-            let controller = segue.destination as! ArticleViewController
-            let value = articles[indexPath.row]
-            controller.article = articles[indexPath.row]
-        }*/
+        if let indexPath = self.tableView.indexPathForSelectedRow {
+            let controller = segue.destination as! DevisViewController
+            controller.id = devis[indexPath.row].ID
+        }
     }
 
 

@@ -19,6 +19,7 @@ final class PanierDevis {
     var navigation:UITabBarController?
     var isNav:Bool
     
+    
     init() {
         self.panier = 0
         self.devis = 0

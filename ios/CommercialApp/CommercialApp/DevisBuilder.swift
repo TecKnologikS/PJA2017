@@ -19,16 +19,26 @@ open class DevisBuilder {
     
     static func jsonToArticle(json:[String:Any]) -> Devis {
         var retour = Devis()
-        /*
-        retour.id = Int(json["id"] as! String)!
-        retour.name = json["name"] as! String
-        retour.smallDesc = json["smallDesc"] as! String
-        retour.about = json["about"] as! String
-        retour.image = json["image"] as! String
-        retour.categorie = Int(json["categorie"] as! String)!
-        retour.tags = json["tags"] as! String
-        retour.prix = Double(json["prix"] as! String)!
-        */
+        
+        retour.ID = Int(json["ID"] as! String)!
+        retour.Societe = json["Societe"] as! String
+        retour.DateCreation = json["Date_Creation"] as! String
+        //retour.Facture = Bool(json["Facture"] as! String)!
+        retour.DateFacture = json["Date_Facture"] as! String
+        retour.DateValidity = json["Date_Validity"] as! String
+        retour.Siret = json["Siret"] as! String
+        retour.Tel = json["Tel"] as! String
+        retour.Fax = json["Fax"] as! String
+        retour.Email = json["Email"] as! String
+        retour.Adresse = json["Adresse"] as! String
+        retour.CP = json["CP"] as! String
+        retour.Ville = json["Ville"] as! String
+        retour.Nom = json["Nom"] as! String
+        retour.Prenom = json["Prenom"] as! String
+        retour.Prix = Double(json["Prix"] as! String)!
+        retour.Reduction = Double(json["Reduction"] as! String)!
+        retour.PrixFinal = Double(json["Prix_final"] as! String)!
+        
         return retour
     }
 }
