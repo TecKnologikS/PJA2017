@@ -40,6 +40,9 @@ Robin PAUQUET & Pierre MEHU
 # Avancement
 80% du projet 
 La partie web OK (reste a ajouter les fonctions supplémentaires)
+
 IOS : Quasiment terminées (ajouter fonction de partage de pdf et appel etc + fonction bonus)
+
 Android: en cours
+
 API : OK a corriger 2/3 minor fix
