@@ -17,7 +17,7 @@
             }
           ?>
           <li><a href="./bag.php" title="Panier"><button class="btn btn-warning"><i class="material-icons" style="vertical-align: bottom">shopping_cart</i> (<span id="item_count_bag">0</span>)</button></a></li>
-          <li><a href="./listdevis.php" title="Listes des devis"><button class="btn btn-success"><i class="material-icons" style="vertical-align: bottom">insert_drive_file</i> (<span id="item_count_devis">0</span>)</button></a></li>
+          <li><a href="./listdevis.php" title="Liste des devis"><button class="btn btn-success"><i class="material-icons" style="vertical-align: bottom">insert_drive_file</i> (<span id="item_count_devis">0</span>)</button></a></li>
           <li><a href="./logout.php" title="Se déconnecter" onclick="return confirm('Voulez-vous vraiment vous déconnecter ?')"><button type="submit" name="logOut" class="btn btn-danger"><i class="material-icons" style="vertical-align: bottom">power_settings_new</i></button></a></li>
             </div>
         </div>
