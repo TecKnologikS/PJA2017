@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MessageUI
 
 class DevisViewController: UITableViewController {
     
@@ -16,6 +17,9 @@ class DevisViewController: UITableViewController {
     let CELL_TITLE = "title"
     let CELL_INFO = "info"
     let CELL_ART = "produit"
+    var tel:String = ""
+    var email:String = ""
+    var adresse:String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +35,8 @@ class DevisViewController: UITableViewController {
                 self.ArticlesToCells(arts: articles)
                 self.PromoToCells(promos: promo)
                 self.Recapitulatif(devis: devis)
+                self.remplirAction(devis: devis)
+                
                 
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
@@ -43,6 +49,12 @@ class DevisViewController: UITableViewController {
         
         self.tableView.dataSource = self
         
+    }
+    
+    func remplirAction(devis:[String:Any]) {
+        self.tel = devis["Tel"] as! String
+        self.email = devis["Email"] as! String
+        self.adresse = "\(devis["Adresse"] as! String) \(devis["CP"] as! String) \(devis["Ville"] as! String)"
     }
     
     func ifExist(json:[String:Any], lib:String, Nom:String) {
@@ -146,17 +158,35 @@ class DevisViewController: UITableViewController {
 
         
         let actionAppel = UIAlertAction(title: "Appeller le client", style: .default, handler: { (action: UIAlertAction!) in
-            
+            if let url = URL(string: "tel://\(self.tel)"), UIApplication.shared.canOpenURL(url) {
+                if #available(iOS 10, *) {
+                    UIApplication.shared.open(url)
+                } else {
+                    UIApplication.shared.openURL(url)
+                }
+            }
         })
         actionAppel.setValue(UIImage(named: "ic_phone"), forKey: "image")
         
         let actionPDF = UIAlertAction(title: "Envoyer le devis par courriel", style: .default, handler: { (action: UIAlertAction!) in
-            
+            if let url = URL(string: "mailto:\(self.email)"), UIApplication.shared.canOpenURL(url) {
+                if #available(iOS 10, *) {
+                    UIApplication.shared.open(url)
+                } else {
+                    UIApplication.shared.openURL(url)
+                }
+            }
         })
         actionPDF.setValue(UIImage(named: "ic_email"), forKey: "image")
         
         let actionMaps = UIAlertAction(title: "Ouvrir dans maps", style: .default, handler: { (action: UIAlertAction!) in
-            
+            if let url = URL(string: "http://maps.apple.com/maps?q=\(self.adresse)"), UIApplication.shared.canOpenURL(url) {
+                if #available(iOS 10, *) {
+                    UIApplication.shared.open(url)
+                } else {
+                    UIApplication.shared.openURL(url)
+                }
+            }
         })
         actionMaps.setValue(UIImage(named: "ic_explore"), forKey: "image")
         
