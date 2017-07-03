@@ -148,22 +148,22 @@ class DevisViewController: UITableViewController {
         let actionAppel = UIAlertAction(title: "Appeller le client", style: .default, handler: { (action: UIAlertAction!) in
             
         })
-        actionAppel.setValue(UIImage(named: "ic_input"), forKey: "image")
+        actionAppel.setValue(UIImage(named: "ic_phone"), forKey: "image")
         
         let actionPDF = UIAlertAction(title: "Envoyer le devis par courriel", style: .default, handler: { (action: UIAlertAction!) in
             
         })
-        actionPDF.setValue(UIImage(named: "ic_input"), forKey: "image")
+        actionPDF.setValue(UIImage(named: "ic_email"), forKey: "image")
         
         let actionMaps = UIAlertAction(title: "Ouvrir dans maps", style: .default, handler: { (action: UIAlertAction!) in
             
         })
-        actionMaps.setValue(UIImage(named: "ic_input"), forKey: "image")
+        actionMaps.setValue(UIImage(named: "ic_explore"), forKey: "image")
         
         refreshAlert.addAction(actionAppel)
         refreshAlert.addAction(actionPDF)
         refreshAlert.addAction(actionMaps)
-        refreshAlert.addAction(UIAlertAction(title: "Fermer le menu", style: .default, handler: nil))
+        refreshAlert.addAction(UIAlertAction(title: "Fermer le menu", style: .cancel, handler: nil))
         
         present(refreshAlert, animated: true, completion: nil)
     }

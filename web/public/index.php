@@ -658,6 +658,7 @@ $app->get('/login', function (Request $request, Response $response) {
 	$nom =  $request->getQueryParams()["login"];
 	$mdp = $request->getQueryParams()["mdp"];
 	//echo  $request->getUri();
+	$response = $response->withHeader('Content-type', 'application/json');
 
 	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
 	$res = $mysqli->query("SELECT * FROM user WHERE Login='".$mysqli->real_escape_string($nom)."' AND  Password='".$mysqli->real_escape_string($mdp)."'");
@@ -668,10 +669,12 @@ $app->get('/login', function (Request $request, Response $response) {
 			$token = bin2hex(random_bytes(25));
 			$data = array('ID' => $row['ID'],'login' => $row['Login'], 'really' => $row['Admin'], 'mdp' => 'ESPECE DE CURIEUX ! :p', 'token' => $token);
 			$mysqli->query("UPDATE user SET Token='".$token."' WHERE ID=".$row['ID']." ");
+			$response = $response->withJson($data, 200);
 		}
+	} else {
+		$response = $response->withJson($data, 400);
 	}
-	$response = $response->withHeader('Content-type', 'application/json');
-	$response = $response->withJson($data, 302);
+
     return $response;
 });
 $app->run();

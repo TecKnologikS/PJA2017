@@ -21,6 +21,7 @@
 		B5A0807C1F0748B600303932 /* AdditionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A0807B1F0748B600303932 /* AdditionController.swift */; };
 		B5A0807E1F0753B300303932 /* ValidateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A0807D1F0753B300303932 /* ValidateController.swift */; };
 		B5A080801F0AE9E800303932 /* Promo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A0807F1F0AE9E700303932 /* Promo.swift */; };
+		B5A080821F0AF7EC00303932 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A080811F0AF7EC00303932 /* Message.swift */; };
 		B5B72A321EFD089000BEAFF7 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B72A311EFD089000BEAFF7 /* API.swift */; };
 		B5B72A351EFD092C00BEAFF7 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B72A341EFD092C00BEAFF7 /* Request.swift */; };
 		B5D32C3F1EC1D2AA00BA4F71 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D32C3E1EC1D2AA00BA4F71 /* AppDelegate.swift */; };
@@ -55,6 +56,7 @@
 		B5A0807B1F0748B600303932 /* AdditionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdditionController.swift; sourceTree = "<group>"; };
 		B5A0807D1F0753B300303932 /* ValidateController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidateController.swift; sourceTree = "<group>"; };
 		B5A0807F1F0AE9E700303932 /* Promo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Promo.swift; sourceTree = "<group>"; };
+		B5A080811F0AF7EC00303932 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		B5B72A311EFD089000BEAFF7 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		B5B72A341EFD092C00BEAFF7 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		B5D32C3B1EC1D2AA00BA4F71 /* CommercialApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CommercialApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -189,6 +191,7 @@
 				B5B72A311EFD089000BEAFF7 /* API.swift */,
 				B58DFE061F01B1C000960CBC /* DevisBuilder.swift */,
 				B58DFE0A1F01B5FA00960CBC /* PanierDevis.swift */,
+				B5A080811F0AF7EC00303932 /* Message.swift */,
 			);
 			name = Function;
 			sourceTree = "<group>";
@@ -293,6 +296,7 @@
 				B58DFE0B1F01B5FA00960CBC /* PanierDevis.swift in Sources */,
 				B5D4C39E1EDED35B005535D4 /* ArticleBuilder.swift in Sources */,
 				B5A080751F06E11D00303932 /* CellInfo.swift in Sources */,
+				B5A080821F0AF7EC00303932 /* Message.swift in Sources */,
 				B5D4C3971EDD9CEF005535D4 /* User.swift in Sources */,
 				B58DFE071F01B1C000960CBC /* DevisBuilder.swift in Sources */,
 			);

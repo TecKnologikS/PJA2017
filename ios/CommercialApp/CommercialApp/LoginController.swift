@@ -36,16 +36,22 @@ class LoginController: UIViewController {
         if (!(tfLogin.text?.isEmpty)! && !(tfPassword.text?.isEmpty)!)
         {
             API.APIRequest(type: Request.GET, url: RequestBuilder.Login(user: tfLogin.text!, mdp: tfPassword.text!), body:"") { (ok, data) in
-                let json = API.JSON(data: data)
-                if json.count > 1 {
-                    User.shared.name = json["login"] as! String
-                    User.shared.token = json["token"] as! String
-                    User.shared.id = Int(json["ID"] as! String)!
+                if (ok) {
+                    let json = API.JSON(data: data)
+                    if json.count > 1 {
+                        User.shared.name = json["login"] as! String
+                        User.shared.token = json["token"] as! String
+                        User.shared.id = Int(json["ID"] as! String)!
+                        DispatchQueue.main.async {
+                            let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                            let vc: UITabBarController = storyboard.instantiateViewController(withIdentifier: "app") as! UITabBarController
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.window?.rootViewController = vc
+                        }
+                    }
+                } else {
                     DispatchQueue.main.async {
-                        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                        let vc: UITabBarController = storyboard.instantiateViewController(withIdentifier: "app") as! UITabBarController
-                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                        appDelegate.window?.rootViewController = vc
+                        self.present(Message.ErrorSimple(titre: "Erreur", contenu: "Mauvais couple Identifiant/Mot de passe"), animated: true, completion: nil)
                     }
                 }
             }
