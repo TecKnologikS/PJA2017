@@ -73,8 +73,12 @@ class AdditionController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func createTable() {
-     //  PROMo if (Panier.shared.)
         cells.removeAll()
+        if (Panier.shared.promos.count > 0) {
+            cells.append(AffichageCell(_type: 1, _lib: "Promotion", _val: ""))
+            cells.append(AffichageCell(_type: 2, _lib: "\(Panier.shared.promos[0].nom)", _val: "\(Panier.shared.promos[0].code)"))
+            
+        }
         cells.append(AffichageCell(_type: 1, _lib: "Addition", _val: ""))
         cells.append(AffichageCell(_type: 2, _lib: "Prix Total", _val: "\(Panier.shared.prix_total.roundTo(places: 2)) €"))
         cells.append(AffichageCell(_type: 2, _lib: "Réduction", _val: "\(Panier.shared.reduction_total.roundTo(places: 2)) €" ))

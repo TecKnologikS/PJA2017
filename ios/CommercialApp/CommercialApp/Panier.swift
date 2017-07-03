@@ -10,6 +10,7 @@ open class Panier {
     static let shared = Panier()
     
     var articles:[Article]
+    var promos:[Promo]
     //var promos:[Promo]
     var prix_total:Double
     var prix_final:Double
@@ -17,6 +18,7 @@ open class Panier {
     
     init() {
         self.articles = [Article]()
+        self.promos = [Promo]()
         self.prix_final = 0.0
         self.prix_total = 0.0
         self.reduction_total = 0.0
@@ -34,6 +36,17 @@ open class Panier {
             article.prixFinal = art["prix_final"] as! Double
             article.qte = Int(art["Qte"] as! String) ?? 1
             Panier.shared.articles.append(article)
+        }
+        
+        let promos = json["promo"] as! [[String:Any]]
+        Panier.shared.promos.removeAll()
+        for promo in promos {
+            let p = Promo()
+            p.id = Int(promo["ID"] as! String) ?? 0
+            p.nom = promo["Nom"] as! String
+            p.code = promo["Code"] as! String
+            p.reduction = promo["Reduction"] as! String
+            Panier.shared.promos.append(p)
         }
     }
 
