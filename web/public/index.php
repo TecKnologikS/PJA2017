@@ -306,6 +306,77 @@ $app->delete('/{id}/{token}/devis/delete/', function ($request, $response, $args
 	$response = $response->withJson($retour, 302);
   return $response;
 });
+$app->post('/{id}/{token}/devis/create/', function ($request, $response, $args) {
+	$id = $args['id'];
+	$token = $args['token'];
+	$parsedBody = $request->getParsedBody();
+
+	$data = array();
+	$data2 = array();
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
+	$mysqli->set_charset("utf8");
+	if ($mysqli->connect_errno) {
+		echo "Echec lors de la connexion à MySQL : (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
+	}
+	$retour = array('item' => $parsedBody["id"],'id_devis' => 0, 'created' => false);
+
+	// SELECT ARTICLE
+	$res = $mysqli->query("SELECT * FROM article a INNER JOIN panier_article pa ON pa.ID_Article = a.ID WHERE pa.ID_User = ".$mysqli->real_escape_string($id)." ");
+	while(($row =  mysqli_fetch_assoc($res))) {
+		$data[] = $row;
+	}
+
+	// SELECT PROMO
+	$res = $mysqli->query("SELECT * FROM promocode a INNER JOIN panier_promo pp ON pp.ID_Promo = a.ID WHERE pp.ID_User = ".$mysqli->real_escape_string($id)." ");
+	while(($row =  mysqli_fetch_assoc($res))) {
+		$data2[] = $row;
+	}
+
+	$panier = CalculateBag($data, $data2);
+	/*** Create devis ***/
+	$res = $mysqli->query("INSERT INTO devis(ID_User, Societe, Date_Validity, Siret, Tel, Fax, Email, Adresse, CP, Ville, Nom, Prenom, Prix, Reduction, Prix_final) VALUES ("
+										." ".$mysqli->real_escape_string($id).", "
+										." '".$mysqli->real_escape_string($parsedBody["societe"])."', "
+										." DATE_ADD(NOW(), INTERVAL 90 DAY), "
+										." '".$mysqli->real_escape_string($parsedBody["siret"])."', "
+										." '".$mysqli->real_escape_string($parsedBody["tel"])."', "
+										." '".$mysqli->real_escape_string($parsedBody["fax"])."', "
+										." '".$mysqli->real_escape_string($parsedBody["email"])."', "
+										." '".$mysqli->real_escape_string($parsedBody["adresse"])."', "
+										." '".$mysqli->real_escape_string($parsedBody["cp"])."', "
+										." '".$mysqli->real_escape_string($parsedBody["ville"])."', "
+										." '".$mysqli->real_escape_string($parsedBody["nom"])."', "
+										." '".$mysqli->real_escape_string($parsedBody["prenom"])."', "
+										." '".$mysqli->real_escape_string($panier["prix_total"])."', "
+										." '".$mysqli->real_escape_string($panier["reduction_total"])."', "
+										." '".$mysqli->real_escape_string($panier["prix_final"])."' "
+										.");");
+	$id_devis = $mysqli->insert_id;
+	$retour = array('item' => $parsedBody["id"],'id_devis' => $id_devis, 'created' => true);
+	$test = "";
+	/*** Add Articles ***/
+	for($i = 0; $i < count($panier["articles"]); $i++) {
+		$mysqli->query("INSERT INTO devis_article (ID_Devis,ID_Article,Qte, Prix, Reduction, Prix_final) VALUES ("
+													."".$id_devis.", "
+													."".$panier["articles"][$i]["id"].", "
+													."'".$panier["articles"][$i]["Qte"]."', "
+													."'".$panier["articles"][$i]["prix"]."', "
+													."'".$panier["articles"][$i]["reduction"]."', "
+													."'".$panier["articles"][$i]["prix_final"]."');");
+	}
+	$retour = array('id_devis' => $id_devis, 'created' => true);
+	/*** Add PromoCode ***/
+	for($i = 0; $i < count($panier["promo"]); $i++) {
+		$mysqli->query("INSERT INTO devis_promo (ID_Devis,ID_Promo,Reduction) VALUES ("
+													."".$id_devis.", "
+													."".$panier["promo"][$i]["ID_Promo"].", "
+													."'".$panier["promo"][$i]["total"]."');");
+	}
+
+	$response = $response->withHeader('Content-type', 'text');
+	$response = $response->withJson($retour, 302);
+    return $response;
+});
 $app->get('/{id}/{token}/promo/', function ($request, $response, $args) {
 	$id = $args['id'];
 	$token = $args['token'];
@@ -484,77 +555,6 @@ $app->post('/{id}/{token}/bag/update/', function ($request, $response, $args) {
 
 	$mysqli->query("UPDATE panier_article SET Qte = ".$parsedBody["qte"]." WHERE ID_User= ".$id." AND ID_Article = ".$parsedBody["id"]." ");
 	$retour = array('item' => $parsedBody["id"],'count' => 0, 'sql'=>"UPDATE FROM panier_article SET Qte = ".$parsedBody["qte"]." WHERE ID_User= ".$id." AND ID_Article = ".$parsedBody["id"]." ");
-	$response = $response->withHeader('Content-type', 'text');
-	$response = $response->withJson($retour, 302);
-    return $response;
-});
-$app->post('/{id}/{token}/devis/create/', function ($request, $response, $args) {
-	$id = $args['id'];
-	$token = $args['token'];
-	$parsedBody = $request->getParsedBody();
-
-	$data = array();
-	$data2 = array();
-	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
-	$mysqli->set_charset("utf8");
-	if ($mysqli->connect_errno) {
-		echo "Echec lors de la connexion à MySQL : (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
-	}
-	$retour = array('item' => $parsedBody["id"],'id_devis' => 0, 'created' => false);
-
-	// SELECT ARTICLE
-	$res = $mysqli->query("SELECT * FROM article a INNER JOIN panier_article pa ON pa.ID_Article = a.ID WHERE pa.ID_User = ".$mysqli->real_escape_string($id)." ");
-	while(($row =  mysqli_fetch_assoc($res))) {
-		$data[] = $row;
-	}
-
-	// SELECT PROMO
-	$res = $mysqli->query("SELECT * FROM promocode a INNER JOIN panier_promo pp ON pp.ID_Promo = a.ID WHERE pp.ID_User = ".$mysqli->real_escape_string($id)." ");
-	while(($row =  mysqli_fetch_assoc($res))) {
-		$data2[] = $row;
-	}
-
-	$panier = CalculateBag($data, $data2);
-	/*** Create devis ***/
-	$res = $mysqli->query("INSERT INTO devis(ID_User, Societe, Date_Validity, Siret, Tel, Fax, Email, Adresse, CP, Ville, Nom, Prenom, Prix, Reduction, Prix_final) VALUES ("
-										." ".$mysqli->real_escape_string($id).", "
-										." '".$mysqli->real_escape_string($parsedBody["societe"])."', "
-										." DATE_ADD(NOW(), INTERVAL 90 DAY), "
-										." '".$mysqli->real_escape_string($parsedBody["siret"])."', "
-										." '".$mysqli->real_escape_string($parsedBody["tel"])."', "
-										." '".$mysqli->real_escape_string($parsedBody["fax"])."', "
-										." '".$mysqli->real_escape_string($parsedBody["email"])."', "
-										." '".$mysqli->real_escape_string($parsedBody["adresse"])."', "
-										." '".$mysqli->real_escape_string($parsedBody["cp"])."', "
-										." '".$mysqli->real_escape_string($parsedBody["ville"])."', "
-										." '".$mysqli->real_escape_string($parsedBody["nom"])."', "
-										." '".$mysqli->real_escape_string($parsedBody["prenom"])."', "
-										." '".$mysqli->real_escape_string($panier["prix_total"])."', "
-										." '".$mysqli->real_escape_string($panier["reduction_total"])."', "
-										." '".$mysqli->real_escape_string($panier["prix_final"])."' "
-										.");");
-	$id_devis = $mysqli->insert_id;
-	$retour = array('item' => $parsedBody["id"],'id_devis' => $id_devis, 'created' => true);
-	$test = "";
-	/*** Add Articles ***/
-	for($i = 0; $i < count($panier["articles"]); $i++) {
-		$mysqli->query("INSERT INTO devis_article (ID_Devis,ID_Article,Qte, Prix, Reduction, Prix_final) VALUES ("
-													."".$id_devis.", "
-													."".$panier["articles"][$i]["id"].", "
-													."'".$panier["articles"][$i]["Qte"]."', "
-													."'".$panier["articles"][$i]["prix"]."', "
-													."'".$panier["articles"][$i]["reduction"]."', "
-													."'".$panier["articles"][$i]["prix_final"]."');");
-	}
-	$retour = array('id_devis' => $id_devis, 'created' => true);
-	/*** Add PromoCode ***/
-	for($i = 0; $i < count($panier["promo"]); $i++) {
-		$mysqli->query("INSERT INTO devis_promo (ID_Devis,ID_Promo,Reduction) VALUES ("
-													."".$id_devis.", "
-													."".$panier["promo"][$i]["ID"].", "
-													."'".$panier["promo"][$i]["total"]."');");
-	}
-
 	$response = $response->withHeader('Content-type', 'text');
 	$response = $response->withJson($retour, 302);
     return $response;
