@@ -18,7 +18,7 @@ open class ArticleBuilder {
     }
     
     static func jsonToArticle(json:[String:Any]) -> Article {
-        var retour = Article()
+        let retour = Article()
         
         retour.id = Int(json["id"] as! String)!
         retour.name = json["name"] as! String

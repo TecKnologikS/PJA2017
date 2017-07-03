@@ -81,7 +81,7 @@ class DevisViewController: UITableViewController {
         if(promos.count > 0){
             cells.append(AffichageCell(_type: 1, _lib: "Promotion", _val: ""))
             for promo in promos {
-                cells.append(AffichageCell(_type: 3, _lib: "\(promo["Code"] as! String)", _val: promo["Nom"] as! String!))
+                cells.append(AffichageCell(_type: 3, _lib: "\(promo["Nom"] as! String)", _val: promo["Code"] as! String!))
             }
         }
     }
@@ -111,23 +111,19 @@ class DevisViewController: UITableViewController {
             let cell :CellTitle = tableView.dequeueReusableCell(withIdentifier: CELL_TITLE)  as! CellTitle
             cell.tvTitle.text = cells[indexPath.row].libelle
             return cell
-            break;
         case 2:
             let cell :CellInfo = tableView.dequeueReusableCell(withIdentifier: CELL_INFO)  as! CellInfo
             cell.tvLib.text = cells[indexPath.row].libelle
             cell.tvValues.text = cells[indexPath.row].value
             return cell
-            break;
         case 3:
             let cell :CellArticles = tableView.dequeueReusableCell(withIdentifier: CELL_ART)  as! CellArticles
             cell.tvNom.text = cells[indexPath.row].libelle
             cell.tvPrix.text = cells[indexPath.row].value
             return cell
-            break;
         default:
             let cell :CellTitle = tableView.dequeueReusableCell(withIdentifier: CELL_TITLE)  as! CellTitle
             return cell
-            break;
         }
         
         
@@ -144,12 +140,32 @@ class DevisViewController: UITableViewController {
     }
     
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        /*if let indexPath = self.tableView.indexPathForSelectedRow {
-         let controller = segue.destination as! ArticleViewController
-         let value = articles[indexPath.row]
-         controller.article = articles[indexPath.row]
-         }*/
+    @IBAction func openMenu(_ sender: Any) {
+        
+        let refreshAlert = UIAlertController(title: "Actions supplémentaires", message: "Que voulez-vous faire ?", preferredStyle: UIAlertControllerStyle.actionSheet)
+
+        
+        let actionAppel = UIAlertAction(title: "Appeller le client", style: .default, handler: { (action: UIAlertAction!) in
+            
+        })
+        actionAppel.setValue(UIImage(named: "ic_input"), forKey: "image")
+        
+        let actionPDF = UIAlertAction(title: "Envoyer le devis par courriel", style: .default, handler: { (action: UIAlertAction!) in
+            
+        })
+        actionPDF.setValue(UIImage(named: "ic_input"), forKey: "image")
+        
+        let actionMaps = UIAlertAction(title: "Ouvrir dans maps", style: .default, handler: { (action: UIAlertAction!) in
+            
+        })
+        actionMaps.setValue(UIImage(named: "ic_input"), forKey: "image")
+        
+        refreshAlert.addAction(actionAppel)
+        refreshAlert.addAction(actionPDF)
+        refreshAlert.addAction(actionMaps)
+        refreshAlert.addAction(UIAlertAction(title: "Fermer le menu", style: .default, handler: nil))
+        
+        present(refreshAlert, animated: true, completion: nil)
     }
     
     

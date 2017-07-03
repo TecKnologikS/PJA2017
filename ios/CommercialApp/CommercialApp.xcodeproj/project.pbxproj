@@ -137,10 +137,10 @@
 				B5D32C491EC1D2AA00BA4F71 /* LaunchScreen.storyboard */,
 				B5D32C4C1EC1D2AA00BA4F71 /* Info.plist */,
 				B5D32C521EC1D6E200BA4F71 /* DevisController.swift */,
+				B5A080721F06DFAC00303932 /* DevisViewController.swift */,
 				B5D4C39A1EDECF6F005535D4 /* ArticlesController.swift */,
 				B58DFE081F01B22000960CBC /* ArticleViewController.swift */,
 				B5A0806D1F06D46600303932 /* PanierController.swift */,
-				B5A080721F06DFAC00303932 /* DevisViewController.swift */,
 				B5A0807B1F0748B600303932 /* AdditionController.swift */,
 				B5A0807D1F0753B300303932 /* ValidateController.swift */,
 			);

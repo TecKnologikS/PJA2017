@@ -76,12 +76,23 @@ class PanierController: UITableViewController {
         }
     }
     @IBAction func deleteItem(_ sender: Any) {
-        let id = (sender as! UIButton).tag
-        var emptyDict: [String: String] = [:]
-        emptyDict.updateValue("\(Panier.shared.articles[id].id)", forKey: "id") //TODO recuperer id article
-        API.APIRequest(type: Request.POST, url: RequestBuilder.RemoveToBasket(), body:API.createBody(dict: emptyDict)) { (ok, data) in
-            self.loadPanier()
-        }
+        let refreshAlert = UIAlertController(title: "Suppression", message: "Voulez-vous supprimer cet article du panier ?", preferredStyle: UIAlertControllerStyle.alert)
+        
+        refreshAlert.addAction(UIAlertAction(title: "Supprimer", style: .default, handler: { (action: UIAlertAction!) in
+            let id = (sender as! UIButton).tag
+            var emptyDict: [String: String] = [:]
+            emptyDict.updateValue("\(Panier.shared.articles[id].id)", forKey: "id") //TODO recuperer id article
+            API.APIRequest(type: Request.POST, url: RequestBuilder.RemoveToBasket(), body:API.createBody(dict: emptyDict)) { (ok, data) in
+                self.loadPanier()
+            }
+        }))
+        
+        refreshAlert.addAction(UIAlertAction(title: "Annuler", style: .cancel, handler: { (action: UIAlertAction!) in
+        }))
+        
+        present(refreshAlert, animated: true, completion: nil)
+        
+        
     }
     
     

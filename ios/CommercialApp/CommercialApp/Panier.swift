@@ -30,7 +30,7 @@ open class Panier {
         let articles = json["articles"] as! [[String:Any]]
         Panier.shared.articles.removeAll()
         for art in articles {
-            var article:Article = ArticleBuilder.jsonToArticle(json: art)
+            let article:Article = ArticleBuilder.jsonToArticle(json: art)
             article.prixFinal = art["prix_final"] as! Double
             article.qte = Int(art["Qte"] as! String) ?? 1
             Panier.shared.articles.append(article)

@@ -18,7 +18,7 @@ open class DevisBuilder {
     }
     
     static func jsonToArticle(json:[String:Any]) -> Devis {
-        var retour = Devis()
+        let retour = Devis()
         
         retour.ID = Int(json["ID"] as! String)!
         retour.Societe = json["Societe"] as! String

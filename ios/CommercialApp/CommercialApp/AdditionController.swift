@@ -48,17 +48,14 @@ class AdditionController: UIViewController, UITableViewDataSource, UITableViewDe
             let cell :CellTitle = tableView.dequeueReusableCell(withIdentifier: CELL_TITLE)  as! CellTitle
             cell.tvTitle.text = cells[indexPath.row].libelle
             return cell
-            break;
         case 2:
             let cell :CellInfo = tableView.dequeueReusableCell(withIdentifier: CELL_INFO)  as! CellInfo
             cell.tvLib.text = cells[indexPath.row].libelle
             cell.tvValues.text = cells[indexPath.row].value
             return cell
-            break;
         default:
             let cell :CellTitle = tableView.dequeueReusableCell(withIdentifier: CELL_TITLE)  as! CellTitle
             return cell
-            break;
         }
         
         
@@ -76,7 +73,7 @@ class AdditionController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func createTable() {
-       //PROMo if (Panier.shared.)
+     //  PROMo if (Panier.shared.)
         cells.removeAll()
         cells.append(AffichageCell(_type: 1, _lib: "Addition", _val: ""))
         cells.append(AffichageCell(_type: 2, _lib: "Prix Total", _val: "\(Panier.shared.prix_total.roundTo(places: 2)) €"))
