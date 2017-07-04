@@ -207,8 +207,11 @@ $app->get('/{id}/{token}/products', function (Request $request, Response $respon
 		$data = article(-1, $limit);
 
 	$response = $response->withHeader('Content-type', 'application/json');
-	$response = $response->withJson($data, 302);
-    return $response;
+	if (count($data) > 0)
+		$response = $response->withJson($data, 200);
+	else
+		$response = $response->withJson($data, 400);
+  return $response;
 });
 $app->get('/{id}/{token}/products/search/{recherche}/', function (Request $request, Response $response) {
   $id = $request->getAttribute('id');
@@ -221,8 +224,11 @@ $app->get('/{id}/{token}/products/search/{recherche}/', function (Request $reque
 	$data = search(0, $recherche);
 
 	$response = $response->withHeader('Content-type', 'application/json');
-	$response = $response->withJson($data, 302);
-    return $response;
+	if (count($data) > 0)
+		$response = $response->withJson($data, 200);
+	else
+		$response = $response->withJson($data, 400);
+	return $response;
 });
 $app->get('/{id}/{token}/products/{id_p}/', function (Request $request, Response $response) {
     $id = $request->getAttribute('id');
@@ -234,8 +240,11 @@ $app->get('/{id}/{token}/products/{id_p}/', function (Request $request, Response
 	$data = article($id_p, -1);
 
 	$response = $response->withHeader('Content-type', 'application/json');
-	$response = $response->withJson($data, 302);
-    return $response;
+	if (count($data) > 0)
+		$response = $response->withJson($data, 200);
+	else
+		$response = $response->withJson($data, 400);
+	return $response;
 });
 $app->get('/{id}/{token}/devis', function ($request, $response, $args) {
 	$id = $args['id'];
@@ -251,8 +260,12 @@ $app->get('/{id}/{token}/devis', function ($request, $response, $args) {
 		$data = devis($id, -1, $limit);
 
 	$response = $response->withHeader('Content-type', 'application/json');
-	$response = $response->withJson($data, 302);
-    return $response;
+	if (count($data) > 0)
+		$response = $response->withJson($data, 200);
+	else
+		$response = $response->withJson($data, 400);
+
+	return $response;
 });
 $app->get('/{id}/{token}/devis/{id_devis}/', function (Request $request, Response $response) {
 	$id = $request->getAttribute('id');
@@ -288,8 +301,12 @@ $app->get('/{id}/{token}/devis/{id_devis}/', function (Request $request, Respons
 	$retour = array("devis" => $devis, "articles" => $articles, "promo" => $promos);
 
 	$response = $response->withHeader('Content-type', 'application/json');
-	$response = $response->withJson($retour, 302);
-    return $response;
+	if (count($devis) > 0)
+		$response = $response->withJson($retour, 200);
+	else
+		$response = $response->withJson($retour, 400);
+
+	return $response;
 });
 $app->delete('/{id}/{token}/devis/delete/', function ($request, $response, $args) {
 	$id = $args['id'];
@@ -298,12 +315,13 @@ $app->delete('/{id}/{token}/devis/delete/', function ($request, $response, $args
 
 	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
 	$retour = array('delete' => false,'admin' => false);
+	$response = $response->withJson($retour, 400);
 	if (isCorrectIdentificationAdmin($id, $token)) {
 		$mysqli->query("DELETE FROM devis WHERE ID= ".$parsedBody["id"]." ");
 		$retour = array('delete' => true,'admin' => true);
+		$response = $response->withJson($retour, 200);
 	}
 	$response = $response->withHeader('Content-type', 'text');
-	$response = $response->withJson($retour, 302);
   return $response;
 });
 $app->post('/{id}/{token}/devis/create/', function ($request, $response, $args) {
@@ -374,25 +392,30 @@ $app->post('/{id}/{token}/devis/create/', function ($request, $response, $args) 
 	}
 
 	$response = $response->withHeader('Content-type', 'text');
-	$response = $response->withJson($retour, 302);
-    return $response;
+	if ($id_devis > 0)
+		$response = $response->withJson($retour, 200);
+	else
+		$response = $response->withJson($retour, 400);
+
+	return $response;
 });
 $app->get('/{id}/{token}/promo/', function ($request, $response, $args) {
 	$id = $args['id'];
 	$token = $args['token'];
 	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
 	$mysqli->set_charset("utf8");
+	$response = $response->withJson($promos, 400);
 	$promos = array();
 	if (isCorrectIdentificationAdmin($id, $token)) {
 		$res = $mysqli->query("SELECT  * FROM promocode");
 		while(($row =  mysqli_fetch_assoc($res))) {
 			$promos[] = $row;
 		}
+		$response = $response->withJson($promos, 200);
 	}
 
 
 	$response = $response->withHeader('Content-type', 'text');
-	$response = $response->withJson($promos, 302);
   return $response;
 });
 $app->post('/{id}/{token}/promo/add/', function ($request, $response, $args) {
@@ -512,8 +535,10 @@ $app->get('/{id}/{token}/bag/', function (Request $request, Response $response) 
 	$retour = CalculateBag($data, $data2);
 
 	$response = $response->withHeader('Content-type', 'application/json');
-	$response = $response->withJson($retour, 302);
-    return $response;
+	
+	$response = $response->withJson($retour, 200);
+
+  return $response;
 });
 $app->post('/{id}/{token}/bag/add/', function ($request, $response, $args) {
 	$id = $args['id'];
