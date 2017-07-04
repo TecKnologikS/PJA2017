@@ -37,16 +37,19 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.tecknologiks.myapplication.ObjectClass.ResponseAPI;
 import fr.tecknologiks.myapplication.ObjectClass.User;
 import fr.tecknologiks.myapplication.Param.API;
+import fr.tecknologiks.myapplication.function.APIRequest;
 import fr.tecknologiks.myapplication.function.Stream;
+import fr.tecknologiks.myapplication.interfaceClass.AsyncResponse;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
+public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor>, AsyncResponse {
 
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -70,6 +73,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -194,14 +198,22 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
+            /*
+            OLD WAY
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
+             */
+
+            APIRequest api = new APIRequest(1, API.Login(email, password), "");
+            api.delegate = LoginActivity.this;
+            api.execute();
         }
     }
 
     private boolean isEmailValid(String email) {
+        return true;
         //TODO: Replace this with your own logic
-        return email.contains("@");
+       // return email.contains("@");
     }
 
     private boolean isPasswordValid(String password) {
@@ -288,6 +300,19 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mEmailView.setAdapter(adapter);
     }
 
+    @Override
+    public void processFinish(ResponseAPI response) {
+        showProgress(false);
+
+        /*if (success) {
+            finish();
+        } else {
+            mPasswordView.setError(getString(R.string.error_incorrect_password));
+            mPasswordView.requestFocus();
+        }*/
+        Log.e("c'est revenu", "");
+    }
+
 
     private interface ProfileQuery {
         String[] PROJECTION = {
@@ -308,7 +333,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         private final String mEmail;
         private final String mPassword;
         String server_response = "";
-        User u;
 
         UserLoginTask(String email, String password) {
             mEmail = email;
@@ -322,8 +346,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             HttpURLConnection urlConnection = null;
 
             try {
-                url = new URL(API.URL + API.LOGIN + API.LOGIN_USER + mEmail + "&" + API.LOGIN_MDP + mPassword);
-                Log.v("CatalogClient", "url : " + API.URL + API.LOGIN + API.LOGIN_USER + mEmail + "&" + API.LOGIN_MDP + mPassword);
+                url = new URL(API.Login(mEmail, mPassword));
                 urlConnection = (HttpURLConnection) url.openConnection();
 
                 int responseCode = urlConnection.getResponseCode();
@@ -332,9 +355,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 if(responseCode == HttpURLConnection.HTTP_OK){
                     server_response = Stream.readStream(urlConnection.getInputStream());
                     Log.v("CatalogClient", server_response);
-                    u = new User();
-                    u.fromJSON(server_response);
-                    return u.isCorrect();
+
+                    User.getInstance().fromJSON(server_response);
+                    return User.getInstance().isCorrect();
                 }
 
             } catch (MalformedURLException e) {
