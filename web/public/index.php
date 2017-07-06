@@ -521,7 +521,7 @@ $app->get('/{id}/{token}/bag/', function (Request $request, Response $response) 
 	}
 
 	// SELECT ARTICLE
-	$res = $mysqli->query("SELECT * FROM article a INNER JOIN panier_article pa ON pa.ID_Article = a.ID WHERE pa.ID_User = ".$mysqli->real_escape_string($id)." ");
+	$res = $mysqli->query("SELECT * FROM article a INNER JOIN panier_article pa ON pa.ID_Article = a.ID WHERE pa.ID_User = ".$mysqli->real_escape_string($id)." ORDER BY pa.ID");
 	while(($row =  mysqli_fetch_assoc($res))) {
 		$data[] = $row;
 	}
@@ -535,7 +535,7 @@ $app->get('/{id}/{token}/bag/', function (Request $request, Response $response) 
 	$retour = CalculateBag($data, $data2);
 
 	$response = $response->withHeader('Content-type', 'application/json');
-	
+
 	$response = $response->withJson($retour, 200);
 
   return $response;
@@ -554,7 +554,7 @@ $app->post('/{id}/{token}/bag/add/', function ($request, $response, $args) {
 		$retour = array('item' => $parsedBody["id"],'count' => $row['nb']);
 	}
 	$response = $response->withHeader('Content-type', 'text');
-	$response = $response->withJson($retour, 302);
+	$response = $response->withJson($retour, 200);
     return $response;
 });
 $app->post('/{id}/{token}/bag/remove/', function ($request, $response, $args) {

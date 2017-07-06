@@ -1,14 +1,6 @@
 package fr.tecknologiks.myapplication.Param;
 
-import android.util.Log;
-
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import fr.tecknologiks.myapplication.ObjectClass.User;
-import fr.tecknologiks.myapplication.function.Stream;
 
 /**
  * Created by robin on 23/05/2017.

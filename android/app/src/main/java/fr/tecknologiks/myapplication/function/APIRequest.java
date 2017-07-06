@@ -1,20 +1,14 @@
 package fr.tecknologiks.myapplication.function;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLEncoder;
 
-import fr.tecknologiks.myapplication.ObjectClass.Request;
 import fr.tecknologiks.myapplication.ObjectClass.ResponseAPI;
-import fr.tecknologiks.myapplication.ObjectClass.User;
-import fr.tecknologiks.myapplication.R;
 import fr.tecknologiks.myapplication.function.Stream;
 import fr.tecknologiks.myapplication.interfaceClass.AsyncResponse;
 
@@ -29,12 +23,14 @@ public class APIRequest extends AsyncTask<Void, Void, ResponseAPI> {
     private final String url;
     private final String body;
     private final int type;
+    private final int info_sup;
     public AsyncResponse delegate = null;
 
-    public APIRequest(int _type, String _url, String _body) {
+    public APIRequest(int _type, String _url, String _body, int _info_sup) {
         url = _url;
         body = _body;
         type = _type;
+        info_sup = _info_sup;
     }
 
     @Override
@@ -52,6 +48,7 @@ public class APIRequest extends AsyncTask<Void, Void, ResponseAPI> {
                 case POST:
                     urlConnection.setRequestMethod("POST");
                     urlConnection.setDoOutput(true);
+                    urlConnection.setRequestProperty("Content-Type", "application/json; charset=utf-8");
                     OutputStreamWriter wr = new OutputStreamWriter(urlConnection.getOutputStream());
                     wr.write(body);
                     wr.flush();
@@ -64,15 +61,15 @@ public class APIRequest extends AsyncTask<Void, Void, ResponseAPI> {
 
             int responseCode = urlConnection.getResponseCode();
             if(responseCode == HttpURLConnection.HTTP_OK)
-                return new ResponseAPI(responseCode, Stream.readStream(urlConnection.getInputStream()));
-            return new ResponseAPI(responseCode, "");
+                return new ResponseAPI(responseCode, Stream.readStream(urlConnection.getInputStream()), info_sup);
+            return new ResponseAPI(responseCode, "", info_sup);
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return new ResponseAPI(HttpURLConnection.HTTP_FORBIDDEN, "");
+        return new ResponseAPI(HttpURLConnection.HTTP_FORBIDDEN, "", info_sup);
     }
 
     @Override

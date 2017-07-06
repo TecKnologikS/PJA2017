@@ -1,5 +1,9 @@
 package fr.tecknologiks.myapplication.ObjectClass;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 /**
  * Created by robin on 23/05/2017.
  */
@@ -30,11 +34,23 @@ public class User {
     }
 
     public void fromJSON(String json) {
+        JsonElement jelement = new JsonParser().parse(json);
+        JsonObject jobject = jelement.getAsJsonObject();
+        if (jobject.size() > 0) {
+            this.id = jobject.get("ID").getAsInt();
+            this.name = jobject.get("login").getAsString();
+            this.token = jobject.get("token").getAsString();
+        }
+    }
 
+    public void reset() {
+        this.id = 0;
+        this.name = "";
+        this.token = "";
     }
 
     public boolean isCorrect() {
-        return true;
+        return id > 0 && token.trim().length() > 0;
     }
 
     public int getId() {
