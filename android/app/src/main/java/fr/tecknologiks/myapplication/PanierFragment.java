@@ -46,6 +46,9 @@ public class PanierFragment extends Fragment implements PanierAdapter.PanierList
     final int REQUEST_UPDATE = 2;
     final int REQUEST_PROMO = 3;
 
+    final int MENU_PANIER = R.menu.menu_panier;
+    final int MENU_ADDITION_ = R.menu.menu_addition;
+    final int MENU_VALIDATE = R.menu.menu_validate;
 
 
     @Override
@@ -56,6 +59,7 @@ public class PanierFragment extends Fragment implements PanierAdapter.PanierList
         adapter = new PanierAdapter(Panier.getInstance().getArticles(), getContext(), this);
         lvPanier.setAdapter(adapter);
         setHasOptionsMenu(true);
+        ((MainActivity2)getActivity()).setMenu(MENU_PANIER);
         ((MainActivity2)getActivity()).setTitle("Panier (" + Panier.getInstance().getPrix_final() + " €)");
         //((MainActivity2)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 

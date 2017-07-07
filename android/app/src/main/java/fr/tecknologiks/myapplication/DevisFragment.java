@@ -12,7 +12,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -23,27 +22,27 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import fr.tecknologiks.myapplication.ObjectClass.Article;
-import fr.tecknologiks.myapplication.ObjectClass.Panier;
+import fr.tecknologiks.myapplication.ObjectClass.Devis;
 import fr.tecknologiks.myapplication.ObjectClass.Request;
 import fr.tecknologiks.myapplication.ObjectClass.ResponseAPI;
 import fr.tecknologiks.myapplication.ObjectClass.User;
 import fr.tecknologiks.myapplication.Param.API;
 import fr.tecknologiks.myapplication.adaptateur.ArticlesAdapter;
-import fr.tecknologiks.myapplication.adaptateur.PanierAdapter;
+import fr.tecknologiks.myapplication.adaptateur.DevisAdapter;
 import fr.tecknologiks.myapplication.function.APIRequest;
 import fr.tecknologiks.myapplication.interfaceClass.AsyncResponse;
 
 /**
- * Created by robinpauquet on 05/07/2017.
+ * Created by robinpauquet on 07/07/2017.
  */
 
-public class ArticleFragment extends Fragment implements AsyncResponse {
+public class DevisFragment  extends Fragment implements AsyncResponse {
     public static final String ARG_TITLE = "arg_title";
     private TextView textView;
     private int test = 0;
     ListView lvArticles;
-    private ArrayList<Article> lstArticles = new ArrayList<>();
-    ArticlesAdapter adapter;
+    private ArrayList<Devis> lstDevis = new ArrayList<>();
+    DevisAdapter adapter;
     String recherche = "";
     boolean start = false;
     LinearLayout layoutDetails;
@@ -64,8 +63,8 @@ public class ArticleFragment extends Fragment implements AsyncResponse {
     public void onResume() {
         super.onResume();
         if(User.getInstance().isCorrect()) {
-            if (lstArticles.size() == 0)
-                loadArticles();
+            if (lstDevis.size() == 0)
+                loadDevis();
         }
         if (details && selected > -1)
             showDetails();
@@ -75,9 +74,9 @@ public class ArticleFragment extends Fragment implements AsyncResponse {
         layoutDetails.setVisibility(View.VISIBLE);
         ((MainActivity2)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         details = true;
-        ((MainActivity2)getActivity()).setTitle("" + lstArticles.get(selected).getName());
-        tvSmall.setText(lstArticles.get(selected).getSmallDesc());
-        tvSmall.setText(lstArticles.get(selected).getAbout());
+       // ((MainActivity2)getActivity()).setTitle("" + lstArticles.get(selected).getName());
+       // tvSmall.setText(lstArticles.get(selected).getSmallDesc());
+        //tvSmall.setText(lstArticles.get(selected).getAbout());
         ((MainActivity2)getActivity()).setMenu(MENU_DETAILS);
     }
 
@@ -93,7 +92,7 @@ public class ArticleFragment extends Fragment implements AsyncResponse {
         edtCount = (EditText) rootView.findViewById(R.id.edtCount);
         ((MainActivity2)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         setHasOptionsMenu(true);
-        adapter= new ArticlesAdapter(lstArticles,getContext());
+        adapter= new DevisAdapter(lstDevis,getContext());
         lvArticles.setAdapter(adapter);
         ((MainActivity2)getActivity()).setMenu(MENU_RECHERCHE);
         lvArticles.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -104,22 +103,7 @@ public class ArticleFragment extends Fragment implements AsyncResponse {
             }
         });
         ((MainActivity2)getActivity()).setTitle("Articles");
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(Integer.parseInt(edtCount.getText().toString()) > 0) {
-                    HashMap<String, String> dict = new HashMap<String, String>();
-                    dict.put("id", String.valueOf(lstArticles.get(selected).getId()));
-                    dict.put("nb", edtCount.getText().toString());
-                    String test = new Gson().toJson(dict);
-                    APIRequest api = new APIRequest(Request.POST, API.AddArticle(), test, REQUEST_ADD_ARTICLE);
-                    api.delegate = ArticleFragment.this;
-                    api.execute();
-                } else {
-                    //todo: error
-                }
-            }
-        });
+
         return rootView;
     }
 
@@ -137,12 +121,12 @@ public class ArticleFragment extends Fragment implements AsyncResponse {
     }
 
 
-    private void loadArticles() {
-        String req = API.Articles();
+    private void loadDevis() {
+        String req = API.Devis();
         if (recherche.length() > 2)
             req = API.Search(recherche);
         APIRequest api = new APIRequest(Request.GET, req, "", REQUEST_LIST_ARTICLES);
-        api.delegate = ArticleFragment.this;
+        api.delegate = DevisFragment.this;
         api.execute();
     }
 
@@ -150,18 +134,18 @@ public class ArticleFragment extends Fragment implements AsyncResponse {
     public void processFinish(ResponseAPI response) {
         switch (response.getInfo_sup()) {
             case REQUEST_LIST_ARTICLES:
-                lstArticles.clear();
+                lstDevis.clear();
                 if (response.getCode() == HttpURLConnection.HTTP_OK) {
                     JsonArray jarray = (new JsonParser().parse(response.getBody())).getAsJsonArray();
                     for (int i = 0; i < jarray.size(); i++) {
-                        lstArticles.add(new Article(jarray.get(i).getAsJsonObject()));
+                        lstDevis.add(new Devis(jarray.get(i).getAsJsonObject()));
                     }
                 }
                 adapter.notifyDataSetChanged();
 
                 ((MainActivity2)getActivity()).setTitle("Articles");
                 if (recherche.length() > 2)
-                    ((MainActivity2)getActivity()).setTitle(lstArticles.size() + " Articles");
+                    ((MainActivity2)getActivity()).setTitle(lstDevis.size() + " Articles");
                 break;
             case REQUEST_ADD_ARTICLE:
                 ((MainActivity2)getActivity()).updatePanier();
@@ -176,12 +160,12 @@ public class ArticleFragment extends Fragment implements AsyncResponse {
     public void recherche(String _recherche) {
         if (_recherche.length() > 2) {
             recherche = _recherche;
-            loadArticles();
+            loadDevis();
         }
     }
 
     public void annuleRecherche() {
         recherche = "";
-        loadArticles();
+        loadDevis();
     }
 }

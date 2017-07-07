@@ -34,6 +34,7 @@ public class MainActivity2 extends AppCompatActivity implements AsyncResponse {
     private static final String TAG_FRAGMENT_TRIPS = "tag_frag_trips";
     private List<Fragment> fragments = new ArrayList<>(3);
     SearchView searchView;
+    int menu = R.menu.menu_top;
 
     private BottomNavigationView bottomNavigationView;
 
@@ -102,9 +103,15 @@ public class MainActivity2 extends AppCompatActivity implements AsyncResponse {
         panier.setArguments(bundle2);
 
 
+        DevisFragment devis = new DevisFragment();
+        Bundle bundle3 = new Bundle();
+        bundle3.putString(DevisFragment.ARG_TITLE, "");
+        panier.setArguments(bundle3);
+
+
         fragments.add(articles);
         fragments.add(panier);
-        fragments.add(tripsFragment);
+        fragments.add(devis);
     }
 
     /**
@@ -123,24 +130,36 @@ public class MainActivity2 extends AppCompatActivity implements AsyncResponse {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_top, menu);
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        searchView = (SearchView) menu.findItem(R.id.search).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
-                final Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.frame_fragmentholder);
-                if (currentFragment != null && currentFragment.getClass() == ArticleFragment.class) {
-                    ((ArticleFragment)currentFragment).annuleRecherche();
-                    searchView.onActionViewCollapsed();
+        if (this.menu == R.menu.menu_top) {
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(this.menu, menu);
+            SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+            searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+            searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+                @Override
+                public boolean onClose() {
+                    final Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.frame_fragmentholder);
+                    if (currentFragment != null && currentFragment.getClass() == ArticleFragment.class) {
+                        ((ArticleFragment)currentFragment).annuleRecherche();
+                        searchView.onActionViewCollapsed();
+                    }
+                    return true;
                 }
-                return true;
-            }
-        });
+            });
+        } else {
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(this.menu, menu);
+        }
+
 
         return true;
+    }
+
+
+    public void setMenu(int menu) {
+        this.menu = menu;
+        invalidateOptionsMenu();
     }
 
     @Override
