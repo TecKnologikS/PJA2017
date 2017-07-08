@@ -1,5 +1,8 @@
-// A PARTIR DE LA TABLE 12, on créer les articles
+//creer les categorie
+INSERT INTO categorie (name)
+SELECT DISTINCT `COL 1` FROM `TABLE 12` WHERE 1
 
+// A PARTIR DE LA TABLE 12, on créer les articles
 INSERT INTO `article`(`ref`, `name`, `smallDesc`, `about`, `image`, `categorie`, `tags`, `prix`)
 SELECT t.`REFERENCE`, t.`LIBELLE court`, t.`LIBELLE long`, '', '', c.id , '', t.`PV UNITAIRE (HT)` FROM `TABLE 12` t INNER JOIN categorie c ON c.name = t.`Code Fam`  WHERE 1
 
@@ -830,4 +833,3 @@ INSERT INTO `article_details` (`ID_Article`, `W`, `K`, `Lm`, `LmW`, `F`, `V`, `I
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
