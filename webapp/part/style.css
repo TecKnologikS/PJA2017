@@ -202,7 +202,7 @@ h4 {
 .addition td:nth-child(odd) {
 	background-color: #EEEEEE;
 	font-weight: bold;
-	width:150px;
+	width:200px;
 	text-align: right;
 }
 

@@ -60,6 +60,8 @@
    define("S_CONTACT", 				"Contact");
    define("S_ADDTOBASKET", 			"Ajouter au panier");
    define("S_NUMBER", 				"Nombre :");
+   define("S_REF", 				"Référence");
+   define("S_CARACT", 				"Caractéristiques");
 
 
 

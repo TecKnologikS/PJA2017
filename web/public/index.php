@@ -96,10 +96,10 @@ function isCorrectIdentificationAdmin($id, $token) {
 	return false;
 }
 
-function article($id, $number) {
+function article($id, $number, $details) {
 	$args = "";
 	if ($id != -1) {
-		$args .= " AND id=".$id." ";
+		$args .= " AND a.id=".$id." ";
 	}
 
 	if ($number != -1) {
@@ -110,7 +110,10 @@ function article($id, $number) {
 	if ($mysqli->connect_errno) {
 		echo "Echec lors de la connexion à MySQL : (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 	}
-	$res = $mysqli->query("SELECT * , (SELECT SUM(Qte) FROM `devis_article` WHERE ID_Article = article.id) as nb_commande FROM article WHERE 1=1 ".$args);
+	if (!$details)
+		$res = $mysqli->query("SELECT * , (SELECT SUM(Qte) FROM `devis_article` WHERE ID_Article = a.id) as nb_commande FROM article a WHERE 1=1 ".$args);
+	else
+		$res = $mysqli->query("SELECT * , (SELECT SUM(Qte) FROM `devis_article` WHERE ID_Article = a.id) as nb_commande FROM article a LEFT JOIN article_details ad  ON a.id = ad.ID_Article WHERE 1=1 ".$args);
 	$types = array();
 
 	while(($row =  mysqli_fetch_assoc($res))) {
@@ -202,9 +205,9 @@ $app->get('/{id}/{token}/products', function (Request $request, Response $respon
 	$data = array();
 
 	if (empty($limit))
-		$data = article(-1, -1);
+		$data = article(-1, -1, false);
 	else
-		$data = article(-1, $limit);
+		$data = article(-1, $limit, false);
 
 	$response = $response->withHeader('Content-type', 'application/json');
 	if (count($data) > 0)
@@ -237,7 +240,7 @@ $app->get('/{id}/{token}/products/{id_p}/', function (Request $request, Response
 	$timestamps =  time();
 	$data = array();
 
-	$data = article($id_p, -1);
+	$data = article($id_p, -1, true);
 
 	$response = $response->withHeader('Content-type', 'application/json');
 	if (count($data) > 0)

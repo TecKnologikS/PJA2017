@@ -25,6 +25,7 @@ $articles = fromJSON(
 		<table id="quezac" class="display responsive nowrap" width="100%">
 			<thead>
 						<tr>
+							<th><?= S_REF ?></th>
 							<th><?= S_PRODUCTNAME ?></th>
 							<th><?= S_PRODUCTDESCRIPTION ?></th>
 							<th style="width:60px; text-align: right;"><?= S_COMMANDE ?></th>
@@ -35,6 +36,7 @@ $articles = fromJSON(
 					<tbody>
 						<?php
 						$toshow = "<tr>
+													<td>{ref}</td>
 													<td><a href='page.php?id={id_product}'>{name}</a></td>
 													<td>{descr}</td>
 													<td style='text-align:right;'>{commande}</td>
@@ -46,8 +48,8 @@ $articles = fromJSON(
 						if (count($articles) > 0) {
 							for($i = 0; $i < count($articles); $i++) {
 								echo str_replace(
-									array("{id_product}",								"{name}", 					"{descr}", 										"{prix}" , 							"{btn}", "{commande}"),
-									array($articles[$i]["id"], $articles[$i]["name"], $articles[$i]["smallDesc"], $articles[$i]["prix"], str_replace("{id_product}", $articles[$i]["id"], $btn), $articles[$i]["nb_commande"]),
+									array("{ref}", "{id_product}",								"{name}", 					"{descr}", 										"{prix}" , 							"{btn}", "{commande}"),
+									array($articles[$i]["ref"], $articles[$i]["id"], $articles[$i]["name"], $articles[$i]["smallDesc"], $articles[$i]["prix"], str_replace("{id_product}", $articles[$i]["id"], $btn), $articles[$i]["nb_commande"]),
 									$toshow);
 							}
 						} else {
