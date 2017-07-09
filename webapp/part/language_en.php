@@ -60,6 +60,18 @@
    define("S_CONTACT", 				"Contact");
    define("S_ADDTOBASKET", 			"Add to basket");
    define("S_NUMBER", 				"Number :");
+   define("S_REF", 					"Reference");
    define("S_PRICETOPAIE", 			"Price to paie");
+   define("S_CARACT", 				"Caractéristics");
+   define("S_UPDATE_BAG", 			"Basket update");
+   define("S_DELETED_BAG", 			"Article delete");
+   define("S_CODE_PROMO_FALSE", 	" is an incorrect promotional sheet");
+   define("S_CHANGED_STATUT", 		"User statut have been moficate");
+   define("S_CREATED_USER", 		"User created");
+   define("S_CHANGED_MDP", 			"Password changed");
+   define("S_DELETED_USER", 		"User deleted");
+   define("S_CREATED_PROMO", 		"Promotional sheet created");
+   define("S_DELETED_PROMO", 		"Promotional sheet deleted");
 
+   
 ?>
