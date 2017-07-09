@@ -5,7 +5,7 @@
    define("S_USER_UNKNOW", 			"Utilisateur inconnu !");
    define("S_BAD_PASSWORD", 		"Mot de passe incorrect!");
    define("S_NO_CONNECTED", 		"Vous n'êtes pas connecté(e)");
-   define("S_BLOCKED", 				"Contacter votre fournisseur");
+   define("S_BLOCKED", 				"Contactez votre fournisseur");
    define("S_LOGIN", 				"Compte utilisateur");
    define("S_MDP", 					"Mot de passe");
    define("S_LOGOUT", 				"Déconnexion");
@@ -29,7 +29,7 @@
    define("S_ADMINUSER", 			"Administrateur");
    define("S_LISTUSER", 			"Liste des utilisateurs");
    define("S_PRODUCTNAME", 			"Nom du produit");
-   define("S_QUANTITE", 			"Quantite");
+   define("S_QUANTITE", 			"Quantité");
    define("S_BASEPRICE", 			"Prix de base");
    define("S_REDUCTION", 			"Reduction");
    define("S_FINALPRICE", 			"Prix final");
@@ -60,7 +60,7 @@
    define("S_CONTACT", 				"Contact");
    define("S_ADDTOBASKET", 			"Ajouter au panier");
    define("S_NUMBER", 				"Nombre :");
-   define("S_REF", 				"Référence");
+   define("S_REF", 					"Référence");
    define("S_CARACT", 				"Caractéristiques");
 
 

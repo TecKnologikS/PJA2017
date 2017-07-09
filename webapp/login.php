@@ -52,7 +52,7 @@ if (isset($_POST["id"]) && isset($_POST["password"])) {
 								<div class="form-group">
 									<input class="form-control login_pass" placeholder="<?php echo S_MDP; ?>" name="password" type="password" pattern=".{1,}" required >
 								</div>
-								<input style="height:50px;" class="btn btn-lg btn-success btn-block" type="submit" value="Se Connecter">
+								<input style="height:50px;" class="btn btn-lg btn-success btn-block" type="submit" value="Se connecter">
 							</fieldset>
 						</form>
 					</div>
