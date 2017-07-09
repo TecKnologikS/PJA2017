@@ -25,12 +25,12 @@ $articles = fromJSON(
 		<table id="quezac" class="display responsive nowrap" width="100%">
 			<thead>
 						<tr>
-							<th><?= S_REF ?></th>
-							<th><?= S_PRODUCTNAME ?></th>
-							<th><?= S_PRODUCTDESCRIPTION ?></th>
-							<th style="width:60px; text-align: right;"><?= S_COMMANDE ?></th>
-							<th style="width:60px; text-align: right;"><?= S_UNITYPRICE ?></th>
-							<th style="width:40px;"></th>
+							<th class="all"><?= S_REF ?></th>
+							<th class="tablet"><?= S_PRODUCTNAME ?></th>
+							<th class="desktop"><?= S_PRODUCTDESCRIPTION ?></th>
+							<th class="desktop" style="width:60px; text-align: right;"><?= S_COMMANDE ?></th>
+							<th class="all" style="width:60px; text-align: right;"><?= S_UNITYPRICE ?></th>
+							<th class="all" style="width:40px;"></th>
 						</tr>
 					</thead>
 					<tbody>

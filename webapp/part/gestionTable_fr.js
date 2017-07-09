@@ -1,10 +1,12 @@
 var calcDataTableHeight = function() {
-	//return document.body.clientHeight  - 200;
-  return $(window).height()  - 225;
+	//
+  return document.body.clientHeight  - 150;
+  //return $(window).height()  - 225;
 };
 
 var setTable = function() {
 	var table = $('#quezac').DataTable( {
+	scrollY:        calcDataTableHeight(),
 	paging: true,
   searching: false,
   lengthChange: false,
@@ -12,13 +14,13 @@ var setTable = function() {
   processing: true,
 	scrollCollapse: true,
 	deferRender:    true,
-	scrollY:        calcDataTableHeight(),
+  "pagingType": "simple_numbers",
 	"language": {
 			"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json"
 		},
 	responsive: {
         breakpoints: [
-            { name: 'desktop', width: 1200 },
+            { name: 'desktop', width: 1400 },
             { name: 'tablet',  width: 1024 },
             { name: 'fablet',  width: 768 },
             { name: 'phone',   width: 480 }
@@ -27,11 +29,7 @@ var setTable = function() {
   } );
   table.on( 'search.dt', function () {
     if (table.search().length > 0) {
-      switch(table.search()) {
-        case "#about":
-          document.getElementById('easter').className='easter';
-        break;
-      }
+
     }
   } );
 };

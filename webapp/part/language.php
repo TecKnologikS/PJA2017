@@ -62,6 +62,15 @@
    define("S_NUMBER", 				"Nombre :");
    define("S_REF", 					"Référence");
    define("S_CARACT", 				"Caractéristiques");
+   define("S_UPDATE_BAG", "Panier mis à jour");
+   define("S_DELETED_BAG", "Article supprimé");
+   define("S_CODE_PROMO_FALSE", " est un code promotionnel incorrect");
+   define("S_CHANGED_STATUT", "Le statut de l'utilisateur a été modifié");
+   define("S_CREATED_USER", "Utilisateur créer");
+   define("S_CHANGED_MDP", "Mot de passe modifié");
+   define("S_DELETED_USER", "Utilisateur supprimé");
+   define("S_CREATED_PROMO", "Code promotionnel créé");
+   define("S_DELETED_PROMO", "Code promotionnel supprimé");
 
 
 
