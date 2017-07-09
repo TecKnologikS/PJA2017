@@ -26,7 +26,7 @@ $articles = fromJSON(
 			<thead>
 						<tr>
 							<th class="all"><?= S_REF ?></th>
-							<th class="tablet"><?= S_PRODUCTNAME ?></th>
+							<th class="all"><?= S_PRODUCTNAME ?></th>
 							<th class="desktop"><?= S_PRODUCTDESCRIPTION ?></th>
 							<th class="desktop" style="width:60px; text-align: right;"><?= S_COMMANDE ?></th>
 							<th class="all" style="width:60px; text-align: right;"><?= S_UNITYPRICE ?></th>

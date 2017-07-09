@@ -104,9 +104,17 @@ function removeDevis(id) {
 }
 
 function MessageFromJS(message) {
-  document.body.innerHTML += '<div id="information_message" class="succed_message"><i style="vertical-align:middle; margin-right: 20px;" class="material-icons">warning</i> ' + message + '</div> <script> setTimeout(function() { var element =  document.getElementById("information_message"); if (typeof(element) != \'undefined\' && element != null) { document.getElementById("information_message").remove(); } }, 3000); </script>';
-  setTimeout(function() { var element =  document.getElementById("information_message"); if (typeof(element) != 'undefined' && element != null) { document.getElementById("information_message").remove(); } }, 3000);
+  $("body").append('<div id="information_message" class="succed_message"><i style="vertical-align:middle; margin-right: 20px;" class="material-icons">warning</i> ' + message + '<a onclick="document.getElementById(\'information_message\').remove();">X<a></div>');
+  setTimeout(function() {
+    var element =  document.getElementById("information_message");
+    if (typeof(element) != 'undefined' && element != null)
+    {
+      document.getElementById("information_message").remove();
+    }
+  }, 3000);
 }
+
+
 
 function addToBasketFromPage(p1) {
   var nb = 0;

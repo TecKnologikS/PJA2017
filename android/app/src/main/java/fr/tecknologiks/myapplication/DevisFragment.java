@@ -143,7 +143,7 @@ public class DevisFragment  extends Fragment implements AsyncResponse {
                 }
                 adapter.notifyDataSetChanged();
 
-                ((MainActivity2)getActivity()).setTitle("Articles");
+                //((MainActivity2)getActivity()).setTitle("Articles");
                 if (recherche.length() > 2)
                     ((MainActivity2)getActivity()).setTitle(lstDevis.size() + " Articles");
                 break;
