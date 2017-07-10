@@ -1,23 +1,13 @@
 <?php
 require("part/basicFunctionLoad.php");
-//Que pour les admins
-isAdminOrExit();
 
 if (isset($_GET["delete"]))
   if ($_GET["delete"] == "true")
       Succed(S_DELETED_USER);
 
-if (isset($_GET["mdp"]))
-  if ($_GET["mdp"] == "true")
-      Succed(S_CHANGED_MDP);
-
 if (isset($_GET["statut"]))
   if ($_GET["statut"] == "true")
       Succed(S_CHANGED_STATUT);
-
-if (isset($_GET["statut"]))
-  if ($_GET["statut"] == "true")
-      Succed(S_CHANGED_LIBELLE);
 
 if (isset($_POST["login"]) && isset($_POST["password"])) {
   $admin = isset($_POST["admin"]) ? $_POST["admin"] : 0;
@@ -57,10 +47,9 @@ $users = fromJSON(
     <form action="/admin_user.php" method="post" >
 			<table class="devis" style="margin: 0 auto 0 auto; ">
         <thead>
-          <tr><th colspan="4"><h4><?= S_NEWUSER ?></h4></th></tr>
+          <tr><th colspan="3"><h4><?= S_NEWUSER ?></h4></th></tr>
           <tr>
             <th><?= S_LOGIN ?></th>
-            <th><?= S_DISPLAY_NAME ?></th>
             <th><?= S_MDP ?></th>
             <th><?= S_ADMINUSER ?></th>
           </tr>
@@ -68,7 +57,6 @@ $users = fromJSON(
 				<tbody>
           <tr>
             <td><input type="text" name="login" placeholder="login" pattern=".{1,}" required /></td>
-            <td><input type="text" name="displayname" placeholder="libelle utiisateur" pattern=".{1,}" required /></td>
             <td><input type="text" name="password" placeholder="mot de passe" pattern=".{1,}" required /></td>
             <td>
               <label class="switch">
@@ -77,7 +65,7 @@ $users = fromJSON(
               </label>
             </td>
           </tr>
-					<tr><td class="gris" colspan="4" style="padding:0;"><input type="submit" value="Ajouter" class="btn btn-info" style="font-size: 1.5em; width:100%; height:50px;"></td></tr>
+					<tr><td class="gris" colspan="3" style="padding:0;"><input type="submit" value="Ajouter" class="btn btn-info" style="font-size: 1.5em; width:100%; height:50px;"></td></tr>
 				</tbody>
 			</table>
 		</form>
@@ -85,10 +73,9 @@ $users = fromJSON(
     <br />
     <table class="devis" style="margin: 0 auto 0 auto; ">
       <thead>
-        <tr><th colspan="5"><h4><?= S_LISTUSER ?></h4></th></tr>
+        <tr><th colspan="4"><h4><?= S_LISTUSER ?></h4></th></tr>
         <tr>
           <th><?= S_LOGIN ?></th>
-          <th><?= S_DISPLAY_NAME ?></th>
           <th><?= S_MDP ?></th>
           <th><?= S_ADMINUSER ?></th>
           <th></th>
@@ -98,7 +85,6 @@ $users = fromJSON(
           <?php
           $ligne = '<tr>
                       <td>{login}</td>
-                      <td>{display} <a onclick="updateLibelle({id})"><i class="material-icons" style="vertical-align: bottom; color:#F44336;">mode_edit</i></a></td>
                       <td><input id="addIt" type="button" class="btn btn-danger" value="Modifier" onclick="updateMdp({id});" /></td>
                       <td>
                         <label class="switch">
@@ -117,8 +103,8 @@ $users = fromJSON(
                           $toclick = '0';
                         }
                         echo str_replace(
-                          array("{id}",								"{login}", 					"{password}", 			"{admin}", "{value}", "{display}" ),
-                          array($users[$i]["ID"], $users[$i]["Login"], $users[$i]["Password"], $checked, $toclick, $users[$i]["DisplayName"]),
+                          array("{id}",								"{login}", 					"{password}", 			"{admin}", "{value}" ),
+                          array($users[$i]["ID"], $users[$i]["Login"], $users[$i]["Password"], $checked, $toclick),
                           $ligne);
                       }
                     } else {

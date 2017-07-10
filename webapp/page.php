@@ -19,6 +19,20 @@ if (count($bag) > 0) {
 } else {
 	header('Location: index.php');
 }
+
+$avoir = fromJSON(
+					GET_REQ(
+						"http://commercial.tecknologiks.com/index.php/{id}/{token}/products/{id_p}/associate/",
+						array("{id}", 					"{token}", 					"{id_p}"),
+						array($_SESSION["id"], $_SESSION["token"], $_GET["id"])));
+
+$champsvide = '';
+$aajouter = 3 - count($avoir);
+if ($aajouter > 0) {
+	for($i = 0; $i < $aajouter; $i++) {
+		$champsvide .= '<td></td>';
+	}
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -27,7 +41,7 @@ if (count($bag) > 0) {
 </head>
 <body onload="getBasketAndDevis();">
 	<?php include("part/navdatas.php"); ?>
-	<div style="padding-top: 70px; height:100vh; width:70vw; background-color:white; margin-left: auto; margin-right:auto;">
+	<div style="padding-top: 70px; height:100%; width:70vw; background-color:white; margin-left: auto; margin-right:auto;">
 	<div style="margin: 20px 20px 20px 20px;">
 		<h1 style="text-align:center;"><?= $article["name"] ?></h1>
 		<p style="text-align:center; font-style: italic;"><?= $article["ref"] ?></p>
@@ -64,6 +78,52 @@ if (count($bag) > 0) {
 				<tr><td>DEEE (HT) INCLUSE</td><td><?= $article["DEEE"] ?></td></tr>
 			</tbody>
 		</table>
+		<br />
+		<br />
+		<table  style="margin-left:auto; margin-right:auto; margin-bottom:30px;" class="devis" style="margin-left: 0px;">
+			<thead>
+        <tr><th colspan="3"><h3 style="text-align:center; font-weight:bold;"><?= S_A_VOIR_AUSSI ?></h3></th></tr>
+      </thead>
+			<tbody>
+				<tr>
+					<?php
+					//Affichage ref
+					for($i = 0; $i < count($avoir); $i++) {
+						echo '<td><a href="page.php?id='.$avoir[$i]["ID_Article"].'">'.$avoir[$i]["ref"].'</a></td>';
+					}
+					echo $champsvide;
+					?>
+				</tr>
+				<tr>
+					<?php
+					//Affichage nom
+					for($i = 0; $i < count($avoir); $i++) {
+						echo '<td><a href="page.php?id='.$avoir[$i]["ID_Article"].'">'.$avoir[$i]["name"].'</a></td>';
+					}
+					echo $champsvide;
+					?>
+				</tr>
+				<tr>
+					<?php
+					//Affichage prix
+					for($i = 0; $i < count($avoir); $i++) {
+						echo '<td>'.$avoir[$i]["prix"].' €</td>';
+					}
+					echo $champsvide;
+					?>
+				</tr>
+				<tr>
+					<?php
+					//Affichage nb commande
+					for($i = 0; $i < count($avoir); $i++) {
+						echo '<td class="gris">'.$avoir[$i]["commande"].' commande(s)</td>';
+					}
+					echo $champsvide;
+					?>
+				</tr>
+			</tbody>
+		</table>
+
 	</div>
 
 

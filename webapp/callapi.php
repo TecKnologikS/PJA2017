@@ -22,6 +22,11 @@ if (isset($_GET["function"])) {
         updateMDP($_GET["id"], $_GET["mdp"]);
       }
       break;
+    case 'updateLibelle':
+        if (isset($_GET["id"]) && isset($_GET["libelle"])) {
+          updateLibelle($_GET["id"], $_GET["libelle"]);
+        }
+        break;
     case 'updateSTATUT':
       if (isset($_GET["id"]) && isset($_GET["statut"])) {
         updateSTATUT($_GET["id"], $_GET["statut"]);
@@ -82,6 +87,14 @@ function updateMDP($id, $mdp) {
   print_r(
     POST_REQ("http://commercial.tecknologiks.com/index.php/{id}/{token}/users/update/mdp",
       array( 'id' => $id, 'mdp' => $mdp ),
+      array("{id}", 				"{token}"),
+      array($_SESSION["id"], $_SESSION["token"])));
+}
+
+function updateLibelle($id, $libelle) {
+  print_r(
+    POST_REQ("http://commercial.tecknologiks.com/index.php/{id}/{token}/users/update/libelle",
+      array( 'id' => $id, 'libelle' => $libelle ),
       array("{id}", 				"{token}"),
       array($_SESSION["id"], $_SESSION["token"])));
 }
