@@ -14,9 +14,11 @@ class LoginController: UIViewController {
     @IBOutlet weak var tfLogin: UITextField!
     @IBOutlet weak var tfPassword: UITextField!
     @IBOutlet weak var bConnect: UIButton!
+    var activeField: UITextField?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround()
         /*var emptyDict: [String: String] = [:]
         emptyDict.updateValue("test", forKey: "key")
         emptyDict.updateValue("test2", forKey: "key2")
@@ -24,6 +26,14 @@ class LoginController: UIViewController {
         emptyDict.updateValue("test4", forKey: "key4")
         _ = API.createBody(dict: emptyDict)*/
         // Do any additional setup after loading the view, typically from a nib.
+        
+        
+    }
+    
+        
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //registerKeyboardNotifications()
     }
     
     override func didReceiveMemoryWarning() {
