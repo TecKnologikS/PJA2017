@@ -74,7 +74,8 @@ public class APIRequest extends AsyncTask<Void, Void, ResponseAPI> {
 
     @Override
     protected void onPostExecute(ResponseAPI response) {
-        delegate.processFinish(response);
+        if (delegate != null)
+            delegate.processFinish(response);
     }
 
 }

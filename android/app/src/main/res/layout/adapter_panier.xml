@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="200px">
+    android:layout_height="80dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,30 +25,33 @@
             android:orientation="horizontal">
 
             <EditText
+                android:id="@+id/edtCount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:digits="0123456789"
-                android:id="@+id/edtCount"/>
+                android:digits="0123456789" />
 
-            <Button
+            <ImageButton
+                android:id="@+id/btnSuppr"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/btnSuppr"/>
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:elevation="0dp"
+                android:src="@drawable/ic_delete_black_36dp" />
 
         </LinearLayout>
-
 
 
     </LinearLayout>
 
     <TextView
         android:id="@+id/tvPrix"
-        android:layout_width="200px"
+        android:layout_width="100dp"
         android:layout_height="match_parent"
         android:gravity="right|center"
         android:paddingLeft="20px"
         android:paddingRight="10px"
         android:text="1 000 0000 €"
-        android:textAlignment="center" />
+        android:textAlignment="textEnd"
+        android:textStyle="bold" />
 </LinearLayout>

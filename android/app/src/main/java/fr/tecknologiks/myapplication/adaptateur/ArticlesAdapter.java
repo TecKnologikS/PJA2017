@@ -69,7 +69,7 @@ public class ArticlesAdapter extends ArrayAdapter<Article> {
         lastPosition = position;
 
         viewHolder.tvNom.setText(dataModel.getName());
-        viewHolder.tvPrix.setText(String.valueOf(dataModel.getPrix()));
+        viewHolder.tvPrix.setText(String.valueOf(dataModel.getPrix()) + " €");
         return convertView;
     }
 }

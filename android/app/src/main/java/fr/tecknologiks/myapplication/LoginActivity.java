@@ -186,8 +186,9 @@ public class LoginActivity extends AppCompatActivity implements AsyncResponse {
             if (User.getInstance().isCorrect()) {
                 finish();
             }
+        } else {
+            ErreurConnexion();
         }
-        ErreurConnexion();
     }
 
     private void ErreurConnexion() {

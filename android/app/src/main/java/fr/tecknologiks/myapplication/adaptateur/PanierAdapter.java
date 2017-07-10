@@ -11,6 +11,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ public class PanierAdapter extends ArrayAdapter<Article> {
     private static class ViewHolder {
         TextView tvNom;
         TextView tvPrix;
-        Button btnSuppr;
+        ImageButton btnSuppr;
         EditText edtCount;
     }
 
@@ -69,7 +70,7 @@ public class PanierAdapter extends ArrayAdapter<Article> {
             viewHolder.tvNom = (TextView) convertView.findViewById(R.id.tvNom);
             viewHolder.tvPrix = (TextView) convertView.findViewById(R.id.tvPrix);
             viewHolder.edtCount = (EditText) convertView.findViewById(R.id.edtCount);
-            viewHolder.btnSuppr = (Button) convertView.findViewById(R.id.btnSuppr);
+            viewHolder.btnSuppr = (ImageButton) convertView.findViewById(R.id.btnSuppr);
 
             result=convertView;
 
@@ -80,7 +81,7 @@ public class PanierAdapter extends ArrayAdapter<Article> {
         }
 
         Animation animation = AnimationUtils.loadAnimation(mContext, (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
-        result.startAnimation(animation);
+        //result.startAnimation(animation);
         lastPosition = position;
 
         viewHolder.tvNom.setText(dataModel.getName());
@@ -94,6 +95,8 @@ public class PanierAdapter extends ArrayAdapter<Article> {
                     int qte = Integer.parseInt(((EditText)v).getText().toString());
                     if (qte != dataSet.get((Integer)v.getTag()).getQte())
                         mPanierListener.onUpdate((Integer)v.getTag(), qte);
+                } else {
+                    viewHolder.edtCount.setSelection(viewHolder.edtCount.getText().toString().length());
                 }
 
             }

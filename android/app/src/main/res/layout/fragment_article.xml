@@ -6,12 +6,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/lvArticles"></ListView>
+
     <LinearLayout
-        android:orientation="vertical"
+        android:id="@+id/layoutDetails"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary"
-        android:id="@+id/layoutDetails"
+        android:background="@android:color/white"
+        android:orientation="vertical"
         android:padding="20px"
         android:visibility="gone">
 
@@ -26,49 +27,377 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="75px"
-                    android:text="Ajouter au panier"
+                    android:layout_height="50dp"
                     android:background="@color/grey"
-                    android:gravity="center"/>
+                    android:gravity="center"
+                    android:text="Ajouter au panier"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:background="@color/grey">
+                    android:background="@color/grey"
+                    android:orientation="horizontal">
 
                     <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
                         android:id="@+id/edtCount"
-                        android:text="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@android:color/white"
                         android:gravity="center"
                         android:inputType="number"
-                        android:layout_weight="1"/>
+                        android:text="1" />
 
                     <Button
+                        android:id="@+id/btnAdd"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="add"
-                        android:id="@+id/btnAdd"
-                        android:background="@color/green"/>
+                        android:background="@color/green"
+                        android:text="add" />
 
                 </LinearLayout>
 
 
                 <TextView
+                    android:id="@+id/tvsSmallDesc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/tvsSmallDesc"
-                    android:layout_marginTop="30px"
                     android:layout_marginBottom="30px"
-                    android:text=""/>
+                    android:layout_marginTop="30px"
+                    android:background="@android:color/white"
+                    android:text=""
+                    android:textSize="20sp" />
 
                 <TextView
+                    android:id="@+id/tvAbout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/tvAbout"
-                    android:text=""/>
+                    android:text="" />
+
+                <TableLayout
+                    android:id="@+id/containerTable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:shrinkColumns="*"
+                    android:stretchColumns="*">>
+
+                    <TableRow>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_span="2"
+                            android:background="@color/grey"
+                            android:gravity="center"
+                            android:padding="3dip"
+                            android:text="Caractéristiques"
+                            android:textSize="24sp"
+                            android:textStyle="bold" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:background="@color/grey"
+                            android:padding="3dip"
+                            android:paddingStart="10dp"
+                            android:text="PV UNITAIRE (HT)"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvHT"
+                            android:layout_column="1"
+                            android:gravity="right"
+                            android:padding="3dip"
+                            android:paddingEnd="10dp"
+                            android:text="" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:background="@color/grey"
+                            android:padding="3dip"
+                            android:paddingStart="10dp"
+                            android:text="PUISSANCE (W)"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvW"
+                            android:layout_column="1"
+                            android:gravity="right"
+                            android:padding="3dip"
+                            android:paddingEnd="10dp"
+                            android:text="" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:background="@color/grey"
+                            android:padding="3dip"
+                            android:paddingStart="10dp"
+                            android:text="TEMPERATURE (K)"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvK"
+                            android:layout_column="1"
+                            android:gravity="right"
+                            android:padding="3dip"
+                            android:paddingEnd="10dp"
+                            android:text="" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:background="@color/grey"
+                            android:padding="3dip"
+                            android:paddingStart="10dp"
+                            android:text="LUMINOSITE (Lm)"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvLm"
+                            android:layout_column="1"
+                            android:gravity="right"
+                            android:padding="3dip"
+                            android:paddingEnd="10dp"
+                            android:text="" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:background="@color/grey"
+                            android:padding="3dip"
+                            android:paddingStart="10dp"
+                            android:text="RATIO (Lm/W)"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvLmW"
+                            android:layout_column="1"
+                            android:gravity="right"
+                            android:padding="3dip"
+                            android:paddingEnd="10dp"
+                            android:text="" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:background="@color/grey"
+                            android:padding="3dip"
+                            android:paddingStart="10dp"
+                            android:text="FAISCEAU (-°)"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvF"
+                            android:layout_column="1"
+                            android:gravity="right"
+                            android:padding="3dip"
+                            android:paddingEnd="10dp"
+                            android:text="" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:background="@color/grey"
+                            android:padding="3dip"
+                            android:paddingStart="10dp"
+                            android:text="TENSION (V)"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvV"
+                            android:layout_column="1"
+                            android:gravity="right"
+                            android:padding="3dip"
+                            android:paddingEnd="10dp"
+                            android:text="" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:background="@color/grey"
+                            android:padding="3dip"
+                            android:paddingStart="10dp"
+                            android:text="IRC"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvIRC"
+                            android:layout_column="1"
+                            android:gravity="right"
+                            android:padding="3dip"
+                            android:paddingEnd="10dp" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:background="@color/grey"
+                            android:padding="3dip"
+                            android:paddingStart="10dp"
+                            android:text="DUREE DE VIE (H)"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvH"
+                            android:layout_column="1"
+                            android:gravity="right"
+                            android:padding="3dip"
+                            android:paddingEnd="10dp" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:background="@color/grey"
+                            android:padding="3dip"
+                            android:paddingStart="10dp"
+                            android:text="Longueur"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvLongueur"
+                            android:layout_column="1"
+                            android:gravity="right"
+                            android:padding="3dip"
+                            android:paddingEnd="10dp"
+                            android:text="" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:background="@color/grey"
+                            android:padding="3dip"
+                            android:paddingStart="10dp"
+                            android:text="Largeur"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvLargeur"
+                            android:layout_column="1"
+                            android:gravity="right"
+                            android:padding="3dip"
+                            android:paddingEnd="10dp"
+                            android:text="" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:background="@color/grey"
+                            android:padding="3dip"
+                            android:paddingStart="10dp"
+                            android:text="Profondeur"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvProfondeur"
+                            android:layout_column="1"
+                            android:gravity="right"
+                            android:padding="3dip"
+                            android:paddingEnd="10dp"
+                            android:text="" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:background="@color/grey"
+                            android:padding="3dip"
+                            android:paddingStart="10dp"
+                            android:text="Poids (g)"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvPoids"
+                            android:layout_column="1"
+                            android:gravity="right"
+                            android:padding="3dip"
+                            android:paddingEnd="10dp" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:background="@color/grey"
+                            android:padding="3dip"
+                            android:paddingStart="10dp"
+                            android:text="Minimum"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvMin"
+                            android:layout_column="1"
+                            android:gravity="right"
+                            android:padding="3dip"
+                            android:paddingEnd="10dp"
+                            android:text="" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:background="@color/grey"
+                            android:padding="3dip"
+                            android:paddingStart="10dp"
+                            android:text="Maximum"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvMax"
+                            android:layout_column="1"
+                            android:gravity="right"
+                            android:padding="3dip"
+                            android:paddingEnd="10dp"
+                            android:text="" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:background="@color/grey"
+                            android:padding="3dip"
+                            android:paddingStart="10dp"
+                            android:text="DEEE (HT) INCLUSE"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvDEEE"
+                            android:layout_column="1"
+                            android:gravity="right"
+                            android:padding="3dip"
+                            android:paddingEnd="10dp"
+                            android:text="" />
+                    </TableRow>
+                </TableLayout>
 
             </LinearLayout>
         </ScrollView>

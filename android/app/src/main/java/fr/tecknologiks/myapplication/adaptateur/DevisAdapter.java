@@ -73,7 +73,7 @@ public class DevisAdapter extends ArrayAdapter<Devis> {
 
         viewHolder.tvNom.setText("Devis n°" + dataModel.getID() + " " + dataModel.getSociete());
         viewHolder.tvPrenomNom.setText(dataModel.getNom() + " " + dataModel.getPrenom());
-        viewHolder.tvPrix.setText(String.valueOf(dataModel.getPrix()));
+        viewHolder.tvPrix.setText(String.valueOf(dataModel.getPrix()) + " €");
         return convertView;
     }
 }

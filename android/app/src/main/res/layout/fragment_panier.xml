@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <ListView
@@ -11,12 +12,13 @@
         android:layout_height="match_parent"
         android:visibility="gone"
         android:id="@+id/lvAddition"></ListView>
+
     <LinearLayout
-        android:orientation="vertical"
+        android:id="@+id/layoutAddition"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary"
-        android:id="@+id/layoutDetails"
+        android:background="@android:color/white"
+        android:orientation="vertical"
         android:padding="20px"
         android:visibility="gone">
 
@@ -29,8 +31,223 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+                <TableLayout
+                    android:id="@+id/containerTable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:shrinkColumns="*"
+                    android:stretchColumns="*">
+
+                    <TableRow>
+
+                        <EditText
+                            android:id="@+id/edtCode"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@android:color/white"
+                            android:hint="Code Promotionnel" />
+
+                        <ImageButton
+                            android:id="@+id/btnAdd"
+                            android:layout_height="match_parent"
+                            android:background="@color/green"
+                            android:gravity="right"
+                            app:srcCompat="@drawable/ic_done_white_36dp" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_span="2"
+                            android:background="@color/grey"
+                            android:gravity="center"
+                            android:padding="3dip"
+                            android:text="Addition"
+                            android:textSize="24sp"
+                            android:textStyle="bold" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:background="@color/grey"
+                            android:padding="3dip"
+                            android:paddingStart="10dp"
+                            android:text="Prix total"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvTotal"
+                            android:layout_height="match_parent"
+                            android:layout_column="1"
+                            android:background="@android:color/white"
+                            android:gravity="right"
+                            android:padding="3dip"
+                            android:paddingEnd="10dp"
+                            android:text="tt"
+                            android:textSize="18sp" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:background="@color/grey"
+                            android:padding="3dip"
+                            android:paddingStart="10dp"
+                            android:text="Réduction"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvReduct"
+                            android:layout_height="match_parent"
+                            android:layout_column="1"
+                            android:background="@android:color/white"
+                            android:gravity="right"
+                            android:padding="3dip"
+                            android:paddingEnd="10dp"
+                            android:text=""
+                            android:textSize="18sp" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:id="@+id/textView"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:background="@color/grey"
+                            android:padding="3dip"
+                            android:paddingStart="10dp"
+                            android:text="Prix final"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvFinal"
+                            android:layout_height="match_parent"
+                            android:layout_column="1"
+                            android:background="@android:color/white"
+                            android:gravity="right"
+                            android:padding="3dip"
+                            android:paddingEnd="10dp"
+                            android:text=""
+                            android:textSize="18sp" />
+                    </TableRow>
+                </TableLayout>
+
 
             </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutValidate"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:orientation="vertical"
+        android:padding="20px"
+        android:visibility="gone">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Société" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Nom" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Prénom" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Téléphone" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Email" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Adresse" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Code Postal" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Ville" />
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
         </ScrollView>
     </LinearLayout>
 </FrameLayout>

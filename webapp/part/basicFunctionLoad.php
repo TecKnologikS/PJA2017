@@ -64,21 +64,32 @@ function REQ($url, $body, $param, $value, $type) {
   );
 
   $context  = stream_context_create($opts);
-  return file_get_contents(
+  $retour = file_get_contents(
 			str_replace(
 	      $param,
 	      $value,
 	      $url),
     	false,
     	$context);
+
+		if ($http_response_header[0] == 'HTTP/1.1 403 Forbidden') {
+			header('Location: login.php');
+		}
+
+		return $retour;
 }
 
 function GET_REQ($url, $param, $value) {
-		return file_get_contents(
+		$retour = file_get_contents(
 		  str_replace(
 		    $param,
 		    $value,
 		    $url));
+			if ($http_response_header[0] == 'HTTP/1.1 403 Forbidden') {
+				header('Location: login.php');
+			}
+
+			return $retour;
 }
 
 function fromJSON($var) {

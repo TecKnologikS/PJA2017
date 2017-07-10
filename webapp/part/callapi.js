@@ -29,6 +29,23 @@ function updateMdp(id) {
     });
   }
 }
+
+function updateLibelle(id) {
+  var txt;
+  var libelle = prompt("Entrez le nouveau libellé", "");
+  if (libelle == null || libelle == "") {
+
+  } else {
+    $.ajax({
+        url: 'callapi.php?function=updateLibelle&id={id_user}&libelle={libelle}'.replace("{id_user}", id).replace("{libelle}", libelle),
+        dataType: "json",
+        complete: function (response) {
+            location.href = "?libelle=true";
+        }
+    });
+  }
+}
+
 function updateStatut(id, value) {
   $.ajax({
       url: 'callapi.php?function=updateSTATUT&id={id_user}&statut={value}'.replace("{id_user}", id).replace("{value}", value),

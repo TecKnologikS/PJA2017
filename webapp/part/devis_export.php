@@ -4,6 +4,12 @@
 .grise {
   background-color:#EEEEEE;
 }
+.color2 {
+  background-color:#F5F5F5;
+}
+.color {
+
+}
 </style>
 <link rel="stylesheet" type="text/css" href="part/style.css">
 	<div class="container-fluid" style="margin-top: 70px;">
@@ -19,11 +25,13 @@
         <tr><td class="grise">Adresse :</td><td colspan="3" style="text-align: left;"><?= $devis["Adresse"] ?></td></tr>
         <tr><td class="grise">Code Postal :</td><td><?= $devis["CP"] ?></td><td class="grise">Ville :</td><td><?= $devis["Ville"] ?></td></tr>
         <tr><td class="grise">Nom :</td><td><?= $devis["Nom"] ?></td><td class="grise">Prénom :</td><td><?= $devis["Prenom"] ?></td></tr>
+        <tr><td class="grise">Représentant :</td><td  colspan="3"><b><?= $devis["DisplayName"] ?></b></td></tr>
       </tbody>
     </table>
 
     <br />
-    <br />
+
+
     <br />
     <table class="devis" style="margin: 20px auto 20px auto; width:625px; border: 2px solid #EEEEEE;">
       <thead>
@@ -32,19 +40,19 @@
       </thead>
       <tbody>
         <?php
-        $ligne = "<tr>"
-                    ."<td>{libelle}</td>"
-                    ."<td>{unit}</td>"
-                    ."<td>{qte}</td>"
-                    ."<td>{prix}</td>"
-                    ."<td>{reduct}</td>"
-                    ."<td>{final}</td>"
-                  ."</tr>";
+        $ligne = '<tr>'
+                    .'<td> {libelle}</td>'
+                    .'<td>{unit}</td>'
+                    .'<td>{qte}</td>'
+                    .'<td>{prix}</td>'
+                    .'<td>{reduct}</td>'
+                    .'<td>{final}</td>'
+                  .'</tr>';
 
         for($i = 0; $i < count($articles); $i++) {
           echo str_replace(
-              array("{libelle}", 					"{unit}", 					"{qte}", 					"{prix}", 					"{reduct}", 					"{final}"),
-              array($articles[$i]["name"], $articles[$i]["prix"], $articles[$i]["Qte"], $articles[$i]["Prix"], $articles[$i]["Reduction"], $articles[$i]["Prix_final"]),
+              array("{color}",  "{libelle}", 					"{unit}", 					"{qte}", 					"{prix}", 					"{reduct}", 					"{final}"),
+              array($color,     $articles[$i]["name"], $articles[$i]["prix"], $articles[$i]["Qte"], $articles[$i]["Prix"], $articles[$i]["Reduction"], $articles[$i]["Prix_final"]),
               $ligne);
       	}
         ?>

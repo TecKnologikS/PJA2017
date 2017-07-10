@@ -1,5 +1,6 @@
 package fr.tecknologiks.myapplication;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -51,11 +53,15 @@ public class DevisFragment  extends Fragment implements AsyncResponse {
     TextView tvSmall;
     TextView tvAbout;
     Button btnAdd;
+    Devis devis;
+    TableLayout tableDevis;
     EditText edtCount;
+    ProgressDialog dialog;
     final int REQUEST_LIST_ARTICLES = 0;
     final int REQUEST_ADD_ARTICLE = 1;
+    final int REQUEST_DEVIS = 2;
 
-    final int MENU_RECHERCHE = R.menu.menu_top;
+    final int MENU_RECHERCHE = R.menu.menu_rien;
     final int MENU_DETAILS = R.menu.menu_rien;
 
 
@@ -73,23 +79,27 @@ public class DevisFragment  extends Fragment implements AsyncResponse {
     public void showDetails() {
         layoutDetails.setVisibility(View.VISIBLE);
         ((MainActivity2)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        details = true;
-       // ((MainActivity2)getActivity()).setTitle("" + lstArticles.get(selected).getName());
-       // tvSmall.setText(lstArticles.get(selected).getSmallDesc());
-        //tvSmall.setText(lstArticles.get(selected).getAbout());
-        ((MainActivity2)getActivity()).setMenu(MENU_DETAILS);
+        details = true;((MainActivity2)getActivity()).setTitle("Devis n°" + lstDevis.get(selected).getID());
+        tableDevis.removeAllViews();
+        LayoutInflater inflater = LayoutInflater.from(getContext());
+        View convertView = inflater.inflate(R.layout.adapter_title, null, false);
+        tableDevis.addView(convertView);
+        /*APIRequest api = new APIRequest(Request.GET, API.Devi(selected), "", REQUEST_DEVIS);
+        api.delegate = this;
+        api.execute();*/
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_article, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_devis, container, false);
         lvArticles = (ListView)rootView.findViewById(R.id.lvArticles);
         layoutDetails = (LinearLayout) rootView.findViewById(R.id.layoutDetails);
         tvSmall = (TextView) rootView.findViewById(R.id.tvsSmallDesc);
         tvAbout = (TextView) rootView.findViewById(R.id.tvAbout);
         btnAdd = (Button) rootView.findViewById(R.id.btnAdd);
         edtCount = (EditText) rootView.findViewById(R.id.edtCount);
+        tableDevis = (TableLayout) rootView.findViewById(R.id.containerTable);
         ((MainActivity2)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         setHasOptionsMenu(true);
         adapter= new DevisAdapter(lstDevis,getContext());
@@ -102,7 +112,7 @@ public class DevisFragment  extends Fragment implements AsyncResponse {
                 showDetails();
             }
         });
-        ((MainActivity2)getActivity()).setTitle("Articles");
+        ((MainActivity2)getActivity()).setTitle("Devis");
 
         return rootView;
     }
@@ -125,6 +135,8 @@ public class DevisFragment  extends Fragment implements AsyncResponse {
         String req = API.Devis();
         if (recherche.length() > 2)
             req = API.Search(recherche);
+        dialog = ProgressDialog.show(getContext(), "",
+                "Chargement en cours...", true);
         APIRequest api = new APIRequest(Request.GET, req, "", REQUEST_LIST_ARTICLES);
         api.delegate = DevisFragment.this;
         api.execute();
@@ -132,6 +144,8 @@ public class DevisFragment  extends Fragment implements AsyncResponse {
 
     @Override
     public void processFinish(ResponseAPI response) {
+        if (dialog != null)
+            dialog.cancel();
         switch (response.getInfo_sup()) {
             case REQUEST_LIST_ARTICLES:
                 lstDevis.clear();
@@ -143,17 +157,21 @@ public class DevisFragment  extends Fragment implements AsyncResponse {
                 }
                 adapter.notifyDataSetChanged();
 
-                //((MainActivity2)getActivity()).setTitle("Articles");
-                if (recherche.length() > 2)
-                    ((MainActivity2)getActivity()).setTitle(lstDevis.size() + " Articles");
+                if (((MainActivity2)getActivity()) != null)
+                    if (recherche.length() > 2)
+                        ((MainActivity2)getActivity()).setTitle(lstDevis.size() + " Devis");
+                    else
+                        ((MainActivity2)getActivity()).setTitle("Devis");
+
                 break;
-            case REQUEST_ADD_ARTICLE:
-                ((MainActivity2)getActivity()).updatePanier();
-                layoutDetails.setVisibility(View.GONE);
-                ((MainActivity2)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-                details = false;
+            case REQUEST_DEVIS:
+                loadThisDevis(response.getBody());
                 break;
         }
+
+    }
+
+    public void loadThisDevis(String response) {
 
     }
 

@@ -10,6 +10,7 @@
                 <input class="form-control recherche" placeholder="Rechercher un produit" name="search" type="text" value="<?php if(isset($_POST['search'])) {echo $_POST['search'];}?>">
               </fieldset>
 					</form></li>
+          <li><a href="./index.php" title="Liste produits"><button class="btn btn-info"><i class="material-icons" style="vertical-align: bottom">list</i></button></a></li>
           <?php
             if ($_SESSION["really"] == true) {
               echo '<li><a href="./admin_user.php" title="Utilisateurs (Administration)"><button class="btn btn-info"><i style="vertical-align: bottom" class="material-icons">supervisor_account</i></button></a></li>';

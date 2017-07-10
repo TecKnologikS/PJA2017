@@ -8,7 +8,7 @@
     <string name="title_article">Articles</string>
     <string name="title_panier">Panier</string>
     <string name="title_devis">Devis</string>
-    <string name="title_activity_login">Sign in</string>
+    <string name="title_activity_login">Connexion</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>

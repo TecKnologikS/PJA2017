@@ -1,5 +1,6 @@
 package fr.tecknologiks.myapplication;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -53,12 +54,28 @@ public class ArticleFragment extends Fragment implements AsyncResponse {
     TextView tvAbout;
     Button btnAdd;
     EditText edtCount;
+    TextView tvHT;
+    TextView tvW;
+    TextView tvK;
+    TextView tvLm;
+    TextView tvLmW;
+    TextView tvF;
+    TextView tvV;
+    TextView tvIRC;
+    TextView tvH;
+    TextView tvLongueur;
+    TextView tvLargeur;
+    TextView tvProfondeur;
+    TextView tvPoids;
+    TextView tvMin;
+    TextView tvMax;
+    TextView tvDEEE;
     final int REQUEST_LIST_ARTICLES = 0;
     final int REQUEST_ADD_ARTICLE = 1;
 
     final int MENU_RECHERCHE = R.menu.menu_top;
     final int MENU_DETAILS = R.menu.menu_rien;
-
+    ProgressDialog dialog;
 
     @Override
     public void onResume() {
@@ -75,9 +92,26 @@ public class ArticleFragment extends Fragment implements AsyncResponse {
         layoutDetails.setVisibility(View.VISIBLE);
         ((MainActivity2)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         details = true;
-        ((MainActivity2)getActivity()).setTitle("" + lstArticles.get(selected).getName());
-        tvSmall.setText(lstArticles.get(selected).getSmallDesc());
-        tvSmall.setText(lstArticles.get(selected).getAbout());
+        ((MainActivity2)getActivity()).setTitle("" + lstArticles.get(selected).getRef());
+        tvSmall.setText(lstArticles.get(selected).getName());
+        tvAbout.setText(lstArticles.get(selected).getSmallDesc());
+
+        tvHT.setText(String.valueOf(lstArticles.get(selected).getPrix()));
+        tvW.setText(lstArticles.get(selected).getW());
+        tvK.setText(lstArticles.get(selected).getK());
+        tvLm.setText(lstArticles.get(selected).getLm());
+        tvLmW.setText(lstArticles.get(selected).getLmW());
+        tvF.setText(lstArticles.get(selected).getF());
+        tvV.setText(lstArticles.get(selected).getV());
+        tvIRC.setText(lstArticles.get(selected).getIRC());
+        tvH.setText(lstArticles.get(selected).getH());
+        tvLongueur.setText(lstArticles.get(selected).getLongueur());
+        tvLargeur.setText(lstArticles.get(selected).getLargeur());
+        tvProfondeur.setText(lstArticles.get(selected).getProfondeur());
+        tvPoids.setText(lstArticles.get(selected).getPoids());
+        tvMin.setText(lstArticles.get(selected).getMin());
+        tvMax.setText(lstArticles.get(selected).getMax());
+        tvDEEE.setText(lstArticles.get(selected).getDEEE());
         ((MainActivity2)getActivity()).setMenu(MENU_DETAILS);
     }
 
@@ -91,6 +125,25 @@ public class ArticleFragment extends Fragment implements AsyncResponse {
         tvAbout = (TextView) rootView.findViewById(R.id.tvAbout);
         btnAdd = (Button) rootView.findViewById(R.id.btnAdd);
         edtCount = (EditText) rootView.findViewById(R.id.edtCount);
+
+
+        tvHT = (TextView) rootView.findViewById(R.id.tvHT);
+        tvW = (TextView) rootView.findViewById(R.id.tvW);
+        tvK = (TextView) rootView.findViewById(R.id.tvK);
+        tvLm = (TextView) rootView.findViewById(R.id.tvLm);
+        tvLmW = (TextView) rootView.findViewById(R.id.tvLmW);
+        tvF = (TextView) rootView.findViewById(R.id.tvF);
+        tvV = (TextView) rootView.findViewById(R.id.tvV);
+        tvIRC = (TextView) rootView.findViewById(R.id.tvIRC);
+        tvH = (TextView) rootView.findViewById(R.id.tvH);
+        tvLongueur = (TextView) rootView.findViewById(R.id.tvLongueur);
+        tvLargeur = (TextView) rootView.findViewById(R.id.tvLargeur);
+        tvProfondeur = (TextView) rootView.findViewById(R.id.tvProfondeur);
+        tvPoids = (TextView) rootView.findViewById(R.id.tvPoids);
+        tvMin = (TextView) rootView.findViewById(R.id.tvMin);
+        tvMax = (TextView) rootView.findViewById(R.id.tvMax);
+        tvDEEE = (TextView) rootView.findViewById(R.id.tvDEEE);
+
         ((MainActivity2)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         setHasOptionsMenu(true);
         adapter= new ArticlesAdapter(lstArticles,getContext());
@@ -103,11 +156,14 @@ public class ArticleFragment extends Fragment implements AsyncResponse {
                 showDetails();
             }
         });
-        ((MainActivity2)getActivity()).setTitle("Articles");
+        if (((MainActivity2)getActivity()) != null)
+            ((MainActivity2)getActivity()).setTitle("Articles");
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(Integer.parseInt(edtCount.getText().toString()) > 0) {
+                    dialog = ProgressDialog.show(getContext(), "",
+                            "Ajout en cours...", true);
                     HashMap<String, String> dict = new HashMap<String, String>();
                     dict.put("id", String.valueOf(lstArticles.get(selected).getId()));
                     dict.put("nb", edtCount.getText().toString());
@@ -138,16 +194,21 @@ public class ArticleFragment extends Fragment implements AsyncResponse {
 
 
     private void loadArticles() {
+        dialog = ProgressDialog.show(getContext(), "",
+                "Chargement en cours...", true);
         String req = API.Articles();
         if (recherche.length() > 2)
             req = API.Search(recherche);
         APIRequest api = new APIRequest(Request.GET, req, "", REQUEST_LIST_ARTICLES);
         api.delegate = ArticleFragment.this;
         api.execute();
+
     }
 
     @Override
     public void processFinish(ResponseAPI response) {
+        if (dialog != null)
+            dialog.cancel();
         switch (response.getInfo_sup()) {
             case REQUEST_LIST_ARTICLES:
                 lstArticles.clear();
