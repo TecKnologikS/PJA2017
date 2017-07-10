@@ -3,15 +3,14 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
 require '../vendor/autoload.php';
-
+/*
 function initMySQL() {
 	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
 	if ($mysqli->connect_errno) {
 		echo "Echec lors de la connexion à MySQL : (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 	}
-	$mysqli->set_charset("utf8");
 	return $mysqli;
-}
+}*/
 
 function CalculateBag($article, $promo) {
 	$prix_final = 0; $prix_total = 0; $reduction_total = 0;
@@ -78,8 +77,12 @@ function isTimeStampsOk($id, $timestamps) {
 	return false;
 }
 
-function isCorrectIdentification($id, $token, $mysqli) {
-	$res = $mysqli->query("SELECT * FROM user WHERE ID='".$mysqli->real_escape_string($id)."' AND  Token='".$mysqli->real_escape_string($token)."'");
+function isCorrectIdentification($id, $token) {
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
+	if ($mysqli->connect_errno) {
+		echo "Echec lors de la connexion à MySQL : (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
+	}
+	$res = $mysqli->query("SELECT * FROM user WHERE ID='".$mysqli->real_escape_string($id)."' AND  Token='".$mysqli->real_escape_string($token)."' ");
 	$check_user = mysqli_num_rows($res);
 	if($check_user>0){
 		return true;
@@ -87,7 +90,11 @@ function isCorrectIdentification($id, $token, $mysqli) {
 	return false;
 }
 
-function isCorrectIdentificationAdmin($id, $token, $mysqli) {
+function isCorrectIdentificationAdmin($id, $token) {
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
+	if ($mysqli->connect_errno) {
+		echo "Echec lors de la connexion à MySQL : (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
+	}
 	$res = $mysqli->query("SELECT * FROM user WHERE ID='".$mysqli->real_escape_string($id)."' AND  Token='".$mysqli->real_escape_string($token)."' AND Admin=1");
 	$check_user = mysqli_num_rows($res);
 	if($check_user>0){
@@ -96,25 +103,20 @@ function isCorrectIdentificationAdmin($id, $token, $mysqli) {
 	return false;
 }
 
-function article($id, $number, $start, $details, $mysqli) {
+function article($id, $number, $details) {
 	$args = "";
 	if ($id != -1) {
 		$args .= " AND a.id=".$id." ";
 	}
 
-	$args .= " ORDER BY nb_commande DESC ";
-
 	if ($number != -1) {
 		$args .= " LIMIT ".$number." ";
-		if ($number < 101)
-			$details = true;
 	}
 
-	if ($start != -1) {
-		$args .= " OFFSET ".$start." ";
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
+	if ($mysqli->connect_errno) {
+		echo "Echec lors de la connexion à MySQL : (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 	}
-
-
 	if (!$details)
 		$res = $mysqli->query("SELECT * , (SELECT SUM(Qte) FROM `devis_article` WHERE ID_Article = a.id) as nb_commande FROM article a WHERE 1=1 ".$args);
 	else
@@ -127,7 +129,7 @@ function article($id, $number, $start, $details, $mysqli) {
 	return $types;
 }
 
-function search($type, $recherche, $mysqli) {
+function search($type, $recherche) {
 	$args = "";
 	if ($type == 0) {
 		//Juste le nom
@@ -136,6 +138,10 @@ function search($type, $recherche, $mysqli) {
 
 	}
 
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
+	if ($mysqli->connect_errno) {
+		echo "Echec lors de la connexion à MySQL : (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
+	}
 	$res = $mysqli->query("SELECT * , (SELECT SUM(Qte) FROM `devis_article` WHERE ID_Article = article.id) as nb_commande FROM article WHERE 1=1 ".$args);
 	$types = array();
 
@@ -145,7 +151,7 @@ function search($type, $recherche, $mysqli) {
 	return $types;
 }
 
-function devis($id_user, $id, $number, $mysqli) {
+function devis($id_user, $id, $number) {
 	$args = "";
 	if ($id != -1) {
 		$args .= " AND ID=".$id." ";
@@ -158,7 +164,10 @@ function devis($id_user, $id, $number, $mysqli) {
 		$args .= " LIMIT ".$number." ";
 	}
 
-
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
+	if ($mysqli->connect_errno) {
+		echo "Echec lors de la connexion à MySQL : (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
+	}
 	$res = $mysqli->query("SELECT * FROM devis WHERE 1=1 ".$args);
 	$types = array();
 
@@ -198,25 +207,19 @@ $app->get('/{id}/{token}/products', function (Request $request, Response $respon
     $id = $request->getAttribute('id');
 	$token =  $request->getAttribute('token');
 	$limit =  $request->getQueryParams()["limit"];
-	$start =  $request->getQueryParams()["start"];
 
-	$mysqli = initMySQL();
-
-	if (!isCorrectIdentification($id, $token, $mysqli)) {
+	/*if (!isCorrectIdentification($id, $token)) {
 		$response = $response->withJson($data, 403);
   	return $response;
-	}
-
+	}*/
 
 	$timestamps =  time();
 	$data = array();
 
 	if (empty($limit))
-		$limit = -1;
-	if (empty($start))
-		$start = -1;
-
-	$data = article(-1, $limit, $start, false, $mysqli);
+		$data = article(-1, -1, false);
+	else
+		$data = article(-1, $limit, false);
 
 	$response = $response->withHeader('Content-type', 'application/json');
 	if (count($data) > 0)
@@ -230,15 +233,10 @@ $app->get('/{id}/{token}/products/search/{recherche}/', function (Request $reque
 	$token =  $request->getAttribute('token');
 	$recherche =  $request->getAttribute('recherche');
 
-	$mysqli = initMySQL();
-	if (!isCorrectIdentification($id, $token, $mysqli)) {
-		$response = $response->withJson($data, 403);
-  	return $response;
-	}
 	$timestamps =  time();
 	$data = array();
 
-	$data = search(0, $recherche, $mysqli);
+	$data = search(0, $recherche);
 
 	$response = $response->withHeader('Content-type', 'application/json');
 	if (count($data) > 0)
@@ -253,12 +251,8 @@ $app->get('/{id}/{token}/products/{id_p}/', function (Request $request, Response
 	$token =  $request->getAttribute('token');
 	$timestamps =  time();
 	$data = array();
-	$mysqli = initMySQL();
-	if (!isCorrectIdentification($id, $token, $mysqli)) {
-		$response = $response->withJson($data, 403);
-  	return $response;
-	}
-	$data = article($id_p, -1, true, $mysqli);
+
+	$data = article($id_p, -1, true);
 
 	$response = $response->withHeader('Content-type', 'application/json');
 	if (count($data) > 0)
@@ -273,11 +267,9 @@ $app->get('/{id}/{token}/products/{id_p}/associate/', function (Request $request
 	$token =  $request->getAttribute('token');
 	$timestamps =  time();
 	$data = array();
-
-	$mysqli = initMySQL();
-	if (!isCorrectIdentification($id, $token, $mysqli)) {
-		$response = $response->withJson($data, 403);
-  	return $response;
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
+	if ($mysqli->connect_errno) {
+		echo "Echec lors de la connexion à MySQL : (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 	}
 	$request = 	"  SELECT da2.ID_Article, SUM(da2.Qte)  as commande, a.ref, a.name, a.prix FROM devis_article da"
 							." INNER JOIN devis_article da2 ON da2.ID_Devis = da.ID_Devis"
@@ -307,15 +299,10 @@ $app->get('/{id}/{token}/devis', function ($request, $response, $args) {
 	$timestamps =  time();
 	$data = array();
 
-	$mysqli = initMySQL();
-	if (!isCorrectIdentification($id, $token, $mysqli)) {
-		$response = $response->withJson($data, 403);
-  	return $response;
-	}
 	if (empty($limit))
-		$data = devis($id, -1, -1, $mysqli);
+		$data = devis($id, -1, -1);
 	else
-		$data = devis($id, -1, $limit, $mysqli);
+		$data = devis($id, -1, $limit);
 
 	$response = $response->withHeader('Content-type', 'application/json');
 	if (count($data) > 0)
@@ -334,13 +321,13 @@ $app->get('/{id}/{token}/devis/{id_devis}/', function (Request $request, Respons
 	$articles = array();
 	$promos = array();
 
-	$mysqli = initMySQL();
-	if (!isCorrectIdentification($id, $token, $mysqli)) {
-		$response = $response->withJson($data, 403);
-  	return $response;
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
+	$mysqli->set_charset("utf8");
+	if ($mysqli->connect_errno) {
+		echo "Echec lors de la connexion à MySQL : (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 	}
 
-	$res = $mysqli->query("SELECT d.*, u.DisplayName FROM devis d INNER JOIN user u ON u.ID = d.ID_User WHERE d.ID=".$mysqli->real_escape_string($id_devis)." ");
+	$res = $mysqli->query("SELECT * FROM devis WHERE ID=".$mysqli->real_escape_string($id_devis)." ");
 	if ($row = $res->fetch_assoc()){
 		$devis = $row;
 	}
@@ -371,11 +358,10 @@ $app->delete('/{id}/{token}/devis/delete/', function ($request, $response, $args
 	$token = $args['token'];
 	$parsedBody = $request->getParsedBody();
 
-
-	$mysqli = initMySQL();
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
 	$retour = array('delete' => false,'admin' => false);
 	$response = $response->withJson($retour, 400);
-	if (isCorrectIdentificationAdmin($id, $token, $mysqli)) {
+	if (isCorrectIdentificationAdmin($id, $token)) {
 		$mysqli->query("DELETE FROM devis WHERE ID= ".$parsedBody["id"]." ");
 		$retour = array('delete' => true,'admin' => true);
 		$response = $response->withJson($retour, 200);
@@ -390,11 +376,10 @@ $app->post('/{id}/{token}/devis/create/', function ($request, $response, $args) 
 
 	$data = array();
 	$data2 = array();
-
-	$mysqli = initMySQL();
-	if (!isCorrectIdentification($id, $token, $mysqli)) {
-		$response = $response->withJson($data, 403);
-  	return $response;
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
+	$mysqli->set_charset("utf8");
+	if ($mysqli->connect_errno) {
+		echo "Echec lors de la connexion à MySQL : (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 	}
 	$retour = array('item' => $parsedBody["id"],'id_devis' => 0, 'created' => false);
 
@@ -462,10 +447,11 @@ $app->post('/{id}/{token}/devis/create/', function ($request, $response, $args) 
 $app->get('/{id}/{token}/promo/', function ($request, $response, $args) {
 	$id = $args['id'];
 	$token = $args['token'];
-	$mysqli = initMySQL();
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
+	$mysqli->set_charset("utf8");
 	$response = $response->withJson($promos, 400);
 	$promos = array();
-	if (isCorrectIdentificationAdmin($id, $token, $mysqli)) {
+	if (isCorrectIdentificationAdmin($id, $token)) {
 		$res = $mysqli->query("SELECT  * FROM promocode");
 		while(($row =  mysqli_fetch_assoc($res))) {
 			$promos[] = $row;
@@ -482,11 +468,7 @@ $app->post('/{id}/{token}/promo/add/', function ($request, $response, $args) {
 	$token = $args['token'];
 	$parsedBody = $request->getParsedBody();
 
-	$mysqli = initMySQL();
-	if (!isCorrectIdentification($id, $token, $mysqli)) {
-		$response = $response->withJson($data, 403);
-  	return $response;
-	}
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
 	$retour = array('item' => $parsedBody["code"],'insert' => false);
 	$res = $mysqli->query("SELECT * FROM `promocode` WHERE code='".$mysqli->real_escape_string($parsedBody["code"])." ' AND Validity > CURRENT_TIMESTAMP");
 	$id_promo = 0;
@@ -509,11 +491,8 @@ $app->post('/{id}/{token}/promo/insert/', function ($request, $response, $args) 
 	$parsedBody = $request->getParsedBody();
 	$retour = array('item' => $parsedBody["code"],'insert' => false);
 
-	$mysqli = initMySQL();
-	if (!isCorrectIdentificationAdmin($id, $token, $mysqli)) {
-		$response = $response->withJson($data, 403);
-  	return $response;
-	}
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
+	$mysqli->set_charset("utf8");
 	$res = $mysqli->query("SELECT * FROM `promocode` WHERE code='".$mysqli->real_escape_string($parsedBody["code"])."'");
 	$check_promo = mysqli_num_rows($res);
 	if($check_promo <= 0){
@@ -530,9 +509,9 @@ $app->delete('/{id}/{token}/promo/delete/', function ($request, $response, $args
 	$token = $args['token'];
 	$parsedBody = $request->getParsedBody();
 
-	$mysqli = initMySQL();
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
 	$retour = array('item' => $parsedBody["id"],'count' => 0);
-	if (isCorrectIdentificationAdmin($id, $token, $mysqli)) {
+	if (isCorrectIdentificationAdmin($id, $token)) {
 		$mysqli->query("DELETE FROM promocode WHERE ID= ".$parsedBody["id"]." ");
 		$retour = array('item' => $parsedBody["id"],'count' => 0);
 
@@ -544,11 +523,7 @@ $app->delete('/{id}/{token}/promo/delete/', function ($request, $response, $args
 $app->get('/{id}/{token}/count_bag/', function ($request, $response, $args) {
 	$id = $args['id'];
 	$token = $args['token'];
-	$mysqli = initMySQL();
-	if (!isCorrectIdentification($id, $token, $mysqli)) {
-		$response = $response->withJson($data, 403);
-  	return $response;
-	}
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
 	$res = $mysqli->query("SELECT COUNT(*) as nb FROM panier_article WHERE ID_User=".$mysqli->real_escape_string($id)." ");
 	if ($row = $res->fetch_assoc()){
 		$retour = array('count' => $row['nb']);
@@ -560,11 +535,7 @@ $app->get('/{id}/{token}/count_bag/', function ($request, $response, $args) {
 $app->get('/{id}/{token}/count_bag_and_devis/', function ($request, $response, $args) {
 	$id = $args['id'];
 	$token = $args['token'];
-	$mysqli = initMySQL();
-	if (!isCorrectIdentification($id, $token, $mysqli)) {
-		$response = $response->withJson($data, 403);
-  	return $response;
-	}
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
 	$nb_bag = "0"; $nb_devis = "0";
 
 	$res = $mysqli->query("SELECT COUNT(*) as nb FROM panier_article WHERE ID_User=".$mysqli->real_escape_string($id)." ");
@@ -588,11 +559,12 @@ $app->get('/{id}/{token}/bag/', function (Request $request, Response $response) 
 	$timestamps =  time();
 	$data = array();
 	$data2 = array();
-	$mysqli = initMySQL();
-	if (!isCorrectIdentification($id, $token, $mysqli)) {
-		$response = $response->withJson($data, 403);
-  	return $response;
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
+	$mysqli->set_charset("utf8");
+	if ($mysqli->connect_errno) {
+		echo "Echec lors de la connexion à MySQL : (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 	}
+
 	// SELECT ARTICLE
 	$res = $mysqli->query("SELECT * FROM article a INNER JOIN panier_article pa ON pa.ID_Article = a.ID WHERE pa.ID_User = ".$mysqli->real_escape_string($id)." ORDER BY pa.ID");
 	while(($row =  mysqli_fetch_assoc($res))) {
@@ -618,11 +590,7 @@ $app->post('/{id}/{token}/bag/add/', function ($request, $response, $args) {
 	$token = $args['token'];
 	$parsedBody = $request->getParsedBody();
 
-	$mysqli = initMySQL();
-	if (!isCorrectIdentification($id, $token, $mysqli)) {
-		$response = $response->withJson($data, 403);
-  	return $response;
-	}
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
 	$retour = array('item' => $parsedBody["id"],'count' => 0);
 
 	$mysqli->query("INSERT INTO panier_article (ID_User,ID_Article,Qte) VALUES (".$id.", ".$parsedBody["id"].", ".$parsedBody["nb"].") ON DUPLICATE KEY UPDATE Qte=Qte+".$parsedBody["nb"].";");
@@ -639,11 +607,7 @@ $app->post('/{id}/{token}/bag/remove/', function ($request, $response, $args) {
 	$token = $args['token'];
 	$parsedBody = $request->getParsedBody();
 
-	$mysqli = initMySQL();
-	if (!isCorrectIdentification($id, $token, $mysqli)) {
-		$response = $response->withJson($data, 403);
-  	return $response;
-	}
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
 	$retour = array('item' => $parsedBody["id"],'count' => 0);
 
 	$mysqli->query("DELETE FROM panier_article WHERE ID_User= ".$id." AND ID_Article = ".$parsedBody["id"]." ");
@@ -656,11 +620,7 @@ $app->post('/{id}/{token}/bag/update/', function ($request, $response, $args) {
 	$token = $args['token'];
 	$parsedBody = $request->getParsedBody();
 
-	$mysqli = initMySQL();
-	if (!isCorrectIdentification($id, $token, $mysqli)) {
-		$response = $response->withJson($data, 403);
-  	return $response;
-	}
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
 	$retour = array('item' => $parsedBody["id"],'count' => 0);
 
 	$mysqli->query("UPDATE panier_article SET Qte = ".$parsedBody["qte"]." WHERE ID_User= ".$id." AND ID_Article = ".$parsedBody["id"]." ");
@@ -672,32 +632,36 @@ $app->post('/{id}/{token}/bag/update/', function ($request, $response, $args) {
 $app->get('/{id}/{token}/users/', function ($request, $response, $args) {
 	$id = $args['id'];
 	$token = $args['token'];
-	$mysqli = initMySQL();
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
+
 	$users = array();
 
-	if (isCorrectIdentificationAdmin($id, $token, $mysqli)) {
-		$res = $mysqli->query("SELECT ID, Login, 'DTC je le passe pas' AS Password, Admin, DisplayName FROM user");
+	if (isCorrectIdentificationAdmin($id, $token)) {
+		$res = $mysqli->query("SELECT ID, Login, 'DTC je le passe pas' AS Password, Admin FROM user");
 		while(($row =  mysqli_fetch_assoc($res))) {
 			$users[] = $row;
 		}
+	} else  {
+		$response = $response->withJson($users, 401);
+		return $response;
 	}
 
 
 	$response = $response->withHeader('Content-type', 'text');
-	$response = $response->withJson($users, 302);
-    return $response;
+	$response = $response->withJson($users, 200);
+  return $response;
 });
 $app->post('/{id}/{token}/users/insert/', function ($request, $response, $args) {
 	$id = $args['id'];
 	$token = $args['token'];
 	$parsedBody = $request->getParsedBody();
 
-	$mysqli = initMySQL();
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
 	$nb_bag = "0"; $nb_devis = "0";
 
 	$users = array();
 	$retour = array('item' => $parsedBody, 'created' => false);
-	if (isCorrectIdentificationAdmin($id, $token, $mysqli)) {
+	if (isCorrectIdentificationAdmin($id, $token)) {
 		$res = $mysqli->query("SELECT * FROM user WHERE Login='".$mysqli->real_escape_string($parsedBody["Login"])."'");
 		if ($row = $res->fetch_assoc()){
 
@@ -717,9 +681,9 @@ $app->post('/{id}/{token}/users/update/statut', function ($request, $response, $
 	$token = $args['token'];
 	$parsedBody = $request->getParsedBody();
 
-	$mysqli = initMySQL();
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
 	$retour = array('item' => $parsedBody["id"],'count' => 0);
-	if (isCorrectIdentificationAdmin($id, $token, $mysqli) && ($parsedBody["id"] != $id)) {
+	if (isCorrectIdentificationAdmin($id, $token) && ($parsedBody["id"] != $id)) {
 		$mysqli->query("UPDATE user SET Admin = ".$parsedBody["statut"]." WHERE ID= ".$parsedBody["id"]." ");
 		$retour = array('item' => $parsedBody["id"],'count' => 0);
 
@@ -733,31 +697,15 @@ $app->post('/{id}/{token}/users/update/mdp', function ($request, $response, $arg
 	$token = $args['token'];
 	$parsedBody = $request->getParsedBody();
 
-	$mysqli = initMySQL();
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
 	$retour = array('item' => $parsedBody["id"],'count' => 0);
-	if (isCorrectIdentificationAdmin($id, $token, $mysqli)) {
+	if (isCorrectIdentificationAdmin($id, $token)) {
 		$mysqli->query("UPDATE user SET Password = '".$parsedBody["mdp"]."' WHERE ID= ".$parsedBody["id"]." ");
 		$retour = array('item' => $parsedBody["id"],'count' => 0);
 
 	}
 	$response = $response->withHeader('Content-type', 'text');
-	$response = $response->withJson($retour, 200);
-    return $response;
-});
-$app->post('/{id}/{token}/users/update/libelle', function ($request, $response, $args) {
-	$id = $args['id'];
-	$token = $args['token'];
-	$parsedBody = $request->getParsedBody();
-
-	$mysqli = initMySQL();
-	$retour = array('item' => $parsedBody["id"],'count' => 0);
-	if (isCorrectIdentificationAdmin($id, $token, $mysqli)) {
-		$mysqli->query("UPDATE user SET DisplayName = '".$parsedBody["libelle"]."' WHERE ID= ".$parsedBody["id"]." ");
-		$retour = array('item' => $parsedBody["id"],'count' => 0);
-
-	}
-	$response = $response->withHeader('Content-type', 'text');
-	$response = $response->withJson($retour, 200);
+	$response = $response->withJson($retour, 302);
     return $response;
 });
 $app->delete('/{id}/{token}/users/delete/', function ($request, $response, $args) {
@@ -765,9 +713,9 @@ $app->delete('/{id}/{token}/users/delete/', function ($request, $response, $args
 	$token = $args['token'];
 	$parsedBody = $request->getParsedBody();
 
-	$mysqli = initMySQL();
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
 	$retour = array('item' => $parsedBody["id"],'count' => 0);
-	if (isCorrectIdentificationAdmin($id, $token, $mysqli)) {
+	if (isCorrectIdentificationAdmin($id, $token)) {
 		$mysqli->query("DELETE FROM user WHERE ID= ".$parsedBody["id"]." ");
 		$retour = array('item' => $parsedBody["id"],'count' => 0);
 
@@ -785,7 +733,7 @@ $app->get('/login', function (Request $request, Response $response) {
 	//echo  $request->getUri();
 	$response = $response->withHeader('Content-type', 'application/json');
 
-	$mysqli = initMySQL();
+	$mysqli = new mysqli("127.0.0.1", "root", "T3cKnolog!kS", "commercial");
 	$res = $mysqli->query("SELECT * FROM user WHERE Login='".$mysqli->real_escape_string($nom)."' AND  Password='".$mysqli->real_escape_string($mdp)."'");
 	$check_user = mysqli_num_rows($res);
 	if($check_user>0){
@@ -803,18 +751,5 @@ $app->get('/login', function (Request $request, Response $response) {
     return $response;
 });
 $app->run();
-/*
-
-DATEADD(hh, -2, GETDATE())
-*/
-/*$res = $mysqli->query("SELECT ID FROM user");
-
-echo "Ordre du jeu de résultats...\n";
-$res->data_seek(0);
-while ($row = $res->fetch_assoc()) {
-    echo " id = " . $row['ID'] . "\n";
-}*/
-    //$response->getBody()->write("Hello, $name");
-	//$response = $response->withStatus(302);
 
 ?>
