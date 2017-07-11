@@ -74,8 +74,8 @@ if (isset($_POST["societe"]) && isset($_POST["email"]) && isset($_POST["nom"]) &
         <tr><td>*<?= S_EMAIL ?></td><td><input type="email" name="email" pattern=".{1,}" required /></td></tr>
         <tr><td><?= S_FAX ?></td><td><input type="tel" pattern="^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$" name="fax" /></td></tr>
         <tr><td><?= S_ADRESSUSER ?></td><td><input type="text" name="adresse" /></td></tr>
-        <tr><td><?= S_POSTALNUM ?></td><td><input type="number" name="cp" pattern=".{1,}" required /></td></tr>
-        <tr><td><?= S_CITYUSER ?></td><td><input type="text" name="ville" pattern=".{1,}" required /></td></tr>
+        <tr><td><?= S_POSTALNUM ?></td><td><input type="number" name="cp" pattern=".{1,}" /></td></tr>
+        <tr><td><?= S_CITYUSER ?></td><td><input type="text" name="ville" pattern=".{1,}"  /></td></tr>
         <tr><td>*<?= S_USERNAME ?></td><td><input type="text" name="nom" pattern=".{1,}" required /></td></tr>
         <tr><td>*<?= S_USERFIRSTNAME ?></td><td><input type="text" name="prenom" pattern=".{1,}" required /></td></tr>
         <tr><td colspan="2" style="padding:0;"><input type="submit" value="Valider le devis" class="btn btn-info" style="font-size: 1.5em; width:100%; height: 50px"></td></tr>
