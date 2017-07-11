@@ -451,6 +451,9 @@ $app->post('/{id}/{token}/devis/create/', function ($request, $response, $args) 
 													."'".$panier["promo"][$i]["total"]."');");
 	}
 
+	$mysqli->query("DELETE FROM panier_article WHERE ID_User=".$mysqli->real_escape_string($id));
+	$mysqli->query("DELETE FROM panier_promo WHERE ID_User=".$mysqli->real_escape_string($id));
+
 	$response = $response->withHeader('Content-type', 'text');
 	if ($id_devis > 0)
 		$response = $response->withJson($retour, 200);
@@ -792,8 +795,8 @@ $app->get('/login', function (Request $request, Response $response) {
 		//$res->data_seek(0);
 		if ($row = $res->fetch_assoc()){
 			$token = bin2hex(random_bytes(25));
-			$data = array('ID' => $row['ID'],'login' => $row['Login'], 'really' => $row['Admin'], 'mdp' => 'ESPECE DE CURIEUX ! :p', 'token' => $token);
-			$mysqli->query("UPDATE user SET Token='".$token."' WHERE ID=".$row['ID']." ");
+			$data = array('ID' => $row['ID'],'login' => $row['Login'], 'really' => $row['Admin'], 'mdp' => 'ESPECE DE CURIEUX ! :p', 'token' => $row['Token']);
+			//$mysqli->query("UPDATE user SET Token='".$token."' WHERE ID=".$row['ID']." ");
 			$response = $response->withJson($data, 200);
 		}
 	} else {
