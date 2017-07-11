@@ -1,6 +1,7 @@
 var calcDataTableHeight = function() {
-	//
-  return document.body.clientHeight  - 150;
+  var height = isNaN(window.innerHeight) ? window.clientHeight : window.innerHeight;
+  return height - 150;
+  //return document.body.clientHeight  - 150;
   //return $(window).height()  - 225;
 };
 
