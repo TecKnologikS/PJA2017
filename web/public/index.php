@@ -102,6 +102,7 @@ function article($id, $number, $start, $details, $mysqli) {
 		$args .= " AND a.id=".$id." ";
 	}
 
+	$mysqli = initMySQL();
 	$args .= " ORDER BY nb_commande DESC ";
 
 	if ($number != -1) {
@@ -181,6 +182,15 @@ function verify() {
 
 	if (!isTimeStampsOk($id, $timestamps)) {
 		return error("Too Old Request", 0, $response);
+	}
+}
+
+function commission($mysqli, $id_user, $prix_final, $reduction) {
+	$pourcentage = round((($reduction * 100) / $prix_final), 1, PHP_ROUND_HALF_UP);
+	$res = $mysqli->query("SELECT * FROM remise_et_commission WHERE RemiseMin <= ".$pourcentage." AND RemiseMax > ".$pourcentage." ");
+	if ($row = $res->fetch_assoc()){
+		$commission = round((($prix_final * $row['Commission']) * 100), 2, PHP_ROUND_HALF_UP);
+		$mysqli->query("INSERT INTO remise (id_user, id_devis, montant, pourcentage, remise) VALUES (".$id_user.", ".$id_devis.", ".$commission.", ".$row['Commission'].", ".$pourcentage.") ");
 	}
 }
 
@@ -450,6 +460,9 @@ $app->post('/{id}/{token}/devis/create/', function ($request, $response, $args) 
 													."".$panier["promo"][$i]["ID_Promo"].", "
 													."'".$panier["promo"][$i]["total"]."');");
 	}
+
+	//TODO: a faire uniquement pour la soutenance, apres passer a la validation du devis
+	commission($mysqli, $id, $panier["prix_total"], $panier["reduction_total"]);
 
 	$mysqli->query("DELETE FROM panier_article WHERE ID_User=".$mysqli->real_escape_string($id));
 	$mysqli->query("DELETE FROM panier_promo WHERE ID_User=".$mysqli->real_escape_string($id));

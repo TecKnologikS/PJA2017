@@ -8,7 +8,7 @@ if (!isset($_GET["id"])) {
 if (isset($_GET["added"]))
   if ($_GET["added"] == "true")
       Succed(S_ADD_TO_BAG);
-
+			
 $bag = fromJSON(
 					GET_REQ(
 						"http://commercial.tecknologiks.com/index.php/{id}/{token}/products/{id_p}/",
