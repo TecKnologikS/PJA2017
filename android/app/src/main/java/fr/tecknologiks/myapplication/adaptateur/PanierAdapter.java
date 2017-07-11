@@ -3,6 +3,7 @@ package fr.tecknologiks.myapplication.adaptateur;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,12 +94,25 @@ public class PanierAdapter extends ArrayAdapter<Article> {
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus) {
                     int qte = Integer.parseInt(((EditText)v).getText().toString());
-                    if (qte != dataSet.get((Integer)v.getTag()).getQte())
-                        mPanierListener.onUpdate((Integer)v.getTag(), qte);
+                    if (dataSet.size() > ((Integer)v.getTag()))
+                        if (qte != dataSet.get((Integer)v.getTag()).getQte())
+                            mPanierListener.onUpdate((Integer)v.getTag(), qte);
                 } else {
                     viewHolder.edtCount.setSelection(viewHolder.edtCount.getText().toString().length());
                 }
 
+            }
+        });
+        viewHolder.edtCount.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if (keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
+                    int qte = Integer.parseInt(viewHolder.edtCount.getText().toString());
+                    if (dataSet.size() > ((Integer)viewHolder.edtCount.getTag()))
+                        if (qte != dataSet.get((Integer)viewHolder.edtCount.getTag()).getQte())
+                            mPanierListener.onUpdate((Integer)viewHolder.edtCount.getTag(), qte);
+                }
+                return true;
             }
         });
         viewHolder.btnSuppr.setTag(position);

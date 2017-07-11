@@ -3,6 +3,8 @@ package fr.tecknologiks.myapplication;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Build;
@@ -194,6 +196,20 @@ public class LoginActivity extends AppCompatActivity implements AsyncResponse {
     private void ErreurConnexion() {
         mPasswordView.setError(getString(R.string.error_incorrect_password));
         mPasswordView.requestFocus();
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(LoginActivity.this)
+            .setMessage("Voulez vous vraiment quitter ?")
+            .setCancelable(false)
+            .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    finish();
+                }
+            })
+            .setNegativeButton("Non", null)
+            .show();
     }
 
 

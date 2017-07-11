@@ -27,13 +27,43 @@
 
 
                 <TableLayout
-                    android:id="@+id/containerTable"
+                    android:id="@+id/tableDevis"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:shrinkColumns="*"
-                    android:stretchColumns="*">>
+                    android:stretchColumns="*">
 
+                </TableLayout>
+
+
+                <TableLayout
+                    android:id="@+id/tableArticles"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_marginTop="5dp">
+
+
+                </TableLayout>
+
+                <TableLayout
+                    android:id="@+id/tablePromos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:shrinkColumns="*"
+                    android:stretchColumns="*">
+
+                </TableLayout>
+
+                <TableLayout
+                    android:id="@+id/tableRecap"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:shrinkColumns="*"
+                    android:stretchColumns="*">
 
                 </TableLayout>
 

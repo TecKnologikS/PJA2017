@@ -1,8 +1,11 @@
 package fr.tecknologiks.myapplication;
 
 import android.app.ProgressDialog;
+import android.app.SearchManager;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,7 +41,7 @@ import fr.tecknologiks.myapplication.interfaceClass.AsyncResponse;
  * Created by robinpauquet on 05/07/2017.
  */
 
-public class ArticleFragment extends Fragment implements AsyncResponse {
+public class ArticleFragment extends Fragment implements AsyncResponse, SubActivity {
     public static final String ARG_TITLE = "arg_title";
     private TextView textView;
     private int test = 0;
@@ -183,13 +186,17 @@ public class ArticleFragment extends Fragment implements AsyncResponse {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                layoutDetails.setVisibility(View.GONE);
-                ((MainActivity2)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-                ((MainActivity2)getActivity()).setMenu(MENU_RECHERCHE);
-                details = false;
+                unshowDetails();
                 return true;
         }
         return false;
+    }
+
+    public void unshowDetails() {
+        layoutDetails.setVisibility(View.GONE);
+        ((MainActivity2)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        ((MainActivity2)getActivity()).setMenu(MENU_RECHERCHE);
+        details = false;
     }
 
 
@@ -244,5 +251,24 @@ public class ArticleFragment extends Fragment implements AsyncResponse {
     public void annuleRecherche() {
         recherche = "";
         loadArticles();
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        if (!details) {
+            new AlertDialog.Builder(getContext())
+                    .setMessage("Voulez vous vraiment quitter ?")
+                    .setCancelable(false)
+                    .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            ((MainActivity2)getActivity()).finish();
+                        }
+                    })
+                    .setNegativeButton("Non", null)
+                    .show();
+        } else {
+            unshowDetails();
+        }
     }
 }

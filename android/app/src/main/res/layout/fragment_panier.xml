@@ -171,6 +171,7 @@
                     android:layout_height="wrap_content">
 
                     <EditText
+                        android:id="@+id/edtSociete"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Société" />
@@ -181,6 +182,19 @@
                     android:layout_height="wrap_content">
 
                     <EditText
+                        android:id="@+id/edtSiret"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:hint="Siret" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/edtNom"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Nom" />
@@ -191,6 +205,7 @@
                     android:layout_height="wrap_content">
 
                     <EditText
+                        android:id="@+id/edtPrenom"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Prénom" />
@@ -201,8 +216,10 @@
                     android:layout_height="wrap_content">
 
                     <EditText
+                        android:id="@+id/edtTel"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:inputType="phone"
                         android:hint="Téléphone" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -211,6 +228,8 @@
                     android:layout_height="wrap_content">
 
                     <EditText
+                        android:id="@+id/edtEmail"
+                        android:inputType="textEmailAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Email" />
@@ -221,6 +240,7 @@
                     android:layout_height="wrap_content">
 
                     <EditText
+                        android:id="@+id/edtAdresse"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Adresse" />
@@ -231,6 +251,7 @@
                     android:layout_height="wrap_content">
 
                     <EditText
+                        android:id="@+id/edtCP"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Code Postal" />
@@ -241,6 +262,7 @@
                     android:layout_height="wrap_content">
 
                     <EditText
+                        android:id="@+id/edtVille"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Ville" />

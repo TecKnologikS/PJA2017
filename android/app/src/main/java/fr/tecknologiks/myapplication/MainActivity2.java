@@ -2,11 +2,13 @@ package fr.tecknologiks.myapplication;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
@@ -201,5 +203,14 @@ public class MainActivity2 extends AppCompatActivity implements AsyncResponse {
         if (response.getCode() == HttpURLConnection.HTTP_OK) {
             Panier.getInstance().fromJSON(response.getBody());
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        final Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.frame_fragmentholder);
+        if (currentFragment != null) {
+            ((SubActivity)currentFragment).onBackPressed();
+        }
+
     }
 }
