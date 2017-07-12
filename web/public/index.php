@@ -718,7 +718,8 @@ $app->post('/{id}/{token}/users/insert/', function ($request, $response, $args) 
 		if ($row = $res->fetch_assoc()){
 
 		} else {
-			$res = $mysqli->query("INSERT INTO user (Login, Password, Admin) VALUES ('".$mysqli->real_escape_string($parsedBody["Login"])."','".$mysqli->real_escape_string($parsedBody["Password"])."', ".$mysqli->real_escape_string($parsedBody["Admin"]).");");
+				$mdp_hash = hash('sha512', $parsedBody["Password"]);
+			$res = $mysqli->query("INSERT INTO user (Login, Password, Admin, Token) VALUES ('".$mysqli->real_escape_string($parsedBody["Login"])."','".$mysqli->real_escape_string($mdp_hash)."', ".$mysqli->real_escape_string($parsedBody["Admin"]).", '".bin2hex(random_bytes(25))."');");
 			$retour = array('item' => $parsedBody, 'created' => true);
 		}
 	}
@@ -752,7 +753,10 @@ $app->post('/{id}/{token}/users/update/mdp', function ($request, $response, $arg
 	$mysqli = initMySQL();
 	$retour = array('item' => $parsedBody["id"],'count' => 0);
 	if (isCorrectIdentificationAdmin($id, $token, $mysqli)) {
-		$mysqli->query("UPDATE user SET Password = '".$parsedBody["mdp"]."' WHERE ID= ".$parsedBody["id"]." ");
+
+		$mdp_hash = hash('sha512', $parsedBody["mdp"]);
+
+		$mysqli->query("UPDATE user SET Password = '".$mdp_hash."' WHERE ID= ".$parsedBody["id"]." ");
 		$retour = array('item' => $parsedBody["id"],'count' => 0);
 
 	}
@@ -800,9 +804,9 @@ $app->get('/login', function (Request $request, Response $response) {
 	$mdp = $request->getQueryParams()["mdp"];
 	//echo  $request->getUri();
 	$response = $response->withHeader('Content-type', 'application/json');
-
+	$mdp_hash = hash('sha512', $mdp);
 	$mysqli = initMySQL();
-	$res = $mysqli->query("SELECT * FROM user WHERE Login='".$mysqli->real_escape_string($nom)."' AND  Password='".$mysqli->real_escape_string($mdp)."'");
+	$res = $mysqli->query("SELECT * FROM user WHERE Login='".$mysqli->real_escape_string($nom)."' AND  Password='".$mysqli->real_escape_string($mdp_hash)."'");
 	$check_user = mysqli_num_rows($res);
 	if($check_user>0){
 		//$res->data_seek(0);

@@ -8,7 +8,7 @@ if (!isset($_GET["id"])) {
 if (isset($_GET["added"]))
   if ($_GET["added"] == "true")
       Succed(S_ADD_TO_BAG);
-			
+
 $bag = fromJSON(
 					GET_REQ(
 						"http://commercial.tecknologiks.com/index.php/{id}/{token}/products/{id_p}/",
@@ -50,7 +50,7 @@ if ($aajouter > 0) {
 			<tbody>
 				<tr><td colspan="2"><h4 style="text-align:center"><?= S_ADDTOBASKET ?></h4></td></tr>
 				<tr><td><?= S_NUMBER ?></td><td><input type='number' min=1 name="nomber" value="1" id="nbItem" /></td></tr>
-				<tr><td colspan="2" style="padding: 0;"><input value="Ajouter" class="btn btn-success" style="font-size: 1.0em; width:100%; padding: 20px 20px 20px 20px; font-size: 1.5em;" onclick="addToBasketFromPage(<?= $article['id'] ?>);"></td></tr>
+				<tr><td colspan="2" style="padding: 0;"><a class="btn btn-success" style="font-size: 1.0em; width:100%; font-size: 1.5em;" onclick="addToBasketFromPage(<?= $article['id'] ?>);">Ajouter</a></td></tr>
 			</tbody>
 		</table>
 		<br />
